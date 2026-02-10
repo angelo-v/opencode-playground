@@ -50,6 +50,8 @@ Always declare common prefixes at the top. Include Solid project ontologies when
 - **Prefer hash URIs (#) for vocabulary terms and resources**
 - Use fragment identifiers for clean, bookmark-able resources
 - Example: `https://example.org/vocab#Person` rather than `https://example.org/vocab/Person`
+- **For document-relative URIs, use `<#fragment>` or define a base URI with `@base` and use `:fragment` notation**
+- When creating instance data, use hash URIs relative to the document (e.g., `<#order1>` or with `@base`, just `#order1`)
 
 ### 3. Literal datatypes
 - Always specify datatypes for typed literals
@@ -117,26 +119,37 @@ Before finalizing output:
 
 ## Output format
 
+**CRITICAL: Always create a .ttl file when generating RDF data.**
+
 Always output complete, valid Turtle files that can be:
 - Parsed by standard RDF libraries (Apache Jena, RDFLib, etc.)
 - Loaded into triple stores (Virtuoso, Blazegraph, GraphDB)
 - Validated using online validators or CLI tools
 
+**File creation requirements:**
+- Save RDF data to a `.ttl` file with a meaningful filename
+- Use kebab-case for filenames (e.g., `pizza-order.ttl`, `person-profile.ttl`)
+- Place files in an appropriate location (ask user if unclear, default to current directory)
+
 ## Example workflow
 
 User: "Create RDF for a person named John Smith who works at Acme Corp"
 
-Response:
+Response: I'll create a Turtle file with RDF for John Smith.
+
 ```turtle
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
-@prefix ex: <http://example.org/#> .
 
-ex:john-smith a foaf:Person ;
+<#john-smith> a foaf:Person ;
     foaf:name "John Smith"@en ;
     vcard:organization-name "Acme Corp"@en .
 ```
 
-Note: Language tags match the user's input language. This example uses @en because the user wrote in English.
+*Creates file: person-profile.ttl*
+
+Note: 
+- Language tags match the user's input language. This example uses @en because the user wrote in English.
+- The resource uses a document-relative hash URI `<#john-smith>` instead of an external namespace prefix.
