@@ -190,6 +190,28 @@ Only add tags when:
 
 Avoid over-tagging with @smoke, @regression, @critical unless specifically needed.
 
+## Scenario Scope: Default to Single-Focused
+
+**IMPORTANT: Always default to single-focused scenarios unless the user explicitly requests journey-based scenarios.**
+
+### Single-Focused Scenarios (DEFAULT)
+- Each scenario tests **one specific business rule or behavior**
+- Scenarios are independent and can run in isolation
+- Easier to understand, maintain, and debug
+- Clear pass/fail for specific capabilities
+- Preferred approach for most situations
+
+### Journey-Based Scenarios (Only when explicitly requested)
+- Test end-to-end user workflows across multiple capabilities
+- Show how features work together in realistic user flows
+- Used when the user specifically asks for:
+  - "End-to-end scenarios"
+  - "User journey scenarios"  
+  - "Full workflow tests"
+  - "Integration scenarios"
+
+**When in doubt, use single-focused scenarios.**
+
 ## Questions to ask
 
 **ALWAYS ask clarifying questions before generating scenarios.** When the user requests BDD scenarios, ask:
@@ -209,8 +231,7 @@ Avoid over-tagging with @smoke, @regression, @critical unless specifically neede
 5. **Are there common preconditions across scenarios?**
    - Determines Background section usage
 
-6. **Should scenarios focus on single rules or support end-to-end journeys?**
-   - Adapts scenario scope to context
+**Note:** Do NOT ask about single-focused vs. journey scenarios - always default to single-focused unless the user explicitly requests journeys.
 
 Only generate scenarios after receiving answers to relevant questions.
 
@@ -249,7 +270,7 @@ Feature: [Business capability name]
 - Use Background liberally when scenarios share setup
 - Prefer regular Scenarios over Scenario Outlines
 - Add tags only when explicitly needed
-- Adapt scenario scope based on context (single-focus vs. journey)
+- **Default to single-focused scenarios** unless user explicitly requests journeys
 
 ## Common anti-patterns to avoid
 
@@ -287,27 +308,30 @@ Scenario: Process customer order
   Then the order is confirmed
 ```
 
-### ❌ Don't: Force single-focus when journey context matters
+### ❌ Don't: Create journey scenarios unless explicitly requested
 ```gherkin
-Scenario: Add item to cart
-  Given a customer views a product
-  When they add it to cart
-  Then cart contains 1 item
-
-Scenario: Complete checkout
-  Given a cart with 1 item
-  When customer checks out
-  Then order is placed
-```
-
-### ✓ Do: Use end-to-end journey when context flows naturally
-```gherkin
+# Only use this pattern when user explicitly asks for journey/end-to-end scenarios
 Scenario: Complete first-time purchase journey
   Given a new customer browses the product catalog
   When they select a product and add it to their cart
   And complete the checkout process with payment
   Then their order is confirmed
   And they receive a welcome discount on their next purchase
+```
+
+### ✓ Do: Default to single-focused scenarios (preferred approach)
+```gherkin
+Scenario: Add item to cart
+  Given a customer views a product
+  When they add it to cart
+  Then the cart contains 1 item
+  And the product appears in their cart
+
+Scenario: Complete checkout with items in cart
+  Given a customer has 1 item in their cart
+  When they complete the checkout process
+  Then their order is confirmed
+  And they receive a confirmation email
 ```
 
 ### ❌ Don't: Break high-level actions into multiple When steps
@@ -421,7 +445,7 @@ Would you like me to:
 Before finalizing scenarios, verify:
 - [ ] Prioritizes business language with minimal technical details for clarity
 - [ ] Uses domain/business language throughout
-- [ ] Scenarios are adapted to context (single-focus or journey-based as appropriate)
+- [ ] **Scenarios are single-focused (default) unless user explicitly requested journeys**
 - [ ] Given/When/Then structure is followed correctly
 - [ ] **Each scenario has exactly ONE When action (no multiple When/And action steps)**
 - [ ] **Data and parameters are in Given context, not spread across multiple When steps**
@@ -437,9 +461,9 @@ Before finalizing scenarios, verify:
 
 1. **Think like a business analyst**: What does the business care about?
 2. **Balance clarity with domain focus**: Use business language primarily, minimal tech terms for clarity
-3. **Keep scenarios independent**: Each should run in isolation
-4. **Make scenarios maintainable**: Avoid brittle test data dependencies
-5. **Adapt scope to context**: Single-focus for simple rules, journeys for complex flows
+3. **Default to single-focused scenarios**: Test one behavior per scenario unless explicitly asked for journeys
+4. **Keep scenarios independent**: Each should run in isolation
+5. **Make scenarios maintainable**: Avoid brittle test data dependencies
 6. **Use declarative style**: Say WHAT should happen, not HOW to do it
 7. **One action per scenario**: Keep exactly ONE When step - move data to Given context
 8. **High-level actions**: Use business-level actions like "add bookmark", not field-by-field steps
