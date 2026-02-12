@@ -82,9 +82,11 @@ Every feature file should include:
 - No actions or events
 
 **When** - Trigger action:
-- Single action or event
+- **CRITICAL**: Single action or event only - exactly ONE When step per scenario
 - Use present tense ("customer places order", "user cancels subscription")
 - Should be one clear action per When
+- **Avoid multiple When/And steps** - consolidate into a single high-level action
+- Put data/parameters in the Given context, not as separate When steps
 
 **Then** - Verify outcome:
 - Observable business outcome
@@ -121,12 +123,40 @@ Scenario Outline: Apply volume discounts based on purchase quantity
 ### 5. Data Tables
 Use data tables to express structured data in a business-readable way:
 
+**For multiple records (horizontal headers):**
 ```gherkin
 Given the following products are in the catalog:
   | Product Name | Category    | Price |
   | Laptop       | Electronics | 1200  |
   | Desk Chair   | Furniture   | 350   |
   | Monitor      | Electronics | 400   |
+```
+
+**For single record with multiple fields (vertical key-value pairs):**
+```gherkin
+Given a user wants to add a bookmark with the following details:
+  | URL         | https://example.com            |
+  | Title       | Example Website                |
+  | Description | A helpful example site         |
+```
+
+**When to use data tables in Given steps:**
+- When you have 2+ fields/attributes to specify
+- When the Given step would become too long with inline values
+- When you want to clearly show what fields are present vs. absent
+- For better readability and maintainability
+
+**❌ Don't: Use long inline values in Given**
+```gherkin
+Given a user wants to add a bookmark with URL "https://example.com", title "Example Website", and description "A helpful example site for testing"
+```
+
+**✓ Do: Use vertical data table for cleaner readability**
+```gherkin
+Given a user wants to add a bookmark with the following details:
+  | URL         | https://example.com                |
+  | Title       | Example Website                    |
+  | Description | A helpful example site for testing |
 ```
 
 ### 6. Doc Strings
@@ -280,6 +310,48 @@ Scenario: Complete first-time purchase journey
   And they receive a welcome discount on their next purchase
 ```
 
+### ❌ Don't: Break high-level actions into multiple When steps
+```gherkin
+Scenario: Add a bookmark with all fields
+  Given a user is ready to save a new bookmark
+  When they enter "https://example.com" as the URL
+  And they enter "Example Website" as the title
+  And they enter "A description" as the description
+  And they submit the bookmark
+  Then the bookmark is saved successfully
+```
+
+### ✓ Do: Use a single high-level When action with data table in Given
+```gherkin
+Scenario: Add a complete bookmark
+  Given a user wants to add a bookmark with the following details:
+    | URL         | https://example.com |
+    | Title       | Example Website     |
+    | Description | A description       |
+  When they add the bookmark
+  Then the bookmark is saved successfully
+  And the bookmark appears in their bookmark list
+```
+
+### ❌ Don't: Use long inline values in Given steps
+```gherkin
+Scenario: Add a complete bookmark
+  Given a user wants to add a bookmark with URL "https://example.com", title "Example Website", and description "A helpful example site for testing"
+  When they add the bookmark
+  Then the bookmark is saved successfully
+```
+
+### ✓ Do: Use data table when Given has 2+ fields or gets too long
+```gherkin
+Scenario: Add a complete bookmark
+  Given a user wants to add a bookmark with the following details:
+    | URL         | https://example.com                |
+    | Title       | Example Website                    |
+    | Description | A helpful example site for testing |
+  When they add the bookmark
+  Then the bookmark is saved successfully
+```
+
 ## Workflow example
 
 **User:** "Create BDD scenarios for a customer loyalty program where customers earn points on purchases"
@@ -351,6 +423,9 @@ Before finalizing scenarios, verify:
 - [ ] Uses domain/business language throughout
 - [ ] Scenarios are adapted to context (single-focus or journey-based as appropriate)
 - [ ] Given/When/Then structure is followed correctly
+- [ ] **Each scenario has exactly ONE When action (no multiple When/And action steps)**
+- [ ] **Data and parameters are in Given context, not spread across multiple When steps**
+- [ ] **Data tables used for Given steps with 2+ fields or long inline values**
 - [ ] Regular Scenarios used by default; Scenario Outlines only when explicitly beneficial
 - [ ] Tags used minimally - only when needed
 - [ ] Background used liberally when scenarios share preconditions
@@ -366,10 +441,13 @@ Before finalizing scenarios, verify:
 4. **Make scenarios maintainable**: Avoid brittle test data dependencies
 5. **Adapt scope to context**: Single-focus for simple rules, journeys for complex flows
 6. **Use declarative style**: Say WHAT should happen, not HOW to do it
-7. **Ask questions first**: Always clarify requirements before generating
-8. **Review with stakeholders**: Scenarios should be readable by product owners
-9. **Use Background liberally**: Share common setup across scenarios
-10. **Prefer regular Scenarios**: Use Outlines only when truly beneficial
+7. **One action per scenario**: Keep exactly ONE When step - move data to Given context
+8. **High-level actions**: Use business-level actions like "add bookmark", not field-by-field steps
+9. **Use data tables liberally**: For 2+ fields or long values in Given steps - improves readability
+10. **Ask questions first**: Always clarify requirements before generating
+11. **Review with stakeholders**: Scenarios should be readable by product owners
+12. **Use Background liberally**: Share common setup across scenarios
+13. **Prefer regular Scenarios**: Use Outlines only when truly beneficial
 
 ## File naming conventions
 
