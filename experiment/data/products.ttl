@@ -1,0 +1,3410 @@
+@prefix schema: <http://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <#> .
+
+# Brands
+
+:BrandAdidas a schema:Brand ;
+    schema:name "Adidas" .
+
+:BrandApple a schema:Brand ;
+    schema:name "Apple" .
+
+:BrandBlackDecker a schema:Brand ;
+    schema:name "Black & Decker" .
+
+:BrandBosch a schema:Brand ;
+    schema:name "Bosch" .
+
+:BrandBose a schema:Brand ;
+    schema:name "Bose" .
+
+:BrandCanon a schema:Brand ;
+    schema:name "Canon" .
+
+:BrandColeman a schema:Brand ;
+    schema:name "Coleman" .
+
+:BrandCuisinart a schema:Brand ;
+    schema:name "Cuisinart" .
+
+:BrandDeWalt a schema:Brand ;
+    schema:name "DeWalt" .
+
+:BrandDell a schema:Brand ;
+    schema:name "Dell" .
+
+:BrandFisherPrice a schema:Brand ;
+    schema:name "Fisher-Price" .
+
+:BrandGap a schema:Brand ;
+    schema:name "Gap" .
+
+:BrandHM a schema:Brand ;
+    schema:name "H&M" .
+
+:BrandHP a schema:Brand ;
+    schema:name "HP" .
+
+:BrandHarperCollins a schema:Brand ;
+    schema:name "HarperCollins" .
+
+:BrandHasbro a schema:Brand ;
+    schema:name "Hasbro" .
+
+:BrandIKEA a schema:Brand ;
+    schema:name "IKEA" .
+
+:BrandJBL a schema:Brand ;
+    schema:name "JBL" .
+
+:BrandKitchenAid a schema:Brand ;
+    schema:name "KitchenAid" .
+
+:BrandLEGO a schema:Brand ;
+    schema:name "LEGO" .
+
+:BrandLenovo a schema:Brand ;
+    schema:name "Lenovo" .
+
+:BrandLevis a schema:Brand ;
+    schema:name "Levi's" .
+
+:BrandMattel a schema:Brand ;
+    schema:name "Mattel" .
+
+:BrandMelissaDoug a schema:Brand ;
+    schema:name "Melissa & Doug" .
+
+:BrandNike a schema:Brand ;
+    schema:name "Nike" .
+
+:BrandNikon a schema:Brand ;
+    schema:name "Nikon" .
+
+:BrandOxford a schema:Brand ;
+    schema:name "Oxford" .
+
+:BrandPenguin a schema:Brand ;
+    schema:name "Penguin" .
+
+:BrandPlaymobil a schema:Brand ;
+    schema:name "Playmobil" .
+
+:BrandPuma a schema:Brand ;
+    schema:name "Puma" .
+
+:BrandREI a schema:Brand ;
+    schema:name "REI" .
+
+:BrandRandomHouse a schema:Brand ;
+    schema:name "Random House" .
+
+:BrandSamsung a schema:Brand ;
+    schema:name "Samsung" .
+
+:BrandSimonSchuster a schema:Brand ;
+    schema:name "Simon & Schuster" .
+
+:BrandSony a schema:Brand ;
+    schema:name "Sony" .
+
+:BrandSpalding a schema:Brand ;
+    schema:name "Spalding" .
+
+:BrandUnderArmour a schema:Brand ;
+    schema:name "Under Armour" .
+
+:BrandUniqlo a schema:Brand ;
+    schema:name "Uniqlo" .
+
+:BrandWilson a schema:Brand ;
+    schema:name "Wilson" .
+
+:BrandZara a schema:Brand ;
+    schema:name "Zara" .
+
+# Categories
+
+:CategoryBooks a schema:Category ;
+    schema:name "Books" .
+
+:CategoryClothing a schema:Category ;
+    schema:name "Clothing" .
+
+:CategoryElectronics a schema:Category ;
+    schema:name "Electronics" .
+
+:CategoryHomeGarden a schema:Category ;
+    schema:name "Home & Garden" .
+
+:CategorySports a schema:Category ;
+    schema:name "Sports" .
+
+:CategoryToys a schema:Category ;
+    schema:name "Toys" .
+
+# Subcategories
+
+:SubcategoryBiography a schema:Category ;
+    schema:name "Biography" ;
+    schema:parentCategory :CategoryBooks .
+
+:SubcategoryFiction a schema:Category ;
+    schema:name "Fiction" ;
+    schema:parentCategory :CategoryBooks .
+
+:SubcategoryHistory a schema:Category ;
+    schema:name "History" ;
+    schema:parentCategory :CategoryBooks .
+
+:SubcategoryNonFiction a schema:Category ;
+    schema:name "Non-Fiction" ;
+    schema:parentCategory :CategoryBooks .
+
+:SubcategoryScience a schema:Category ;
+    schema:name "Science" ;
+    schema:parentCategory :CategoryBooks .
+
+:SubcategoryDresses a schema:Category ;
+    schema:name "Dresses" ;
+    schema:parentCategory :CategoryClothing .
+
+:SubcategoryJackets a schema:Category ;
+    schema:name "Jackets" ;
+    schema:parentCategory :CategoryClothing .
+
+:SubcategoryPants a schema:Category ;
+    schema:name "Pants" ;
+    schema:parentCategory :CategoryClothing .
+
+:SubcategoryShirts a schema:Category ;
+    schema:name "Shirts" ;
+    schema:parentCategory :CategoryClothing .
+
+:SubcategoryShoes a schema:Category ;
+    schema:name "Shoes" ;
+    schema:parentCategory :CategoryClothing .
+
+:SubcategoryCameras a schema:Category ;
+    schema:name "Cameras" ;
+    schema:parentCategory :CategoryElectronics .
+
+:SubcategoryHeadphones a schema:Category ;
+    schema:name "Headphones" ;
+    schema:parentCategory :CategoryElectronics .
+
+:SubcategoryLaptops a schema:Category ;
+    schema:name "Laptops" ;
+    schema:parentCategory :CategoryElectronics .
+
+:SubcategorySmartphones a schema:Category ;
+    schema:name "Smartphones" ;
+    schema:parentCategory :CategoryElectronics .
+
+:SubcategoryTablets a schema:Category ;
+    schema:name "Tablets" ;
+    schema:parentCategory :CategoryElectronics .
+
+:SubcategoryBedding a schema:Category ;
+    schema:name "Bedding" ;
+    schema:parentCategory :CategoryHomeGarden .
+
+:SubcategoryDecor a schema:Category ;
+    schema:name "Decor" ;
+    schema:parentCategory :CategoryHomeGarden .
+
+:SubcategoryFurniture a schema:Category ;
+    schema:name "Furniture" ;
+    schema:parentCategory :CategoryHomeGarden .
+
+:SubcategoryKitchen a schema:Category ;
+    schema:name "Kitchen" ;
+    schema:parentCategory :CategoryHomeGarden .
+
+:SubcategoryTools a schema:Category ;
+    schema:name "Tools" ;
+    schema:parentCategory :CategoryHomeGarden .
+
+:SubcategoryCycling a schema:Category ;
+    schema:name "Cycling" ;
+    schema:parentCategory :CategorySports .
+
+:SubcategoryFitness a schema:Category ;
+    schema:name "Fitness" ;
+    schema:parentCategory :CategorySports .
+
+:SubcategoryOutdoor a schema:Category ;
+    schema:name "Outdoor" ;
+    schema:parentCategory :CategorySports .
+
+:SubcategoryTeamSports a schema:Category ;
+    schema:name "Team Sports" ;
+    schema:parentCategory :CategorySports .
+
+:SubcategoryWaterSports a schema:Category ;
+    schema:name "Water Sports" ;
+    schema:parentCategory :CategorySports .
+
+:SubcategoryActionFigures a schema:Category ;
+    schema:name "Action Figures" ;
+    schema:parentCategory :CategoryToys .
+
+:SubcategoryBoardGames a schema:Category ;
+    schema:name "Board Games" ;
+    schema:parentCategory :CategoryToys .
+
+:SubcategoryDolls a schema:Category ;
+    schema:name "Dolls" ;
+    schema:parentCategory :CategoryToys .
+
+:SubcategoryEducational a schema:Category ;
+    schema:name "Educational" ;
+    schema:parentCategory :CategoryToys .
+
+:SubcategoryOutdoor a schema:Category ;
+    schema:name "Outdoor" ;
+    schema:parentCategory :CategoryToys .
+
+# Products
+
+:P001 a schema:Product ;
+    schema:sku "P001" ;
+    schema:name "JBL WH-1000XM5" ;
+    schema:description "A high-quality headphones from JBL, designed for professionals." ;
+    schema:price "192.06"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandJBL ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryHeadphones ;
+    schema:inventoryLevel "54"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P025, :P024  .
+
+:P002 a schema:Product ;
+    schema:sku "P002" ;
+    schema:name "Canon Lumix GH6" ;
+    schema:description "A premium cameras from Canon, with long battery life." ;
+    schema:price "262.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCanon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "12"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P017, :P006  .
+
+:P003 a schema:Product ;
+    schema:sku "P003" ;
+    schema:name "Canon WH-1000XM5" ;
+    schema:description "A professional headphones from Canon, with advanced features." ;
+    schema:price "2780.57"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCanon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryHeadphones ;
+    schema:inventoryLevel "29"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P040  .
+
+:P004 a schema:Product ;
+    schema:sku "P004" ;
+    schema:name "Nikon Surface Pro" ;
+    schema:description "A professional tablets from Nikon, with long battery life." ;
+    schema:price "218.49"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNikon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "41"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P017, :P039  .
+
+:P005 a schema:Product ;
+    schema:sku "P005" ;
+    schema:name "JBL Galaxy S24" ;
+    schema:description "A high-quality smartphones from JBL, designed for professionals." ;
+    schema:price "1675.88"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandJBL ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "4"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P013  .
+
+:P006 a schema:Product ;
+    schema:sku "P006" ;
+    schema:name "Canon Studio Wireless" ;
+    schema:description "A innovative headphones from Canon, with long battery life." ;
+    schema:price "544.38"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCanon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryHeadphones ;
+    schema:inventoryLevel "12"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P007 a schema:Product ;
+    schema:sku "P007" ;
+    schema:name "Bose Alpha A7" ;
+    schema:description "A innovative cameras from Bose, with advanced features." ;
+    schema:price "2368.16"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBose ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "85"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P038, :P019, :P027  .
+
+:P008 a schema:Product ;
+    schema:sku "P008" ;
+    schema:name "Canon iPhone 15 Pro" ;
+    schema:description "A innovative smartphones from Canon, featuring latest technology." ;
+    schema:price "2639.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCanon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "66"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P009 a schema:Product ;
+    schema:sku "P009" ;
+    schema:name "Sony iPad Air" ;
+    schema:description "A professional tablets from Sony, with long battery life." ;
+    schema:price "1433.79"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSony ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "18"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P010 a schema:Product ;
+    schema:sku "P010" ;
+    schema:name "Sony ThinkPad X1 Carbon" ;
+    schema:description "A stylish laptops from Sony, featuring latest technology." ;
+    schema:price "2476.71"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSony ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "90"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P011 a schema:Product ;
+    schema:sku "P011" ;
+    schema:name "Apple MacBook Pro" ;
+    schema:price "2314.85"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandApple ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "92"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P002  .
+
+:P012 a schema:Product ;
+    schema:sku "P012" ;
+    schema:name "Dell Surface Pro" ;
+    schema:description "A premium tablets from Dell, designed for professionals." ;
+    schema:price "108.42"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDell ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "20"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P016, :P006  .
+
+:P013 a schema:Product ;
+    schema:sku "P013" ;
+    schema:name "HP Surface Laptop" ;
+    schema:description "A stylish laptops from HP, with advanced features." ;
+    schema:price "1722.89"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHP ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "75"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P018, :P029, :P007  .
+
+:P014 a schema:Product ;
+    schema:sku "P014" ;
+    schema:name "Bose Galaxy Tab Ultra" ;
+    schema:description "A innovative tablets from Bose, with long battery life." ;
+    schema:price "1592.02"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBose ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "32"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P015 a schema:Product ;
+    schema:sku "P015" ;
+    schema:name "Samsung AirPods Pro" ;
+    schema:price "356.07"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryHeadphones ;
+    schema:inventoryLevel "97"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P036, :P039, :P008  .
+
+:P016 a schema:Product ;
+    schema:sku "P016" ;
+    schema:name "Dell Fire HD" ;
+    schema:description "A stylish tablets from Dell, designed for professionals." ;
+    schema:price "652.05"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDell ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "14"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P017 a schema:Product ;
+    schema:sku "P017" ;
+    schema:name "Apple iPad Air Deluxe" ;
+    schema:description "A innovative tablets from Apple, designed for professionals." ;
+    schema:price "1951.72"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandApple ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "52"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P018 a schema:Product ;
+    schema:sku "P018" ;
+    schema:name "Nikon Fire HD" ;
+    schema:description "A reliable tablets from Nikon, with advanced features." ;
+    schema:price "1813.65"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNikon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "53"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P006, :P030, :P007  .
+
+:P019 a schema:Product ;
+    schema:sku "P019" ;
+    schema:name "HP Z9" ;
+    schema:description "A professional cameras from HP, with advanced features." ;
+    schema:price "1427.15"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHP ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "5"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P020 a schema:Product ;
+    schema:sku "P020" ;
+    schema:name "HP X-T5" ;
+    schema:description "A reliable cameras from HP, featuring latest technology." ;
+    schema:price "2544.05"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHP ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "29"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P010, :P005, :P011  .
+
+:P021 a schema:Product ;
+    schema:sku "P021" ;
+    schema:name "HP Lumix GH6 Elite" ;
+    schema:description "A professional cameras from HP, designed for professionals." ;
+    schema:price "2285.25"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHP ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "31"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P022 a schema:Product ;
+    schema:sku "P022" ;
+    schema:name "Lenovo ThinkPad X1 Carbon Plus" ;
+    schema:description "A high-quality laptops from Lenovo, with advanced features." ;
+    schema:price "101.46"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLenovo ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+
+:P023 a schema:Product ;
+    schema:sku "P023" ;
+    schema:name "JBL Alpha A7 Elite" ;
+    schema:description "A innovative cameras from JBL, featuring latest technology." ;
+    schema:price "1381.29"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandJBL ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+
+:P024 a schema:Product ;
+    schema:sku "P024" ;
+    schema:name "Samsung Xperia 5" ;
+    schema:description "A stylish smartphones from Samsung, with long battery life." ;
+    schema:price "1186.78"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "43"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P025, :P040, :P032  .
+
+:P025 a schema:Product ;
+    schema:sku "P025" ;
+    schema:name "Samsung iPhone 15 Pro" ;
+    schema:description "A high-quality smartphones from Samsung, featuring latest technology." ;
+    schema:price "1287.88"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "63"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P026 a schema:Product ;
+    schema:sku "P026" ;
+    schema:name "Dell EOS R5" ;
+    schema:price "2823.77"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDell ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "19"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P027 a schema:Product ;
+    schema:sku "P027" ;
+    schema:name "Samsung Alpha A7" ;
+    schema:description "A stylish cameras from Samsung, featuring latest technology." ;
+    schema:price "162.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "64"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P028 a schema:Product ;
+    schema:sku "P028" ;
+    schema:name "Bose X-T5" ;
+    schema:description "A innovative cameras from Bose, featuring latest technology." ;
+    schema:price "1214.05"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBose ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "41"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P030, :P031, :P041  .
+
+:P029 a schema:Product ;
+    schema:sku "P029" ;
+    schema:name "Sony X-T5 Plus" ;
+    schema:description "A innovative cameras from Sony, with advanced features." ;
+    schema:price "1685.69"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSony ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "21"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P030 a schema:Product ;
+    schema:sku "P030" ;
+    schema:name "Apple EOS R5 Premium" ;
+    schema:description "A reliable cameras from Apple, with long battery life." ;
+    schema:price "1260.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandApple ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "98"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P031 a schema:Product ;
+    schema:sku "P031" ;
+    schema:name "Samsung Dell XPS" ;
+    schema:price "2700.34"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "67"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P032 a schema:Product ;
+    schema:sku "P032" ;
+    schema:name "HP Lumix GH6" ;
+    schema:description "A innovative cameras from HP, with long battery life." ;
+    schema:price "357.49"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHP ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "72"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P020, :P029, :P040  .
+
+:P033 a schema:Product ;
+    schema:sku "P033" ;
+    schema:name "Samsung Alpha A7" ;
+    schema:description "A reliable cameras from Samsung, featuring latest technology." ;
+    schema:price "1729.14"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "28"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P027, :P020  .
+
+:P034 a schema:Product ;
+    schema:sku "P034" ;
+    schema:name "Nikon Z9 Elite" ;
+    schema:description "A innovative cameras from Nikon, with long battery life." ;
+    schema:price "555.27"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNikon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryCameras ;
+    schema:inventoryLevel "1"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P004, :P025, :P026  .
+
+:P035 a schema:Product ;
+    schema:sku "P035" ;
+    schema:name "Samsung Galaxy Tab" ;
+    schema:description "A reliable tablets from Samsung, with long battery life." ;
+    schema:price "554.51"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSamsung ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "22"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P001, :P018, :P036  .
+
+:P036 a schema:Product ;
+    schema:sku "P036" ;
+    schema:name "Lenovo Dell XPS Ultra" ;
+    schema:description "A high-quality laptops from Lenovo, designed for professionals." ;
+    schema:price "2696.77"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLenovo ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "32"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P013  .
+
+:P037 a schema:Product ;
+    schema:sku "P037" ;
+    schema:name "Bose Fire HD Plus" ;
+    schema:description "A professional tablets from Bose, with advanced features." ;
+    schema:price "1114.11"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBose ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryTablets ;
+    schema:inventoryLevel "75"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P038 a schema:Product ;
+    schema:sku "P038" ;
+    schema:name "JBL Elite Ultra" ;
+    schema:description "A stylish headphones from JBL, with long battery life." ;
+    schema:price "2988.25"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandJBL ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryHeadphones ;
+    schema:inventoryLevel "76"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P039 a schema:Product ;
+    schema:sku "P039" ;
+    schema:name "Nikon Surface Laptop" ;
+    schema:description "A stylish laptops from Nikon, designed for professionals." ;
+    schema:price "1160.02"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNikon ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategoryLaptops ;
+    schema:inventoryLevel "27"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P038  .
+
+:P040 a schema:Product ;
+    schema:sku "P040" ;
+    schema:name "Apple Xperia 5" ;
+    schema:description "A professional smartphones from Apple, with long battery life." ;
+    schema:price "435.95"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandApple ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "25"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P018  .
+
+:P041 a schema:Product ;
+    schema:sku "P041" ;
+    schema:name "Apple iPhone 15 Pro" ;
+    schema:description "A premium smartphones from Apple, with advanced features." ;
+    schema:price "765.72"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandApple ;
+    schema:category :CategoryElectronics ;
+    schema:subcategory :SubcategorySmartphones ;
+    schema:inventoryLevel "56"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P011, :P012, :P002  .
+
+:P042 a schema:Product ;
+    schema:sku "P042" ;
+    schema:name "H&M Leather Jacket" ;
+    schema:description "A premium jackets from H&M, comfortable fit." ;
+    schema:price "238.27"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "61"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P071, :P073, :P068  .
+
+:P043 a schema:Product ;
+    schema:sku "P043" ;
+    schema:name "Adidas Running Shoes" ;
+    schema:description "A premium shoes from Adidas, timeless style." ;
+    schema:price "185.63"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "10"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P074, :P076  .
+
+:P044 a schema:Product ;
+    schema:sku "P044" ;
+    schema:name "H&M Summer Dress" ;
+    schema:description "A innovative dresses from H&M, made from quality materials." ;
+    schema:price "145.21"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "2"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P042  .
+
+:P045 a schema:Product ;
+    schema:sku "P045" ;
+    schema:name "Levi's Jeans Ultra" ;
+    schema:description "A innovative pants from Levi's, perfect for any occasion." ;
+    schema:price "131.79"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLevis ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "35"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P066  .
+
+:P046 a schema:Product ;
+    schema:sku "P046" ;
+    schema:name "Puma Dress Pants" ;
+    schema:description "A premium pants from Puma, comfortable fit." ;
+    schema:price "251.75"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "29"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P049, :P068  .
+
+:P047 a schema:Product ;
+    schema:sku "P047" ;
+    schema:name "Nike Maxi Dress" ;
+    schema:description "A reliable dresses from Nike, made from quality materials." ;
+    schema:price "210.09"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "27"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P056  .
+
+:P048 a schema:Product ;
+    schema:sku "P048" ;
+    schema:name "Puma Cocktail Dress" ;
+    schema:price "177.82"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "39"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P079, :P070  .
+
+:P049 a schema:Product ;
+    schema:sku "P049" ;
+    schema:name "Zara Dress Pants" ;
+    schema:description "A stylish pants from Zara, perfect for any occasion." ;
+    schema:price "24.90"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandZara ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "64"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P050 a schema:Product ;
+    schema:sku "P050" ;
+    schema:name "Uniqlo Jeans Elite" ;
+    schema:description "A high-quality pants from Uniqlo, timeless style." ;
+    schema:price "292.30"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "80"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P051 a schema:Product ;
+    schema:sku "P051" ;
+    schema:name "Uniqlo Loafers" ;
+    schema:description "A innovative shoes from Uniqlo, made from quality materials." ;
+    schema:price "247.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "33"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P053, :P080  .
+
+:P052 a schema:Product ;
+    schema:sku "P052" ;
+    schema:name "Nike Parka Max" ;
+    schema:description "A professional jackets from Nike, timeless style." ;
+    schema:price "133.63"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "65"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P053 a schema:Product ;
+    schema:sku "P053" ;
+    schema:name "H&M Sandals Plus" ;
+    schema:description "A innovative shoes from H&M, made from quality materials." ;
+    schema:price "185.81"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "15"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P076  .
+
+:P054 a schema:Product ;
+    schema:sku "P054" ;
+    schema:name "Adidas Windbreaker" ;
+    schema:description "A stylish jackets from Adidas, timeless style." ;
+    schema:price "135.73"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "53"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P043, :P048, :P064  .
+
+:P055 a schema:Product ;
+    schema:sku "P055" ;
+    schema:name "Nike Jeans" ;
+    schema:description "A premium pants from Nike, perfect for any occasion." ;
+    schema:price "222.18"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "4"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P056 a schema:Product ;
+    schema:sku "P056" ;
+    schema:name "H&M Evening Gown" ;
+    schema:description "A durable dresses from H&M, timeless style." ;
+    schema:price "86.26"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "14"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P078  .
+
+:P057 a schema:Product ;
+    schema:sku "P057" ;
+    schema:name "H&M Bomber Pro" ;
+    schema:description "A high-quality jackets from H&M, timeless style." ;
+    schema:price "129.10"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "90"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P067  .
+
+:P058 a schema:Product ;
+    schema:sku "P058" ;
+    schema:name "Uniqlo Chinos" ;
+    schema:description "A high-quality pants from Uniqlo, made from quality materials." ;
+    schema:price "155.62"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "18"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P059 a schema:Product ;
+    schema:sku "P059" ;
+    schema:name "Uniqlo Classic Fit" ;
+    schema:description "A premium shirts from Uniqlo, perfect for any occasion." ;
+    schema:price "235.85"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShirts ;
+    schema:inventoryLevel "23"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P082, :P076  .
+
+:P060 a schema:Product ;
+    schema:sku "P060" ;
+    schema:name "H&M Parka" ;
+    schema:description "A stylish jackets from H&M, perfect for any occasion." ;
+    schema:price "103.57"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "20"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P061 a schema:Product ;
+    schema:sku "P061" ;
+    schema:name "Nike Bomber" ;
+    schema:description "A stylish jackets from Nike, perfect for any occasion." ;
+    schema:price "19.57"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "5"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P049, :P046  .
+
+:P062 a schema:Product ;
+    schema:sku "P062" ;
+    schema:name "Puma Dress Pants" ;
+    schema:description "A high-quality pants from Puma, timeless style." ;
+    schema:price "45.60"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "8"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P045, :P071, :P070  .
+
+:P063 a schema:Product ;
+    schema:sku "P063" ;
+    schema:name "Zara Boots" ;
+    schema:description "A reliable shoes from Zara, timeless style." ;
+    schema:price "290.87"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandZara ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "89"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P081, :P058, :P074  .
+
+:P064 a schema:Product ;
+    schema:sku "P064" ;
+    schema:name "Puma Sandals" ;
+    schema:description "A high-quality shoes from Puma, comfortable fit." ;
+    schema:price "282.61"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "88"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P062, :P063  .
+
+:P065 a schema:Product ;
+    schema:sku "P065" ;
+    schema:name "Levi's Boots" ;
+    schema:description "A professional shoes from Levi's, timeless style." ;
+    schema:price "160.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLevis ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "23"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P067  .
+
+:P066 a schema:Product ;
+    schema:sku "P066" ;
+    schema:name "Puma T-Shirt" ;
+    schema:description "A durable shirts from Puma, made from quality materials." ;
+    schema:price "54.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShirts ;
+    schema:inventoryLevel "71"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P067 a schema:Product ;
+    schema:sku "P067" ;
+    schema:name "Uniqlo Boots" ;
+    schema:description "A professional shoes from Uniqlo, timeless style." ;
+    schema:price "72.23"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "76"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P075, :P081, :P077  .
+
+:P068 a schema:Product ;
+    schema:sku "P068" ;
+    schema:name "H&M T-Shirt" ;
+    schema:description "A premium shirts from H&M, made from quality materials." ;
+    schema:price "150.93"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShirts ;
+    schema:inventoryLevel "33"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P069 a schema:Product ;
+    schema:sku "P069" ;
+    schema:name "Gap Denim Jacket" ;
+    schema:description "A innovative jackets from Gap, comfortable fit." ;
+    schema:price "164.00"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandGap ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "11"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P049, :P054  .
+
+:P070 a schema:Product ;
+    schema:sku "P070" ;
+    schema:name "Uniqlo Denim Jacket" ;
+    schema:description "A stylish jackets from Uniqlo, timeless style." ;
+    schema:price "24.10"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "3"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P054, :P056, :P080  .
+
+:P071 a schema:Product ;
+    schema:sku "P071" ;
+    schema:name "Uniqlo Bomber Premium" ;
+    schema:description "A professional jackets from Uniqlo, perfect for any occasion." ;
+    schema:price "146.76"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P042, :P076, :P062  .
+
+:P072 a schema:Product ;
+    schema:sku "P072" ;
+    schema:name "Nike Dress Pants Ultra" ;
+    schema:description "A reliable pants from Nike, made from quality materials." ;
+    schema:price "163.17"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "86"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P060, :P047  .
+
+:P073 a schema:Product ;
+    schema:sku "P073" ;
+    schema:name "Levi's Bomber Plus" ;
+    schema:description "A innovative jackets from Levi's, comfortable fit." ;
+    schema:price "52.28"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLevis ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "34"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P049, :P078, :P081  .
+
+:P074 a schema:Product ;
+    schema:sku "P074" ;
+    schema:name "Uniqlo Bomber" ;
+    schema:description "A high-quality jackets from Uniqlo, timeless style." ;
+    schema:price "217.51"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUniqlo ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryJackets ;
+    schema:inventoryLevel "96"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P058, :P045  .
+
+:P075 a schema:Product ;
+    schema:sku "P075" ;
+    schema:name "Puma Cocktail Dress" ;
+    schema:description "A professional dresses from Puma, perfect for any occasion." ;
+    schema:price "183.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPuma ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "31"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P076 a schema:Product ;
+    schema:sku "P076" ;
+    schema:name "Adidas Dress Pants Ultra" ;
+    schema:description "A reliable pants from Adidas, timeless style." ;
+    schema:price "183.01"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "37"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P042, :P065  .
+
+:P077 a schema:Product ;
+    schema:sku "P077" ;
+    schema:name "Levi's T-Shirt" ;
+    schema:description "A durable shirts from Levi's, perfect for any occasion." ;
+    schema:price "107.22"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLevis ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShirts ;
+    schema:inventoryLevel "2"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P054  .
+
+:P078 a schema:Product ;
+    schema:sku "P078" ;
+    schema:name "H&M Jeans" ;
+    schema:description "A reliable pants from H&M, comfortable fit." ;
+    schema:price "140.87"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHM ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "67"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P079 a schema:Product ;
+    schema:sku "P079" ;
+    schema:name "Zara Loafers Premium" ;
+    schema:description "A durable shoes from Zara, comfortable fit." ;
+    schema:price "156.06"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandZara ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryShoes ;
+    schema:inventoryLevel "9"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P082  .
+
+:P080 a schema:Product ;
+    schema:sku "P080" ;
+    schema:name "Gap Cocktail Dress Premium" ;
+    schema:description "A reliable dresses from Gap, timeless style." ;
+    schema:price "241.50"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandGap ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "18"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P043, :P057  .
+
+:P081 a schema:Product ;
+    schema:sku "P081" ;
+    schema:name "Adidas Maxi Dress" ;
+    schema:description "A professional dresses from Adidas, timeless style." ;
+    schema:price "29.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryDresses ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P082 a schema:Product ;
+    schema:sku "P082" ;
+    schema:name "Adidas Jeans" ;
+    schema:description "A durable pants from Adidas, perfect for any occasion." ;
+    schema:price "146.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategoryClothing ;
+    schema:subcategory :SubcategoryPants ;
+    schema:inventoryLevel "33"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P083 a schema:Product ;
+    schema:sku "P083" ;
+    schema:name "Cuisinart Coffee Maker" ;
+    schema:description "A premium kitchen from Cuisinart, built to last." ;
+    schema:price "56.52"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P094  .
+
+:P084 a schema:Product ;
+    schema:sku "P084" ;
+    schema:name "DeWalt Food Processor" ;
+    schema:description "A durable kitchen from DeWalt, space-saving design." ;
+    schema:price "882.81"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "74"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P110  .
+
+:P085 a schema:Product ;
+    schema:sku "P085" ;
+    schema:name "Black & Decker Toolbox Elite" ;
+    schema:description "A high-quality tools from Black & Decker, built to last." ;
+    schema:price "713.60"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBlackDecker ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "29"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P092, :P122  .
+
+:P086 a schema:Product ;
+    schema:sku "P086" ;
+    schema:name "KitchenAid Comforter" ;
+    schema:price "1310.06"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "87"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P097, :P102, :P083  .
+
+:P087 a schema:Product ;
+    schema:sku "P087" ;
+    schema:name "DeWalt Lamp" ;
+    schema:description "A premium decor from DeWalt, built to last." ;
+    schema:price "377.77"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "97"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P094, :P118  .
+
+:P088 a schema:Product ;
+    schema:sku "P088" ;
+    schema:name "KitchenAid Stand Mixer" ;
+    schema:description "A professional kitchen from KitchenAid, modern aesthetic." ;
+    schema:price "570.26"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "99"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P114, :P109, :P108  .
+
+:P089 a schema:Product ;
+    schema:sku "P089" ;
+    schema:name "DeWalt Dining Table" ;
+    schema:description "A durable furniture from DeWalt, easy to assemble." ;
+    schema:price "759.97"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryFurniture ;
+    schema:inventoryLevel "46"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P111, :P090, :P103  .
+
+:P090 a schema:Product ;
+    schema:sku "P090" ;
+    schema:name "Black & Decker Wall Art" ;
+    schema:description "A professional decor from Black & Decker, modern aesthetic." ;
+    schema:price "347.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBlackDecker ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P092  .
+
+:P091 a schema:Product ;
+    schema:sku "P091" ;
+    schema:name "KitchenAid Comforter" ;
+    schema:description "A reliable bedding from KitchenAid, easy to assemble." ;
+    schema:price "1440.05"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "49"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P092 a schema:Product ;
+    schema:sku "P092" ;
+    schema:name "KitchenAid Saw" ;
+    schema:description "A stylish tools from KitchenAid, built to last." ;
+    schema:price "1199.19"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "45"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P093 a schema:Product ;
+    schema:sku "P093" ;
+    schema:name "Cuisinart Pillow" ;
+    schema:description "A durable bedding from Cuisinart, easy to assemble." ;
+    schema:price "552.51"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "9"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P088, :P111, :P102  .
+
+:P094 a schema:Product ;
+    schema:sku "P094" ;
+    schema:name "DeWalt Rug" ;
+    schema:description "A reliable decor from DeWalt, built to last." ;
+    schema:price "1493.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "7"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P113  .
+
+:P095 a schema:Product ;
+    schema:sku "P095" ;
+    schema:name "Black & Decker Coffee Maker" ;
+    schema:description "A stylish kitchen from Black & Decker, easy to assemble." ;
+    schema:price "101.07"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBlackDecker ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P120, :P099  .
+
+:P096 a schema:Product ;
+    schema:sku "P096" ;
+    schema:name "DeWalt Duvet Cover" ;
+    schema:description "A professional bedding from DeWalt, easy to assemble." ;
+    schema:price "704.60"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "94"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P097 a schema:Product ;
+    schema:sku "P097" ;
+    schema:name "KitchenAid Toolbox" ;
+    schema:description "A innovative tools from KitchenAid, easy to assemble." ;
+    schema:price "1402.94"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "4"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P112, :P102, :P086  .
+
+:P098 a schema:Product ;
+    schema:sku "P098" ;
+    schema:name "Black & Decker Ladder" ;
+    schema:description "A reliable tools from Black & Decker, easy to assemble." ;
+    schema:price "1084.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBlackDecker ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "18"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P099 a schema:Product ;
+    schema:sku "P099" ;
+    schema:name "IKEA Mattress Pad" ;
+    schema:description "A reliable bedding from IKEA, built to last." ;
+    schema:price "1358.93"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandIKEA ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "54"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P083, :P112  .
+
+:P100 a schema:Product ;
+    schema:sku "P100" ;
+    schema:name "Bosch Blender" ;
+    schema:description "A stylish kitchen from Bosch, modern aesthetic." ;
+    schema:price "1389.30"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBosch ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P101 a schema:Product ;
+    schema:sku "P101" ;
+    schema:name "KitchenAid Mattress Pad Ultra" ;
+    schema:description "A high-quality bedding from KitchenAid, easy to assemble." ;
+    schema:price "1122.89"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "35"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P116, :P083, :P093  .
+
+:P102 a schema:Product ;
+    schema:sku "P102" ;
+    schema:name "IKEA Lamp Deluxe" ;
+    schema:description "A stylish decor from IKEA, built to last." ;
+    schema:price "1175.96"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandIKEA ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "34"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P103 a schema:Product ;
+    schema:sku "P103" ;
+    schema:name "KitchenAid Drill" ;
+    schema:description "A premium tools from KitchenAid, space-saving design." ;
+    schema:price "303.02"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "95"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P104 a schema:Product ;
+    schema:sku "P104" ;
+    schema:name "KitchenAid Food Processor" ;
+    schema:description "A durable kitchen from KitchenAid, space-saving design." ;
+    schema:price "1464.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "7"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P095  .
+
+:P105 a schema:Product ;
+    schema:sku "P105" ;
+    schema:name "Cuisinart Sofa Max" ;
+    schema:description "A reliable furniture from Cuisinart, built to last." ;
+    schema:price "1011.04"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryFurniture ;
+    schema:inventoryLevel "3"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P106 a schema:Product ;
+    schema:sku "P106" ;
+    schema:name "Cuisinart Bookshelf Plus" ;
+    schema:description "A durable furniture from Cuisinart, easy to assemble." ;
+    schema:price "716.00"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryFurniture ;
+    schema:inventoryLevel "68"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P107 a schema:Product ;
+    schema:sku "P107" ;
+    schema:name "DeWalt Vase" ;
+    schema:description "A premium decor from DeWalt, built to last." ;
+    schema:price "880.11"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "58"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P123, :P118, :P088  .
+
+:P108 a schema:Product ;
+    schema:sku "P108" ;
+    schema:name "DeWalt Ladder" ;
+    schema:description "A premium tools from DeWalt, space-saving design." ;
+    schema:price "1199.50"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "79"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P102, :P117, :P091  .
+
+:P109 a schema:Product ;
+    schema:sku "P109" ;
+    schema:name "Bosch Comforter" ;
+    schema:description "A reliable bedding from Bosch, built to last." ;
+    schema:price "293.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBosch ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "95"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P110 a schema:Product ;
+    schema:sku "P110" ;
+    schema:name "Bosch Sheet Set" ;
+    schema:description "A high-quality bedding from Bosch, easy to assemble." ;
+    schema:price "354.86"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBosch ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "99"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P085  .
+
+:P111 a schema:Product ;
+    schema:sku "P111" ;
+    schema:name "Cuisinart Bookshelf" ;
+    schema:description "A durable furniture from Cuisinart, easy to assemble." ;
+    schema:price "1481.30"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryFurniture ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P099, :P120, :P122  .
+
+:P112 a schema:Product ;
+    schema:sku "P112" ;
+    schema:name "DeWalt Vase" ;
+    schema:description "A durable decor from DeWalt, easy to assemble." ;
+    schema:price "703.37"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "93"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P110, :P096, :P102  .
+
+:P113 a schema:Product ;
+    schema:sku "P113" ;
+    schema:name "KitchenAid Sheet Set" ;
+    schema:description "A stylish bedding from KitchenAid, space-saving design." ;
+    schema:price "911.44"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "62"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P096, :P104  .
+
+:P114 a schema:Product ;
+    schema:sku "P114" ;
+    schema:name "DeWalt Vase Elite" ;
+    schema:price "586.99"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "9"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P111, :P094, :P093  .
+
+:P115 a schema:Product ;
+    schema:sku "P115" ;
+    schema:name "IKEA Vase" ;
+    schema:description "A durable decor from IKEA, easy to assemble." ;
+    schema:price "358.61"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandIKEA ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "5"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P116 a schema:Product ;
+    schema:sku "P116" ;
+    schema:name "KitchenAid Sheet Set" ;
+    schema:description "A innovative bedding from KitchenAid, built to last." ;
+    schema:price "286.78"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandKitchenAid ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryBedding ;
+    schema:inventoryLevel "20"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P117 a schema:Product ;
+    schema:sku "P117" ;
+    schema:name "Black & Decker Vase Plus" ;
+    schema:description "A innovative decor from Black & Decker, space-saving design." ;
+    schema:price "706.06"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBlackDecker ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "34"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P106, :P123  .
+
+:P118 a schema:Product ;
+    schema:sku "P118" ;
+    schema:name "IKEA Toolbox Ultra" ;
+    schema:description "A premium tools from IKEA, space-saving design." ;
+    schema:price "422.04"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandIKEA ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+
+:P119 a schema:Product ;
+    schema:sku "P119" ;
+    schema:name "Cuisinart Wall Art" ;
+    schema:description "A premium decor from Cuisinart, space-saving design." ;
+    schema:price "365.23"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryDecor ;
+    schema:inventoryLevel "37"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P117  .
+
+:P120 a schema:Product ;
+    schema:sku "P120" ;
+    schema:name "Bosch Food Processor" ;
+    schema:price "507.43"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandBosch ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "51"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P121 a schema:Product ;
+    schema:sku "P121" ;
+    schema:name "Cuisinart Blender" ;
+    schema:description "A premium kitchen from Cuisinart, modern aesthetic." ;
+    schema:price "560.28"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryKitchen ;
+    schema:inventoryLevel "10"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P122 a schema:Product ;
+    schema:sku "P122" ;
+    schema:name "Cuisinart Saw" ;
+    schema:description "A premium tools from Cuisinart, space-saving design." ;
+    schema:price "297.96"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandCuisinart ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryTools ;
+    schema:inventoryLevel "59"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P123 a schema:Product ;
+    schema:sku "P123" ;
+    schema:name "DeWalt Sofa" ;
+    schema:description "A stylish furniture from DeWalt, easy to assemble." ;
+    schema:price "1401.57"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandDeWalt ;
+    schema:category :CategoryHomeGarden ;
+    schema:subcategory :SubcategoryFurniture ;
+    schema:inventoryLevel "43"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P086  .
+
+:P124 a schema:Product ;
+    schema:sku "P124" ;
+    schema:name "Adidas Football" ;
+    schema:description "A reliable team sports from Adidas, lightweight and durable." ;
+    schema:price "541.68"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P130  .
+
+:P125 a schema:Product ;
+    schema:sku "P125" ;
+    schema:name "Under Armour Yoga Mat" ;
+    schema:description "A reliable fitness from Under Armour, performance-oriented." ;
+    schema:price "270.96"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "91"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P126 a schema:Product ;
+    schema:sku "P126" ;
+    schema:name "Coleman Paddleboard" ;
+    schema:description "A durable water sports from Coleman, designed for athletes." ;
+    schema:price "186.43"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "43"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P127 a schema:Product ;
+    schema:sku "P127" ;
+    schema:name "Wilson Life Jacket" ;
+    schema:description "A durable water sports from Wilson, performance-oriented." ;
+    schema:price "735.00"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandWilson ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "43"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P128, :P140, :P157  .
+
+:P128 a schema:Product ;
+    schema:sku "P128" ;
+    schema:name "REI Treadmill" ;
+    schema:description "A premium fitness from REI, performance-oriented." ;
+    schema:price "777.38"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandREI ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "21"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P163, :P144  .
+
+:P129 a schema:Product ;
+    schema:sku "P129" ;
+    schema:name "Spalding Tennis Racket" ;
+    schema:description "A reliable team sports from Spalding, all-weather." ;
+    schema:price "866.01"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSpalding ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "97"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P138, :P140, :P155  .
+
+:P130 a schema:Product ;
+    schema:sku "P130" ;
+    schema:name "Nike Water Gun" ;
+    schema:description "A professional outdoor from Nike, all-weather." ;
+    schema:price "645.67"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "28"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P139, :P124  .
+
+:P131 a schema:Product ;
+    schema:sku "P131" ;
+    schema:name "Coleman Football" ;
+    schema:description "A stylish team sports from Coleman, designed for athletes." ;
+    schema:price "700.99"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "46"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P132 a schema:Product ;
+    schema:sku "P132" ;
+    schema:name "Nike Swing Set" ;
+    schema:description "A reliable outdoor from Nike, all-weather." ;
+    schema:price "551.58"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "52"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P133  .
+
+:P133 a schema:Product ;
+    schema:sku "P133" ;
+    schema:name "Under Armour Baseball Glove" ;
+    schema:description "A durable team sports from Under Armour, all-weather." ;
+    schema:price "52.49"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "63"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P145, :P129, :P149  .
+
+:P134 a schema:Product ;
+    schema:sku "P134" ;
+    schema:name "Nike Bike Lock" ;
+    schema:description "A durable cycling from Nike, performance-oriented." ;
+    schema:price "682.43"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "41"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P129, :P163  .
+
+:P135 a schema:Product ;
+    schema:sku "P135" ;
+    schema:name "Wilson Football" ;
+    schema:description "A stylish team sports from Wilson, performance-oriented." ;
+    schema:price "781.81"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandWilson ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "19"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P126, :P131  .
+
+:P136 a schema:Product ;
+    schema:sku "P136" ;
+    schema:name "Under Armour Yoga Mat Pro" ;
+    schema:price "398.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "82"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P137 a schema:Product ;
+    schema:sku "P137" ;
+    schema:name "Under Armour Helmet" ;
+    schema:description "A innovative cycling from Under Armour, performance-oriented." ;
+    schema:price "316.93"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P130  .
+
+:P138 a schema:Product ;
+    schema:sku "P138" ;
+    schema:name "REI Soccer Ball Plus" ;
+    schema:description "A stylish team sports from REI, performance-oriented." ;
+    schema:price "50.94"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandREI ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "87"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P139, :P154, :P161  .
+
+:P139 a schema:Product ;
+    schema:sku "P139" ;
+    schema:name "Under Armour Water Bottle Pro" ;
+    schema:price "112.01"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "42"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P132, :P157  .
+
+:P140 a schema:Product ;
+    schema:sku "P140" ;
+    schema:name "Under Armour Basketball" ;
+    schema:description "A stylish team sports from Under Armour, lightweight and durable." ;
+    schema:price "280.50"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+
+:P141 a schema:Product ;
+    schema:sku "P141" ;
+    schema:name "Coleman Kite" ;
+    schema:description "A professional outdoor from Coleman, designed for athletes." ;
+    schema:price "175.22"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "2"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P142 a schema:Product ;
+    schema:sku "P142" ;
+    schema:name "Adidas Treadmill" ;
+    schema:description "A high-quality fitness from Adidas, designed for athletes." ;
+    schema:price "211.02"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P146, :P145  .
+
+:P143 a schema:Product ;
+    schema:sku "P143" ;
+    schema:name "Spalding Football" ;
+    schema:price "50.53"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSpalding ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "65"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P144 a schema:Product ;
+    schema:sku "P144" ;
+    schema:name "Coleman Resistance Bands" ;
+    schema:description "A innovative fitness from Coleman, all-weather." ;
+    schema:price "430.38"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "8"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P132, :P157, :P146  .
+
+:P145 a schema:Product ;
+    schema:sku "P145" ;
+    schema:name "Coleman Bike Lock" ;
+    schema:price "748.77"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "99"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P144  .
+
+:P146 a schema:Product ;
+    schema:sku "P146" ;
+    schema:name "Spalding Kayak" ;
+    schema:description "A stylish water sports from Spalding, performance-oriented." ;
+    schema:price "289.16"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSpalding ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "14"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P139, :P135  .
+
+:P147 a schema:Product ;
+    schema:sku "P147" ;
+    schema:name "Adidas Yoga Mat" ;
+    schema:description "A reliable fitness from Adidas, designed for athletes." ;
+    schema:price "156.28"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryFitness ;
+    schema:inventoryLevel "38"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P148 a schema:Product ;
+    schema:sku "P148" ;
+    schema:name "Coleman Road Bike" ;
+    schema:description "A high-quality cycling from Coleman, all-weather." ;
+    schema:price "138.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P128  .
+
+:P149 a schema:Product ;
+    schema:sku "P149" ;
+    schema:name "Coleman Baseball Glove" ;
+    schema:description "A durable team sports from Coleman, lightweight and durable." ;
+    schema:price "422.27"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "70"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P156, :P159  .
+
+:P150 a schema:Product ;
+    schema:sku "P150" ;
+    schema:name "Coleman Basketball Deluxe" ;
+    schema:description "A innovative team sports from Coleman, performance-oriented." ;
+    schema:price "75.05"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryTeamSports ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P144, :P163  .
+
+:P151 a schema:Product ;
+    schema:sku "P151" ;
+    schema:name "Adidas Frisbee" ;
+    schema:description "A high-quality outdoor from Adidas, performance-oriented." ;
+    schema:price "256.91"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "36"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P152 a schema:Product ;
+    schema:sku "P152" ;
+    schema:name "Nike Paddleboard" ;
+    schema:description "A high-quality water sports from Nike, performance-oriented." ;
+    schema:price "91.04"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "74"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P153 a schema:Product ;
+    schema:sku "P153" ;
+    schema:name "Under Armour Water Gun" ;
+    schema:description "A reliable outdoor from Under Armour, lightweight and durable." ;
+    schema:price "289.87"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "25"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P139, :P136, :P124  .
+
+:P154 a schema:Product ;
+    schema:sku "P154" ;
+    schema:name "Under Armour Water Gun" ;
+    schema:description "A stylish outdoor from Under Armour, lightweight and durable." ;
+    schema:price "556.85"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "10"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P158, :P161, :P163  .
+
+:P155 a schema:Product ;
+    schema:sku "P155" ;
+    schema:name "Nike Water Gun" ;
+    schema:description "A innovative outdoor from Nike, lightweight and durable." ;
+    schema:price "644.07"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "34"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P156 a schema:Product ;
+    schema:sku "P156" ;
+    schema:name "Coleman Paddleboard" ;
+    schema:description "A reliable water sports from Coleman, designed for athletes." ;
+    schema:price "666.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "59"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P125  .
+
+:P157 a schema:Product ;
+    schema:sku "P157" ;
+    schema:name "Nike Wetsuit" ;
+    schema:description "A durable water sports from Nike, performance-oriented." ;
+    schema:price "530.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandNike ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "71"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P155  .
+
+:P158 a schema:Product ;
+    schema:sku "P158" ;
+    schema:name "Under Armour Mountain Bike" ;
+    schema:description "A premium cycling from Under Armour, designed for athletes." ;
+    schema:price "31.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P159 a schema:Product ;
+    schema:sku "P159" ;
+    schema:name "Under Armour Mountain Bike Premium" ;
+    schema:description "A premium cycling from Under Armour, all-weather." ;
+    schema:price "865.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "58"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P154, :P134  .
+
+:P160 a schema:Product ;
+    schema:sku "P160" ;
+    schema:name "Spalding Wetsuit" ;
+    schema:description "A innovative water sports from Spalding, lightweight and durable." ;
+    schema:price "630.12"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSpalding ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryWaterSports ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+
+:P161 a schema:Product ;
+    schema:sku "P161" ;
+    schema:name "Coleman Kite" ;
+    schema:description "A reliable outdoor from Coleman, all-weather." ;
+    schema:price "622.12"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandColeman ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P140  .
+
+:P162 a schema:Product ;
+    schema:sku "P162" ;
+    schema:name "Adidas Bike Lock Max" ;
+    schema:price "255.89"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandAdidas ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "86"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P163 a schema:Product ;
+    schema:sku "P163" ;
+    schema:name "Wilson Mountain Bike Pro" ;
+    schema:description "A premium cycling from Wilson, designed for athletes." ;
+    schema:price "225.36"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandWilson ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "69"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P164 a schema:Product ;
+    schema:sku "P164" ;
+    schema:name "Under Armour Road Bike" ;
+    schema:description "A durable cycling from Under Armour, designed for athletes." ;
+    schema:price "88.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandUnderArmour ;
+    schema:category :CategorySports ;
+    schema:subcategory :SubcategoryCycling ;
+    schema:inventoryLevel "78"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P135, :P146  .
+
+:P165 a schema:Product ;
+    schema:sku "P165" ;
+    schema:name "Random House World War II" ;
+    schema:description "A premium history from Random House, expertly written." ;
+    schema:price "54.92"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "65"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P192, :P170, :P167  .
+
+:P166 a schema:Product ;
+    schema:sku "P166" ;
+    schema:name "Penguin American History" ;
+    schema:description "A durable history from Penguin, critically acclaimed." ;
+    schema:price "60.84"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "42"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P184, :P170  .
+
+:P167 a schema:Product ;
+    schema:sku "P167" ;
+    schema:name "Penguin Chemistry Reference" ;
+    schema:description "A professional science from Penguin, critically acclaimed." ;
+    schema:price "73.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "66"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P173  .
+
+:P168 a schema:Product ;
+    schema:sku "P168" ;
+    schema:name "Simon & Schuster Chemistry Reference" ;
+    schema:description "A durable science from Simon & Schuster, comprehensive guide." ;
+    schema:price "30.31"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "79"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P169 a schema:Product ;
+    schema:sku "P169" ;
+    schema:name "Random House Travel Guide" ;
+    schema:description "A high-quality non-fiction from Random House, expertly written." ;
+    schema:price "21.97"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "89"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P189  .
+
+:P170 a schema:Product ;
+    schema:sku "P170" ;
+    schema:name "Oxford Romance" ;
+    schema:description "A stylish fiction from Oxford, expertly written." ;
+    schema:price "69.70"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "37"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P175, :P177, :P168  .
+
+:P171 a schema:Product ;
+    schema:sku "P171" ;
+    schema:name "Random House Churchill" ;
+    schema:description "A reliable biography from Random House, bestselling." ;
+    schema:price "16.49"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryBiography ;
+    schema:inventoryLevel "23"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P187, :P200, :P205  .
+
+:P172 a schema:Product ;
+    schema:sku "P172" ;
+    schema:name "Penguin Fantasy Series" ;
+    schema:description "A durable fiction from Penguin, bestselling." ;
+    schema:price "67.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "22"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P179, :P170  .
+
+:P173 a schema:Product ;
+    schema:sku "P173" ;
+    schema:name "Random House Travel Guide Ultra" ;
+    schema:description "A durable non-fiction from Random House, comprehensive guide." ;
+    schema:price "36.31"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "24"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P190  .
+
+:P174 a schema:Product ;
+    schema:sku "P174" ;
+    schema:name "Oxford Self-Help Elite" ;
+    schema:description "A premium non-fiction from Oxford, comprehensive guide." ;
+    schema:price "48.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P175 a schema:Product ;
+    schema:sku "P175" ;
+    schema:name "HarperCollins Fantasy Series" ;
+    schema:description "A professional fiction from HarperCollins, expertly written." ;
+    schema:price "18.65"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHarperCollins ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "44"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P186, :P169  .
+
+:P176 a schema:Product ;
+    schema:sku "P176" ;
+    schema:name "HarperCollins Fantasy Series" ;
+    schema:description "A durable fiction from HarperCollins, bestselling." ;
+    schema:price "50.45"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHarperCollins ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "58"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P166  .
+
+:P177 a schema:Product ;
+    schema:sku "P177" ;
+    schema:name "Simon & Schuster Memoir" ;
+    schema:description "A stylish non-fiction from Simon & Schuster, comprehensive guide." ;
+    schema:price "48.37"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "64"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P194, :P183  .
+
+:P178 a schema:Product ;
+    schema:sku "P178" ;
+    schema:name "Simon & Schuster Medieval Europe" ;
+    schema:description "A premium history from Simon & Schuster, expertly written." ;
+    schema:price "29.75"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "14"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P179 a schema:Product ;
+    schema:sku "P179" ;
+    schema:name "Simon & Schuster Biology Guide" ;
+    schema:price "13.10"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "10"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P201  .
+
+:P180 a schema:Product ;
+    schema:sku "P180" ;
+    schema:name "Random House Cookbook Premium" ;
+    schema:description "A reliable non-fiction from Random House, bestselling." ;
+    schema:price "32.22"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "77"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P191, :P178  .
+
+:P181 a schema:Product ;
+    schema:sku "P181" ;
+    schema:name "Simon & Schuster Biology Guide" ;
+    schema:description "A high-quality science from Simon & Schuster, critically acclaimed." ;
+    schema:price "41.80"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "86"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P188  .
+
+:P182 a schema:Product ;
+    schema:sku "P182" ;
+    schema:name "Oxford Biology Guide" ;
+    schema:description "A innovative science from Oxford, critically acclaimed." ;
+    schema:price "51.97"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "16"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P183 a schema:Product ;
+    schema:sku "P183" ;
+    schema:name "HarperCollins Cookbook Deluxe" ;
+    schema:description "A durable non-fiction from HarperCollins, comprehensive guide." ;
+    schema:price "52.71"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHarperCollins ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "41"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P184 a schema:Product ;
+    schema:sku "P184" ;
+    schema:name "Simon & Schuster Churchill" ;
+    schema:description "A premium biography from Simon & Schuster, comprehensive guide." ;
+    schema:price "36.04"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryBiography ;
+    schema:inventoryLevel "56"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P177, :P183  .
+
+:P185 a schema:Product ;
+    schema:sku "P185" ;
+    schema:name "Oxford Medieval Europe" ;
+    schema:description "A high-quality history from Oxford, bestselling." ;
+    schema:price "59.52"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "28"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P186 a schema:Product ;
+    schema:sku "P186" ;
+    schema:name "HarperCollins Astronomy Book" ;
+    schema:description "A professional science from HarperCollins, critically acclaimed." ;
+    schema:price "39.78"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHarperCollins ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "36"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P198, :P204  .
+
+:P187 a schema:Product ;
+    schema:sku "P187" ;
+    schema:name "Simon & Schuster Astronomy Book" ;
+    schema:description "A innovative science from Simon & Schuster, expertly written." ;
+    schema:price "76.31"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "43"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P188 a schema:Product ;
+    schema:sku "P188" ;
+    schema:name "Random House Astronomy Book Max" ;
+    schema:description "A stylish science from Random House, bestselling." ;
+    schema:price "36.20"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P193, :P173  .
+
+:P189 a schema:Product ;
+    schema:sku "P189" ;
+    schema:name "Simon & Schuster Astronomy Book" ;
+    schema:description "A premium science from Simon & Schuster, bestselling." ;
+    schema:price "45.59"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "32"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P199  .
+
+:P190 a schema:Product ;
+    schema:sku "P190" ;
+    schema:name "Oxford Business Guide" ;
+    schema:description "A stylish non-fiction from Oxford, critically acclaimed." ;
+    schema:price "67.64"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "72"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P177, :P176, :P183  .
+
+:P191 a schema:Product ;
+    schema:sku "P191" ;
+    schema:name "Penguin Self-Help" ;
+    schema:description "A high-quality non-fiction from Penguin, expertly written." ;
+    schema:price "68.19"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "55"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P193, :P173  .
+
+:P192 a schema:Product ;
+    schema:sku "P192" ;
+    schema:name "Oxford Physics Textbook" ;
+    schema:description "A durable science from Oxford, bestselling." ;
+    schema:price "13.28"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "100"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P193 a schema:Product ;
+    schema:sku "P193" ;
+    schema:name "Penguin Cookbook Elite" ;
+    schema:description "A innovative non-fiction from Penguin, bestselling." ;
+    schema:price "20.16"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryNonFiction ;
+    schema:inventoryLevel "62"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P194 a schema:Product ;
+    schema:sku "P194" ;
+    schema:name "Random House Astronomy Book" ;
+    schema:description "A stylish science from Random House, critically acclaimed." ;
+    schema:price "48.13"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "47"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P195 a schema:Product ;
+    schema:sku "P195" ;
+    schema:name "Penguin American History Plus" ;
+    schema:description "A professional history from Penguin, bestselling." ;
+    schema:price "53.29"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "71"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P196 a schema:Product ;
+    schema:sku "P196" ;
+    schema:name "Penguin American History" ;
+    schema:description "A stylish history from Penguin, bestselling." ;
+    schema:price "49.19"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "82"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P166, :P165, :P180  .
+
+:P197 a schema:Product ;
+    schema:sku "P197" ;
+    schema:name "Simon & Schuster Churchill" ;
+    schema:description "A innovative biography from Simon & Schuster, expertly written." ;
+    schema:price "36.46"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandSimonSchuster ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryBiography ;
+    schema:inventoryLevel "50"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P198 a schema:Product ;
+    schema:sku "P198" ;
+    schema:name "Oxford Medieval Europe" ;
+    schema:description "A professional history from Oxford, comprehensive guide." ;
+    schema:price "48.00"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "1"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P199 a schema:Product ;
+    schema:sku "P199" ;
+    schema:name "HarperCollins Fantasy Series Max" ;
+    schema:description "A professional fiction from HarperCollins, bestselling." ;
+    schema:price "18.96"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHarperCollins ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "49"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P172, :P200, :P173  .
+
+:P200 a schema:Product ;
+    schema:sku "P200" ;
+    schema:name "Penguin Thriller" ;
+    schema:description "A high-quality fiction from Penguin, expertly written." ;
+    schema:price "32.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "96"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P168  .
+
+:P201 a schema:Product ;
+    schema:sku "P201" ;
+    schema:name "Oxford Astronomy Book" ;
+    schema:description "A durable science from Oxford, comprehensive guide." ;
+    schema:price "64.73"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "68"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P180  .
+
+:P202 a schema:Product ;
+    schema:sku "P202" ;
+    schema:name "Penguin Thriller" ;
+    schema:description "A premium fiction from Penguin, critically acclaimed." ;
+    schema:price "35.46"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryFiction ;
+    schema:inventoryLevel "66"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P175, :P181, :P166  .
+
+:P203 a schema:Product ;
+    schema:sku "P203" ;
+    schema:name "Random House Biology Guide" ;
+    schema:description "A professional science from Random House, expertly written." ;
+    schema:price "36.21"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandRandomHouse ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "86"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P204 a schema:Product ;
+    schema:sku "P204" ;
+    schema:name "Penguin Ancient Rome" ;
+    schema:description "A stylish history from Penguin, critically acclaimed." ;
+    schema:price "12.34"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPenguin ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryHistory ;
+    schema:inventoryLevel "83"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P200, :P196, :P172  .
+
+:P205 a schema:Product ;
+    schema:sku "P205" ;
+    schema:name "Oxford Chemistry Reference" ;
+    schema:description "A premium science from Oxford, comprehensive guide." ;
+    schema:price "48.40"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandOxford ;
+    schema:category :CategoryBooks ;
+    schema:subcategory :SubcategoryScience ;
+    schema:inventoryLevel "2"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P203, :P204, :P181  .
+
+:P206 a schema:Product ;
+    schema:sku "P206" ;
+    schema:name "Melissa & Doug Learning Tablet" ;
+    schema:price "203.37"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "49"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P212  .
+
+:P207 a schema:Product ;
+    schema:sku "P207" ;
+    schema:name "Hasbro Swing Set" ;
+    schema:description "A reliable outdoor from Hasbro, promotes creativity." ;
+    schema:price "294.67"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "73"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P238, :P223, :P218  .
+
+:P208 a schema:Product ;
+    schema:sku "P208" ;
+    schema:name "Playmobil Party Game" ;
+    schema:description "A stylish board games from Playmobil, hours of entertainment." ;
+    schema:price "202.39"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryBoardGames ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P222  .
+
+:P209 a schema:Product ;
+    schema:sku "P209" ;
+    schema:name "LEGO Puzzle" ;
+    schema:description "A premium board games from LEGO, hours of entertainment." ;
+    schema:price "277.38"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryBoardGames ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P210 a schema:Product ;
+    schema:sku "P210" ;
+    schema:name "Hasbro Swing Set" ;
+    schema:description "A innovative outdoor from Hasbro, hours of entertainment." ;
+    schema:price "44.88"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "47"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P213  .
+
+:P211 a schema:Product ;
+    schema:sku "P211" ;
+    schema:name "Hasbro Superhero Figure" ;
+    schema:description "A stylish action figures from Hasbro, hours of entertainment." ;
+    schema:price "126.75"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "98"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P245  .
+
+:P212 a schema:Product ;
+    schema:sku "P212" ;
+    schema:name "LEGO Water Gun Pro" ;
+    schema:price "199.94"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "25"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P213 a schema:Product ;
+    schema:sku "P213" ;
+    schema:name "Fisher-Price Transformers" ;
+    schema:description "A durable action figures from Fisher-Price, age-appropriate." ;
+    schema:price "72.59"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "78"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P214 a schema:Product ;
+    schema:sku "P214" ;
+    schema:name "Playmobil Frisbee" ;
+    schema:price "183.53"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P242  .
+
+:P215 a schema:Product ;
+    schema:sku "P215" ;
+    schema:name "Melissa & Doug Marvel Legends Premium" ;
+    schema:description "A high-quality action figures from Melissa & Doug, safe and fun." ;
+    schema:price "223.93"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "89"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P212, :P213  .
+
+:P216 a schema:Product ;
+    schema:sku "P216" ;
+    schema:name "Mattel Water Gun" ;
+    schema:description "A stylish outdoor from Mattel, age-appropriate." ;
+    schema:price "56.24"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMattel ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "9"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P230, :P222, :P234  .
+
+:P217 a schema:Product ;
+    schema:sku "P217" ;
+    schema:name "Melissa & Doug Collector Doll Premium" ;
+    schema:description "A premium dolls from Melissa & Doug, safe and fun." ;
+    schema:price "120.66"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P212, :P229  .
+
+:P218 a schema:Product ;
+    schema:sku "P218" ;
+    schema:name "Playmobil Trivia" ;
+    schema:description "A high-quality board games from Playmobil, safe and fun." ;
+    schema:price "43.53"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryBoardGames ;
+    schema:inventoryLevel "10"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P225, :P233  .
+
+:P219 a schema:Product ;
+    schema:sku "P219" ;
+    schema:name "Melissa & Doug Trampoline Deluxe" ;
+    schema:description "A reliable outdoor from Melissa & Doug, safe and fun." ;
+    schema:price "107.90"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "47"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P220 a schema:Product ;
+    schema:sku "P220" ;
+    schema:name "LEGO Fashion Doll" ;
+    schema:description "A professional dolls from LEGO, age-appropriate." ;
+    schema:price "210.90"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P246, :P229, :P206  .
+
+:P221 a schema:Product ;
+    schema:sku "P221" ;
+    schema:name "Melissa & Doug Learning Tablet" ;
+    schema:price "233.33"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "98"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P241  .
+
+:P222 a schema:Product ;
+    schema:sku "P222" ;
+    schema:name "Mattel Trivia" ;
+    schema:description "A premium board games from Mattel, age-appropriate." ;
+    schema:price "113.40"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMattel ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryBoardGames ;
+    schema:inventoryLevel "4"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P223 a schema:Product ;
+    schema:sku "P223" ;
+    schema:name "Fisher-Price Frisbee Pro" ;
+    schema:description "A stylish outdoor from Fisher-Price, safe and fun." ;
+    schema:price "115.50"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "37"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P207, :P240  .
+
+:P224 a schema:Product ;
+    schema:sku "P224" ;
+    schema:name "Mattel Baby Doll Ultra" ;
+    schema:description "A durable dolls from Mattel, hours of entertainment." ;
+    schema:price "179.74"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMattel ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P225, :P230  .
+
+:P225 a schema:Product ;
+    schema:sku "P225" ;
+    schema:name "Mattel Barbie Plus" ;
+    schema:description "A reliable dolls from Mattel, promotes creativity." ;
+    schema:price "171.89"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMattel ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "89"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P226 a schema:Product ;
+    schema:sku "P226" ;
+    schema:name "Hasbro Fashion Doll Elite" ;
+    schema:description "A reliable dolls from Hasbro, age-appropriate." ;
+    schema:price "40.52"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "68"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P227 a schema:Product ;
+    schema:sku "P227" ;
+    schema:name "Fisher-Price Water Gun" ;
+    schema:description "A professional outdoor from Fisher-Price, hours of entertainment." ;
+    schema:price "219.98"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "38"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P230, :P246, :P215  .
+
+:P228 a schema:Product ;
+    schema:sku "P228" ;
+    schema:name "Melissa & Doug Star Wars" ;
+    schema:description "A professional action figures from Melissa & Doug, promotes creativity." ;
+    schema:price "65.79"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "25"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P236, :P210, :P222  .
+
+:P229 a schema:Product ;
+    schema:sku "P229" ;
+    schema:name "LEGO Star Wars Ultra" ;
+    schema:description "A durable action figures from LEGO, promotes creativity." ;
+    schema:price "83.30"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "81"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P230 a schema:Product ;
+    schema:sku "P230" ;
+    schema:name "Fisher-Price Learning Tablet" ;
+    schema:description "A stylish educational from Fisher-Price, hours of entertainment." ;
+    schema:price "52.85"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "90"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P225, :P250, :P231  .
+
+:P231 a schema:Product ;
+    schema:sku "P231" ;
+    schema:name "LEGO Frisbee" ;
+    schema:description "A reliable outdoor from LEGO, age-appropriate." ;
+    schema:price "23.91"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P246  .
+
+:P232 a schema:Product ;
+    schema:sku "P232" ;
+    schema:name "Playmobil Kite" ;
+    schema:description "A stylish outdoor from Playmobil, hours of entertainment." ;
+    schema:price "294.56"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "18"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P217, :P215, :P250  .
+
+:P233 a schema:Product ;
+    schema:sku "P233" ;
+    schema:name "Hasbro Baby Doll Max" ;
+    schema:description "A premium dolls from Hasbro, hours of entertainment." ;
+    schema:price "215.03"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "52"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P215, :P210  .
+
+:P234 a schema:Product ;
+    schema:sku "P234" ;
+    schema:name "Hasbro Superhero Figure" ;
+    schema:description "A stylish action figures from Hasbro, hours of entertainment." ;
+    schema:price "201.88"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "89"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P214, :P213  .
+
+:P235 a schema:Product ;
+    schema:sku "P235" ;
+    schema:name "Playmobil Swing Set" ;
+    schema:description "A premium outdoor from Playmobil, hours of entertainment." ;
+    schema:price "173.26"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "81"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P250, :P218  .
+
+:P236 a schema:Product ;
+    schema:sku "P236" ;
+    schema:name "LEGO Barbie Pro" ;
+    schema:description "A premium dolls from LEGO, hours of entertainment." ;
+    schema:price "85.08"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandLEGO ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "74"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P237 a schema:Product ;
+    schema:sku "P237" ;
+    schema:name "Playmobil Frisbee Deluxe" ;
+    schema:description "A stylish outdoor from Playmobil, hours of entertainment." ;
+    schema:price "135.60"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "48"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P238 a schema:Product ;
+    schema:sku "P238" ;
+    schema:name "Melissa & Doug Fashion Doll" ;
+    schema:description "A durable dolls from Melissa & Doug, promotes creativity." ;
+    schema:price "103.33"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "82"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P243  .
+
+:P239 a schema:Product ;
+    schema:sku "P239" ;
+    schema:name "Melissa & Doug Marvel Legends" ;
+    schema:description "A reliable action figures from Melissa & Doug, age-appropriate." ;
+    schema:price "70.43"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "73"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P244  .
+
+:P240 a schema:Product ;
+    schema:sku "P240" ;
+    schema:name "Fisher-Price Water Gun" ;
+    schema:price "63.07"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryOutdoor ;
+    schema:inventoryLevel "41"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P229, :P237, :P236  .
+
+:P241 a schema:Product ;
+    schema:sku "P241" ;
+    schema:name "Fisher-Price STEM Kit" ;
+    schema:description "A innovative educational from Fisher-Price, hours of entertainment." ;
+    schema:price "128.11"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "91"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P208, :P232  .
+
+:P242 a schema:Product ;
+    schema:sku "P242" ;
+    schema:name "Hasbro STEM Kit" ;
+    schema:description "A innovative educational from Hasbro, age-appropriate." ;
+    schema:price "150.63"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "81"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P243 a schema:Product ;
+    schema:sku "P243" ;
+    schema:name "Playmobil Transformers" ;
+    schema:description "A innovative action figures from Playmobil, safe and fun." ;
+    schema:price "242.26"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandPlaymobil ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "20"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P244 a schema:Product ;
+    schema:sku "P244" ;
+    schema:name "Melissa & Doug Party Game" ;
+    schema:description "A durable board games from Melissa & Doug, promotes creativity." ;
+    schema:price "225.33"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryBoardGames ;
+    schema:inventoryLevel "35"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P245 a schema:Product ;
+    schema:sku "P245" ;
+    schema:name "Fisher-Price Marvel Legends" ;
+    schema:description "A reliable action figures from Fisher-Price, promotes creativity." ;
+    schema:price "15.68"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "60"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P215, :P211, :P234  .
+
+:P246 a schema:Product ;
+    schema:sku "P246" ;
+    schema:name "Hasbro STEM Kit Plus" ;
+    schema:description "A stylish educational from Hasbro, age-appropriate." ;
+    schema:price "150.94"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryEducational ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock ;
+    schema:isRelatedTo :P209  .
+
+:P247 a schema:Product ;
+    schema:sku "P247" ;
+    schema:name "Fisher-Price Fashion Doll" ;
+    schema:description "A reliable dolls from Fisher-Price, age-appropriate." ;
+    schema:price "53.43"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "84"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P236, :P231  .
+
+:P248 a schema:Product ;
+    schema:sku "P248" ;
+    schema:name "Melissa & Doug Baby Doll" ;
+    schema:description "A innovative dolls from Melissa & Doug, promotes creativity." ;
+    schema:price "115.58"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandMelissaDoug ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryDolls ;
+    schema:inventoryLevel "78"^^xsd:integer ;
+    schema:availability schema:InStock  .
+
+:P249 a schema:Product ;
+    schema:sku "P249" ;
+    schema:name "Fisher-Price Transformers" ;
+    schema:description "A innovative action figures from Fisher-Price, hours of entertainment." ;
+    schema:price "35.27"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandFisherPrice ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "61"^^xsd:integer ;
+    schema:availability schema:InStock ;
+    schema:isRelatedTo :P222  .
+
+:P250 a schema:Product ;
+    schema:sku "P250" ;
+    schema:name "Hasbro Marvel Legends" ;
+    schema:description "A high-quality action figures from Hasbro, hours of entertainment." ;
+    schema:price "161.33"^^xsd:decimal ;
+    schema:priceCurrency "USD" ;
+    schema:brand :BrandHasbro ;
+    schema:category :CategoryToys ;
+    schema:subcategory :SubcategoryActionFigures ;
+    schema:inventoryLevel "0"^^xsd:integer ;
+    schema:availability schema:OutOfStock  .
+

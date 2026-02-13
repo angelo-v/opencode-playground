@@ -1,0 +1,250 @@
+{
+  "metadata": {
+    "title": "RDF vs Markdown Experiment - Query Suite",
+    "description": "30 test queries across simple lookups, aggregations, and relationship traversals",
+    "total_queries": 30,
+    "date_created": "2026-02-13"
+  },
+  "queries": [
+    {
+      "id": "Q001",
+      "type": "simple_lookup",
+      "question": "What is the price of product P001?",
+      "sparql": "SELECT ?price WHERE { :P001 schema:price ?price }",
+      "expected_type": "single_value",
+      "notes": "Basic property lookup"
+    },
+    {
+      "id": "Q002",
+      "type": "simple_lookup",
+      "question": "What is the name of product P042?",
+      "sparql": "SELECT ?name WHERE { :P042 schema:name ?name }",
+      "expected_type": "single_value",
+      "notes": "Basic property lookup"
+    },
+    {
+      "id": "Q003",
+      "type": "simple_lookup",
+      "question": "List all products from the brand Sony.",
+      "sparql": "SELECT ?id ?name WHERE { ?brand schema:name \"Sony\" . ?product schema:brand ?brand ; schema:sku ?id ; schema:name ?name } ORDER BY ?id",
+      "expected_type": "list",
+      "notes": "Filter by brand"
+    },
+    {
+      "id": "Q004",
+      "type": "simple_lookup",
+      "question": "Find all products in the Electronics category.",
+      "sparql": "SELECT ?id ?name WHERE { ?cat schema:name \"Electronics\" . ?product schema:category ?cat ; schema:sku ?id ; schema:name ?name } ORDER BY ?id LIMIT 20",
+      "expected_type": "list",
+      "notes": "Filter by main category"
+    },
+    {
+      "id": "Q005",
+      "type": "simple_lookup",
+      "question": "What is the stock level of product P010?",
+      "sparql": "SELECT ?stock WHERE { :P010 schema:inventoryLevel ?stock }",
+      "expected_type": "single_value",
+      "notes": "Check inventory"
+    },
+    {
+      "id": "Q006",
+      "type": "simple_lookup",
+      "question": "Is product P015 in stock or out of stock?",
+      "sparql": "SELECT ?availability WHERE { :P015 schema:availability ?availability }",
+      "expected_type": "single_value",
+      "notes": "Check availability status"
+    },
+    {
+      "id": "Q007",
+      "type": "simple_lookup",
+      "question": "What brand makes product P025?",
+      "sparql": "SELECT ?brandName WHERE { :P025 schema:brand ?brand . ?brand schema:name ?brandName }",
+      "expected_type": "single_value",
+      "notes": "Lookup through relationship"
+    },
+    {
+      "id": "Q008",
+      "type": "simple_lookup",
+      "question": "List all products with SKU starting with P01 (P010-P019).",
+      "sparql": "SELECT ?id ?name WHERE { ?product schema:sku ?id ; schema:name ?name . FILTER(regex(?id, \"^P01\")) } ORDER BY ?id",
+      "expected_type": "list",
+      "notes": "Pattern matching"
+    },
+    {
+      "id": "Q009",
+      "type": "simple_lookup",
+      "question": "Find all products priced under $50.",
+      "sparql": "SELECT ?id ?name ?price WHERE { ?product schema:sku ?id ; schema:name ?name ; schema:price ?price . FILTER(?price < 50) } ORDER BY ?price LIMIT 10",
+      "expected_type": "list",
+      "notes": "Numerical filter"
+    },
+    {
+      "id": "Q010",
+      "type": "simple_lookup",
+      "question": "What products are out of stock?",
+      "sparql": "SELECT ?id ?name WHERE { ?product schema:sku ?id ; schema:name ?name ; schema:availability schema:OutOfStock } ORDER BY ?id LIMIT 10",
+      "expected_type": "list",
+      "notes": "Filter by status"
+    },
+    {
+      "id": "Q011",
+      "type": "aggregation",
+      "question": "How many total products are in the catalog?",
+      "sparql": "SELECT (COUNT(?product) AS ?total) WHERE { ?product a schema:Product }",
+      "expected_type": "count",
+      "notes": "Total count"
+    },
+    {
+      "id": "Q012",
+      "type": "aggregation",
+      "question": "What is the average price of all products?",
+      "sparql": "SELECT (AVG(?price) AS ?avgPrice) WHERE { ?product schema:price ?price }",
+      "expected_type": "numeric",
+      "notes": "Average calculation"
+    },
+    {
+      "id": "Q013",
+      "type": "aggregation",
+      "question": "What is the average price of Electronics products?",
+      "sparql": "SELECT (AVG(?price) AS ?avgPrice) WHERE { ?cat schema:name \"Electronics\" . ?product schema:category ?cat ; schema:price ?price }",
+      "expected_type": "numeric",
+      "notes": "Filtered average"
+    },
+    {
+      "id": "Q014",
+      "type": "aggregation",
+      "question": "How many products are out of stock?",
+      "sparql": "SELECT (COUNT(?product) AS ?count) WHERE { ?product schema:availability schema:OutOfStock }",
+      "expected_type": "count",
+      "notes": "Conditional count"
+    },
+    {
+      "id": "Q015",
+      "type": "aggregation",
+      "question": "What is the total inventory value? (sum of price × stock for all products)",
+      "sparql": "SELECT (SUM(?value) AS ?totalValue) WHERE { ?product schema:price ?price ; schema:inventoryLevel ?stock . BIND(?price * ?stock AS ?value) }",
+      "expected_type": "numeric",
+      "notes": "Complex calculation"
+    },
+    {
+      "id": "Q016",
+      "type": "aggregation",
+      "question": "What is the most expensive product price?",
+      "sparql": "SELECT (MAX(?price) AS ?maxPrice) WHERE { ?product schema:price ?price }",
+      "expected_type": "numeric",
+      "notes": "Maximum value"
+    },
+    {
+      "id": "Q017",
+      "type": "aggregation",
+      "question": "What is the cheapest product price?",
+      "sparql": "SELECT (MIN(?price) AS ?minPrice) WHERE { ?product schema:price ?price }",
+      "expected_type": "numeric",
+      "notes": "Minimum value"
+    },
+    {
+      "id": "Q018",
+      "type": "aggregation",
+      "question": "How many different brands are in the catalog?",
+      "sparql": "SELECT (COUNT(DISTINCT ?brand) AS ?brandCount) WHERE { ?product schema:brand ?brand }",
+      "expected_type": "count",
+      "notes": "Distinct count"
+    },
+    {
+      "id": "Q019",
+      "type": "aggregation",
+      "question": "How many products does the brand Apple have?",
+      "sparql": "SELECT (COUNT(?product) AS ?count) WHERE { ?brand schema:name \"Apple\" . ?product schema:brand ?brand }",
+      "expected_type": "count",
+      "notes": "Count with filter"
+    },
+    {
+      "id": "Q020",
+      "type": "aggregation",
+      "question": "Which category has the most products?",
+      "sparql": "SELECT ?categoryName (COUNT(?product) AS ?count) WHERE { ?product schema:category ?cat . ?cat schema:name ?categoryName } GROUP BY ?categoryName ORDER BY DESC(?count) LIMIT 1",
+      "expected_type": "single_value_with_count",
+      "notes": "Group by with max"
+    },
+    {
+      "id": "Q021",
+      "type": "traversal",
+      "question": "What products are related to product P001?",
+      "sparql": "SELECT ?relatedId ?relatedName WHERE { :P001 schema:isRelatedTo ?related . ?related schema:sku ?relatedId ; schema:name ?relatedName }",
+      "expected_type": "list",
+      "notes": "Direct relationship"
+    },
+    {
+      "id": "Q022",
+      "type": "traversal",
+      "question": "Find all products from the same brand as P010.",
+      "sparql": "SELECT ?id ?name WHERE { :P010 schema:brand ?brand . ?product schema:brand ?brand ; schema:sku ?id ; schema:name ?name . FILTER(?product != :P010) } ORDER BY ?id LIMIT 10",
+      "expected_type": "list",
+      "notes": "Shared attribute traversal"
+    },
+    {
+      "id": "Q023",
+      "type": "traversal",
+      "question": "Find all products in the same category as P020.",
+      "sparql": "SELECT ?id ?name WHERE { :P020 schema:category ?cat . ?product schema:category ?cat ; schema:sku ?id ; schema:name ?name . FILTER(?product != :P020) } ORDER BY ?id LIMIT 10",
+      "expected_type": "list",
+      "notes": "Shared category traversal"
+    },
+    {
+      "id": "Q024",
+      "type": "traversal",
+      "question": "Which brands make products in both Electronics and Clothing categories?",
+      "sparql": "SELECT DISTINCT ?brandName WHERE { ?elecCat schema:name \"Electronics\" . ?clothCat schema:name \"Clothing\" . ?prod1 schema:category ?elecCat ; schema:brand ?brand . ?prod2 schema:category ?clothCat ; schema:brand ?brand . ?brand schema:name ?brandName } ORDER BY ?brandName",
+      "expected_type": "list",
+      "notes": "Multi-category brand finding"
+    },
+    {
+      "id": "Q025",
+      "type": "traversal",
+      "question": "Find products with similar prices to P005 (within 10% range).",
+      "sparql": "SELECT ?id ?name ?price WHERE { :P005 schema:price ?p5price . ?product schema:sku ?id ; schema:name ?name ; schema:price ?price . FILTER(?price >= ?p5price * 0.9 && ?price <= ?p5price * 1.1 && ?product != :P005) } ORDER BY ?price LIMIT 10",
+      "expected_type": "list",
+      "notes": "Calculated range comparison"
+    },
+    {
+      "id": "Q026",
+      "type": "traversal",
+      "question": "What products share related products with P001? (products related to P001's related products)",
+      "sparql": "SELECT DISTINCT ?id ?name WHERE { :P001 schema:isRelatedTo ?related . ?related schema:isRelatedTo ?product . ?product schema:sku ?id ; schema:name ?name . FILTER(?product != :P001) } LIMIT 10",
+      "expected_type": "list",
+      "notes": "Two-hop relationship"
+    },
+    {
+      "id": "Q027",
+      "type": "traversal",
+      "question": "Find brands that have products priced over $1000.",
+      "sparql": "SELECT DISTINCT ?brandName WHERE { ?product schema:price ?price ; schema:brand ?brand . ?brand schema:name ?brandName . FILTER(?price > 1000) } ORDER BY ?brandName",
+      "expected_type": "list",
+      "notes": "Brand-price traversal"
+    },
+    {
+      "id": "Q028",
+      "type": "traversal",
+      "question": "Which products in the Electronics category are from the brand Canon?",
+      "sparql": "SELECT ?id ?name ?price WHERE { ?cat schema:name \"Electronics\" . ?brand schema:name \"Canon\" . ?product schema:category ?cat ; schema:brand ?brand ; schema:sku ?id ; schema:name ?name ; schema:price ?price } ORDER BY ?id",
+      "expected_type": "list",
+      "notes": "Multi-filter traversal"
+    },
+    {
+      "id": "Q029",
+      "type": "traversal",
+      "question": "Find the top 3 most expensive products in the Sports category.",
+      "sparql": "SELECT ?id ?name ?price WHERE { ?cat schema:name \"Sports\" . ?product schema:category ?cat ; schema:sku ?id ; schema:name ?name ; schema:price ?price } ORDER BY DESC(?price) LIMIT 3",
+      "expected_type": "list",
+      "notes": "Filtered sort with limit"
+    },
+    {
+      "id": "Q030",
+      "type": "traversal",
+      "question": "How many products does each brand have, for brands with more than 5 products?",
+      "sparql": "SELECT ?brandName (COUNT(?product) AS ?count) WHERE { ?product schema:brand ?brand . ?brand schema:name ?brandName } GROUP BY ?brandName HAVING (COUNT(?product) > 5) ORDER BY DESC(?count)",
+      "expected_type": "grouped_count",
+      "notes": "Grouping with HAVING clause"
+    }
+  ]
+}

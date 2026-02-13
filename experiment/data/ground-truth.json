@@ -1,0 +1,312 @@
+{
+  "generated": "2026-02-13T17:20:07Z",
+  "source": "Comunica SPARQL queries on products.ttl",
+  "results": [
+    {
+      "query_id": "Q001",
+      "question": "What is the price of product P001?",
+      "type": "simple_lookup",
+      "result": 
+    },
+    {
+      "query_id": "Q002",
+      "question": "What is the name of product P042?",
+      "type": "simple_lookup",
+      "result": 
+    },
+    {
+      "query_id": "Q003",
+      "question": "List all products from the brand Sony.",
+      "type": "simple_lookup",
+      "result": [
+{"id":"\"P009\"","name":"\"Sony iPad Air\""},
+{"id":"\"P010\"","name":"\"Sony ThinkPad X1 Carbon\""},
+{"id":"\"P029\"","name":"\"Sony X-T5 Plus\""}
+]
+    },
+    {
+      "query_id": "Q004",
+      "question": "Find all products in the Electronics category.",
+      "type": "simple_lookup",
+      "result": [
+{"name":"\"JBL WH-1000XM5\"","id":"\"P001\""},
+{"name":"\"Canon Lumix GH6\"","id":"\"P002\""},
+{"name":"\"Canon WH-1000XM5\"","id":"\"P003\""},
+{"name":"\"Nikon Surface Pro\"","id":"\"P004\""},
+{"name":"\"JBL Galaxy S24\"","id":"\"P005\""},
+{"name":"\"Canon Studio Wireless\"","id":"\"P006\""},
+{"name":"\"Bose Alpha A7\"","id":"\"P007\""},
+{"name":"\"Canon iPhone 15 Pro\"","id":"\"P008\""},
+{"name":"\"Sony iPad Air\"","id":"\"P009\""},
+{"name":"\"Sony ThinkPad X1 Carbon\"","id":"\"P010\""},
+{"name":"\"Apple MacBook Pro\"","id":"\"P011\""},
+{"name":"\"Dell Surface Pro\"","id":"\"P012\""},
+{"name":"\"HP Surface Laptop\"","id":"\"P013\""},
+{"name":"\"Bose Galaxy Tab Ultra\"","id":"\"P014\""},
+{"name":"\"Samsung AirPods Pro\"","id":"\"P015\""},
+{"name":"\"Dell Fire HD\"","id":"\"P016\""},
+{"name":"\"Apple iPad Air Deluxe\"","id":"\"P017\""},
+{"name":"\"Nikon Fire HD\"","id":"\"P018\""},
+{"name":"\"HP Z9\"","id":"\"P019\""},
+{"name":"\"HP X-T5\"","id":"\"P020\""}
+]
+    },
+    {
+      "query_id": "Q005",
+      "question": "What is the stock level of product P010?",
+      "type": "simple_lookup",
+      "result": 
+    },
+    {
+      "query_id": "Q006",
+      "question": "Is product P015 in stock or out of stock?",
+      "type": "simple_lookup",
+      "result": 
+    },
+    {
+      "query_id": "Q007",
+      "question": "What brand makes product P025?",
+      "type": "simple_lookup",
+      "result": 
+    },
+    {
+      "query_id": "Q008",
+      "question": "List all products with SKU starting with P01 (P010-P019).",
+      "type": "simple_lookup",
+      "result": [
+{"id":"\"P010\"","name":"\"Sony ThinkPad X1 Carbon\""},
+{"id":"\"P011\"","name":"\"Apple MacBook Pro\""},
+{"id":"\"P012\"","name":"\"Dell Surface Pro\""},
+{"id":"\"P013\"","name":"\"HP Surface Laptop\""},
+{"id":"\"P014\"","name":"\"Bose Galaxy Tab Ultra\""},
+{"id":"\"P015\"","name":"\"Samsung AirPods Pro\""},
+{"id":"\"P016\"","name":"\"Dell Fire HD\""},
+{"id":"\"P017\"","name":"\"Apple iPad Air Deluxe\""},
+{"id":"\"P018\"","name":"\"Nikon Fire HD\""},
+{"id":"\"P019\"","name":"\"HP Z9\""}
+]
+    },
+    {
+      "query_id": "Q009",
+      "question": "Find all products priced under $50.",
+      "type": "simple_lookup",
+      "result": [
+{"id":"\"P204\"","price":"\"12.34\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Penguin Ancient Rome\""},
+{"id":"\"P179\"","price":"\"13.10\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Simon & Schuster Biology Guide\""},
+{"id":"\"P192\"","price":"\"13.28\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Oxford Physics Textbook\""},
+{"id":"\"P245\"","price":"\"15.68\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Fisher-Price Marvel Legends\""},
+{"id":"\"P171\"","price":"\"16.49\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Random House Churchill\""},
+{"id":"\"P175\"","price":"\"18.65\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"HarperCollins Fantasy Series\""},
+{"id":"\"P199\"","price":"\"18.96\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"HarperCollins Fantasy Series Max\""},
+{"id":"\"P061\"","price":"\"19.57\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Nike Bomber\""},
+{"id":"\"P193\"","price":"\"20.16\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Penguin Cookbook Elite\""},
+{"id":"\"P169\"","price":"\"21.97\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Random House Travel Guide\""}
+]
+    },
+    {
+      "query_id": "Q010",
+      "question": "What products are out of stock?",
+      "type": "simple_lookup",
+      "result": [
+{"name":"\"Lenovo ThinkPad X1 Carbon Plus\"","id":"\"P022\""},
+{"name":"\"JBL Alpha A7 Elite\"","id":"\"P023\""},
+{"name":"\"Uniqlo Bomber Premium\"","id":"\"P071\""},
+{"name":"\"Cuisinart Coffee Maker\"","id":"\"P083\""},
+{"name":"\"Black & Decker Coffee Maker\"","id":"\"P095\""},
+{"name":"\"Cuisinart Bookshelf\"","id":"\"P111\""},
+{"name":"\"IKEA Toolbox Ultra\"","id":"\"P118\""},
+{"name":"\"Under Armour Helmet\"","id":"\"P137\""},
+{"name":"\"Under Armour Basketball\"","id":"\"P140\""},
+{"name":"\"Adidas Treadmill\"","id":"\"P142\""}
+]
+    },
+    {
+      "query_id": "Q011",
+      "question": "How many total products are in the catalog?",
+      "type": "aggregation",
+      "result": [
+{"total":"\"250\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    },
+    {
+      "query_id": "Q012",
+      "question": "What is the average price of all products?",
+      "type": "aggregation",
+      "result": [
+{"avgPrice":"\"484.6262\"^^http://www.w3.org/2001/XMLSchema#decimal"}
+]
+    },
+    {
+      "query_id": "Q013",
+      "question": "What is the average price of Electronics products?",
+      "type": "aggregation",
+      "result": [
+{"avgPrice":"\"1402.9563414634147\"^^http://www.w3.org/2001/XMLSchema#decimal"}
+]
+    },
+    {
+      "query_id": "Q014",
+      "question": "How many products are out of stock?",
+      "type": "aggregation",
+      "result": [
+{"count":"\"20\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    },
+    {
+      "query_id": "Q015",
+      "question": "What is the total inventory value? (sum of price × stock for all products)",
+      "type": "aggregation",
+      "result": [
+{"totalValue":"\"5524437.21\"^^http://www.w3.org/2001/XMLSchema#decimal"}
+]
+    },
+    {
+      "query_id": "Q016",
+      "question": "What is the most expensive product price?",
+      "type": "aggregation",
+      "result": [
+{"maxPrice":"\"2988.25\"^^http://www.w3.org/2001/XMLSchema#decimal"}
+]
+    },
+    {
+      "query_id": "Q017",
+      "question": "What is the cheapest product price?",
+      "type": "aggregation",
+      "result": [
+{"minPrice":"\"12.34\"^^http://www.w3.org/2001/XMLSchema#decimal"}
+]
+    },
+    {
+      "query_id": "Q018",
+      "question": "How many different brands are in the catalog?",
+      "type": "aggregation",
+      "result": [
+{"brandCount":"\"40\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    },
+    {
+      "query_id": "Q019",
+      "question": "How many products does the brand Apple have?",
+      "type": "aggregation",
+      "result": [
+{"count":"\"5\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    },
+    {
+      "query_id": "Q020",
+      "question": "Which category has the most products?",
+      "type": "aggregation",
+      "result": [
+{"categoryName":"\"Toys\"","count":"\"45\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    },
+    {
+      "query_id": "Q021",
+      "question": "What products are related to product P001?",
+      "type": "traversal",
+      "result": 
+    },
+    {
+      "query_id": "Q022",
+      "question": "Find all products from the same brand as P010.",
+      "type": "traversal",
+      "result": 
+    },
+    {
+      "query_id": "Q023",
+      "question": "Find all products in the same category as P020.",
+      "type": "traversal",
+      "result": 
+    },
+    {
+      "query_id": "Q024",
+      "question": "Which brands make products in both Electronics and Clothing categories?",
+      "type": "traversal",
+      "result": [
+]
+    },
+    {
+      "query_id": "Q025",
+      "question": "Find products with similar prices to P005 (within 10% range).",
+      "type": "traversal",
+      "result": 
+    },
+    {
+      "query_id": "Q026",
+      "question": "What products share related products with P001? (products related to P001's related products)",
+      "type": "traversal",
+      "result": 
+    },
+    {
+      "query_id": "Q027",
+      "question": "Find brands that have products priced over $1000.",
+      "type": "traversal",
+      "result": [
+{"brandName":"\"Apple\""},
+{"brandName":"\"Black & Decker\""},
+{"brandName":"\"Bosch\""},
+{"brandName":"\"Bose\""},
+{"brandName":"\"Canon\""},
+{"brandName":"\"Cuisinart\""},
+{"brandName":"\"Dell\""},
+{"brandName":"\"DeWalt\""},
+{"brandName":"\"HP\""},
+{"brandName":"\"IKEA\""},
+{"brandName":"\"JBL\""},
+{"brandName":"\"KitchenAid\""},
+{"brandName":"\"Lenovo\""},
+{"brandName":"\"Nikon\""},
+{"brandName":"\"Samsung\""},
+{"brandName":"\"Sony\""}
+]
+    },
+    {
+      "query_id": "Q028",
+      "question": "Which products in the Electronics category are from the brand Canon?",
+      "type": "traversal",
+      "result": [
+{"id":"\"P002\"","price":"\"262.08\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Canon Lumix GH6\""},
+{"id":"\"P003\"","price":"\"2780.57\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Canon WH-1000XM5\""},
+{"id":"\"P006\"","price":"\"544.38\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Canon Studio Wireless\""},
+{"id":"\"P008\"","price":"\"2639.64\"^^http://www.w3.org/2001/XMLSchema#decimal","name":"\"Canon iPhone 15 Pro\""}
+]
+    },
+    {
+      "query_id": "Q029",
+      "question": "Find the top 3 most expensive products in the Sports category.",
+      "type": "traversal",
+      "result": [
+{"price":"\"866.01\"^^http://www.w3.org/2001/XMLSchema#decimal","id":"\"P129\"","name":"\"Spalding Tennis Racket\""},
+{"price":"\"865.03\"^^http://www.w3.org/2001/XMLSchema#decimal","id":"\"P159\"","name":"\"Under Armour Mountain Bike Premium\""},
+{"price":"\"781.81\"^^http://www.w3.org/2001/XMLSchema#decimal","id":"\"P135\"","name":"\"Wilson Football\""}
+]
+    },
+    {
+      "query_id": "Q030",
+      "question": "How many products does each brand have, for brands with more than 5 products?",
+      "type": "traversal",
+      "result": [
+{"brandName":"\"Nike\"","count":"\"11\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Under Armour\"","count":"\"11\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Adidas\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Coleman\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"KitchenAid\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Penguin\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Melissa & Doug\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"DeWalt\"","count":"\"10\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Fisher-Price\"","count":"\"9\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Hasbro\"","count":"\"9\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Simon & Schuster\"","count":"\"9\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Oxford\"","count":"\"9\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Cuisinart\"","count":"\"8\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"H&M\"","count":"\"8\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Random House\"","count":"\"8\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Uniqlo\"","count":"\"8\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Playmobil\"","count":"\"7\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Samsung\"","count":"\"7\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"LEGO\"","count":"\"6\"^^http://www.w3.org/2001/XMLSchema#integer"},
+{"brandName":"\"Puma\"","count":"\"6\"^^http://www.w3.org/2001/XMLSchema#integer"}
+]
+    }
+  ]
+}

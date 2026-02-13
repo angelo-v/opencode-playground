@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@comunica/query-sparql-file": "^5.1.3"
+  }
+}

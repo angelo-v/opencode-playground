@@ -1,0 +1,3485 @@
+{
+  "products": [
+    {
+      "id": "P001",
+      "name": "JBL WH-1000XM5",
+      "description": "A high-quality headphones from JBL, designed for professionals.",
+      "price": 192.06,
+      "currency": "USD",
+      "brand": "JBL",
+      "category": "Electronics",
+      "subcategory": "Headphones",
+      "stock": 54,
+      "related": [
+        "P025",
+        "P024"
+      ]
+    },
+    {
+      "id": "P002",
+      "name": "Canon Lumix GH6",
+      "description": "A premium cameras from Canon, with long battery life.",
+      "price": 262.08,
+      "currency": "USD",
+      "brand": "Canon",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 12,
+      "related": [
+        "P017",
+        "P006"
+      ]
+    },
+    {
+      "id": "P003",
+      "name": "Canon WH-1000XM5",
+      "description": "A professional headphones from Canon, with advanced features.",
+      "price": 2780.57,
+      "currency": "USD",
+      "brand": "Canon",
+      "category": "Electronics",
+      "subcategory": "Headphones",
+      "stock": 29,
+      "related": [
+        "P040"
+      ]
+    },
+    {
+      "id": "P004",
+      "name": "Nikon Surface Pro",
+      "description": "A professional tablets from Nikon, with long battery life.",
+      "price": 218.49,
+      "currency": "USD",
+      "brand": "Nikon",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 41,
+      "related": [
+        "P017",
+        "P039"
+      ]
+    },
+    {
+      "id": "P005",
+      "name": "JBL Galaxy S24",
+      "description": "A high-quality smartphones from JBL, designed for professionals.",
+      "price": 1675.88,
+      "currency": "USD",
+      "brand": "JBL",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 4,
+      "related": [
+        "P013"
+      ]
+    },
+    {
+      "id": "P006",
+      "name": "Canon Studio Wireless",
+      "description": "A innovative headphones from Canon, with long battery life.",
+      "price": 544.38,
+      "currency": "USD",
+      "brand": "Canon",
+      "category": "Electronics",
+      "subcategory": "Headphones",
+      "stock": 12,
+      "related": []
+    },
+    {
+      "id": "P007",
+      "name": "Bose Alpha A7",
+      "description": "A innovative cameras from Bose, with advanced features.",
+      "price": 2368.16,
+      "currency": "USD",
+      "brand": "Bose",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 85,
+      "related": [
+        "P038",
+        "P019",
+        "P027"
+      ]
+    },
+    {
+      "id": "P008",
+      "name": "Canon iPhone 15 Pro",
+      "description": "A innovative smartphones from Canon, featuring latest technology.",
+      "price": 2639.64,
+      "currency": "USD",
+      "brand": "Canon",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 66,
+      "related": []
+    },
+    {
+      "id": "P009",
+      "name": "Sony iPad Air",
+      "description": "A professional tablets from Sony, with long battery life.",
+      "price": 1433.79,
+      "currency": "USD",
+      "brand": "Sony",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 18,
+      "related": []
+    },
+    {
+      "id": "P010",
+      "name": "Sony ThinkPad X1 Carbon",
+      "description": "A stylish laptops from Sony, featuring latest technology.",
+      "price": 2476.71,
+      "currency": "USD",
+      "brand": "Sony",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 90,
+      "related": []
+    },
+    {
+      "id": "P011",
+      "name": "Apple MacBook Pro",
+      "description": null,
+      "price": 2314.85,
+      "currency": "USD",
+      "brand": "Apple",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 92,
+      "related": [
+        "P002"
+      ]
+    },
+    {
+      "id": "P012",
+      "name": "Dell Surface Pro",
+      "description": "A premium tablets from Dell, designed for professionals.",
+      "price": 108.42,
+      "currency": "USD",
+      "brand": "Dell",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 20,
+      "related": [
+        "P016",
+        "P006"
+      ]
+    },
+    {
+      "id": "P013",
+      "name": "HP Surface Laptop",
+      "description": "A stylish laptops from HP, with advanced features.",
+      "price": 1722.89,
+      "currency": "USD",
+      "brand": "HP",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 75,
+      "related": [
+        "P018",
+        "P029",
+        "P007"
+      ]
+    },
+    {
+      "id": "P014",
+      "name": "Bose Galaxy Tab Ultra",
+      "description": "A innovative tablets from Bose, with long battery life.",
+      "price": 1592.02,
+      "currency": "USD",
+      "brand": "Bose",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 32,
+      "related": []
+    },
+    {
+      "id": "P015",
+      "name": "Samsung AirPods Pro",
+      "description": null,
+      "price": 356.07,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Headphones",
+      "stock": 97,
+      "related": [
+        "P036",
+        "P039",
+        "P008"
+      ]
+    },
+    {
+      "id": "P016",
+      "name": "Dell Fire HD",
+      "description": "A stylish tablets from Dell, designed for professionals.",
+      "price": 652.05,
+      "currency": "USD",
+      "brand": "Dell",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 14,
+      "related": []
+    },
+    {
+      "id": "P017",
+      "name": "Apple iPad Air Deluxe",
+      "description": "A innovative tablets from Apple, designed for professionals.",
+      "price": 1951.72,
+      "currency": "USD",
+      "brand": "Apple",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 52,
+      "related": []
+    },
+    {
+      "id": "P018",
+      "name": "Nikon Fire HD",
+      "description": "A reliable tablets from Nikon, with advanced features.",
+      "price": 1813.65,
+      "currency": "USD",
+      "brand": "Nikon",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 53,
+      "related": [
+        "P006",
+        "P030",
+        "P007"
+      ]
+    },
+    {
+      "id": "P019",
+      "name": "HP Z9",
+      "description": "A professional cameras from HP, with advanced features.",
+      "price": 1427.15,
+      "currency": "USD",
+      "brand": "HP",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 5,
+      "related": []
+    },
+    {
+      "id": "P020",
+      "name": "HP X-T5",
+      "description": "A reliable cameras from HP, featuring latest technology.",
+      "price": 2544.05,
+      "currency": "USD",
+      "brand": "HP",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 29,
+      "related": [
+        "P010",
+        "P005",
+        "P011"
+      ]
+    },
+    {
+      "id": "P021",
+      "name": "HP Lumix GH6 Elite",
+      "description": "A professional cameras from HP, designed for professionals.",
+      "price": 2285.25,
+      "currency": "USD",
+      "brand": "HP",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 31,
+      "related": []
+    },
+    {
+      "id": "P022",
+      "name": "Lenovo ThinkPad X1 Carbon Plus",
+      "description": "A high-quality laptops from Lenovo, with advanced features.",
+      "price": 101.46,
+      "currency": "USD",
+      "brand": "Lenovo",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 0,
+      "related": []
+    },
+    {
+      "id": "P023",
+      "name": "JBL Alpha A7 Elite",
+      "description": "A innovative cameras from JBL, featuring latest technology.",
+      "price": 1381.29,
+      "currency": "USD",
+      "brand": "JBL",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 0,
+      "related": []
+    },
+    {
+      "id": "P024",
+      "name": "Samsung Xperia 5",
+      "description": "A stylish smartphones from Samsung, with long battery life.",
+      "price": 1186.78,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 43,
+      "related": [
+        "P025",
+        "P040",
+        "P032"
+      ]
+    },
+    {
+      "id": "P025",
+      "name": "Samsung iPhone 15 Pro",
+      "description": "A high-quality smartphones from Samsung, featuring latest technology.",
+      "price": 1287.88,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 63,
+      "related": []
+    },
+    {
+      "id": "P026",
+      "name": "Dell EOS R5",
+      "description": null,
+      "price": 2823.77,
+      "currency": "USD",
+      "brand": "Dell",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 19,
+      "related": []
+    },
+    {
+      "id": "P027",
+      "name": "Samsung Alpha A7",
+      "description": "A stylish cameras from Samsung, featuring latest technology.",
+      "price": 162.2,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 64,
+      "related": []
+    },
+    {
+      "id": "P028",
+      "name": "Bose X-T5",
+      "description": "A innovative cameras from Bose, featuring latest technology.",
+      "price": 1214.05,
+      "currency": "USD",
+      "brand": "Bose",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 41,
+      "related": [
+        "P030",
+        "P031",
+        "P041"
+      ]
+    },
+    {
+      "id": "P029",
+      "name": "Sony X-T5 Plus",
+      "description": "A innovative cameras from Sony, with advanced features.",
+      "price": 1685.69,
+      "currency": "USD",
+      "brand": "Sony",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 21,
+      "related": []
+    },
+    {
+      "id": "P030",
+      "name": "Apple EOS R5 Premium",
+      "description": "A reliable cameras from Apple, with long battery life.",
+      "price": 1260.64,
+      "currency": "USD",
+      "brand": "Apple",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 98,
+      "related": []
+    },
+    {
+      "id": "P031",
+      "name": "Samsung Dell XPS",
+      "description": null,
+      "price": 2700.34,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 67,
+      "related": []
+    },
+    {
+      "id": "P032",
+      "name": "HP Lumix GH6",
+      "description": "A innovative cameras from HP, with long battery life.",
+      "price": 357.49,
+      "currency": "USD",
+      "brand": "HP",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 72,
+      "related": [
+        "P020",
+        "P029",
+        "P040"
+      ]
+    },
+    {
+      "id": "P033",
+      "name": "Samsung Alpha A7",
+      "description": "A reliable cameras from Samsung, featuring latest technology.",
+      "price": 1729.14,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 28,
+      "related": [
+        "P027",
+        "P020"
+      ]
+    },
+    {
+      "id": "P034",
+      "name": "Nikon Z9 Elite",
+      "description": "A innovative cameras from Nikon, with long battery life.",
+      "price": 555.27,
+      "currency": "USD",
+      "brand": "Nikon",
+      "category": "Electronics",
+      "subcategory": "Cameras",
+      "stock": 1,
+      "related": [
+        "P004",
+        "P025",
+        "P026"
+      ]
+    },
+    {
+      "id": "P035",
+      "name": "Samsung Galaxy Tab",
+      "description": "A reliable tablets from Samsung, with long battery life.",
+      "price": 554.51,
+      "currency": "USD",
+      "brand": "Samsung",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 22,
+      "related": [
+        "P001",
+        "P018",
+        "P036"
+      ]
+    },
+    {
+      "id": "P036",
+      "name": "Lenovo Dell XPS Ultra",
+      "description": "A high-quality laptops from Lenovo, designed for professionals.",
+      "price": 2696.77,
+      "currency": "USD",
+      "brand": "Lenovo",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 32,
+      "related": [
+        "P013"
+      ]
+    },
+    {
+      "id": "P037",
+      "name": "Bose Fire HD Plus",
+      "description": "A professional tablets from Bose, with advanced features.",
+      "price": 1114.11,
+      "currency": "USD",
+      "brand": "Bose",
+      "category": "Electronics",
+      "subcategory": "Tablets",
+      "stock": 75,
+      "related": []
+    },
+    {
+      "id": "P038",
+      "name": "JBL Elite Ultra",
+      "description": "A stylish headphones from JBL, with long battery life.",
+      "price": 2988.25,
+      "currency": "USD",
+      "brand": "JBL",
+      "category": "Electronics",
+      "subcategory": "Headphones",
+      "stock": 76,
+      "related": []
+    },
+    {
+      "id": "P039",
+      "name": "Nikon Surface Laptop",
+      "description": "A stylish laptops from Nikon, designed for professionals.",
+      "price": 1160.02,
+      "currency": "USD",
+      "brand": "Nikon",
+      "category": "Electronics",
+      "subcategory": "Laptops",
+      "stock": 27,
+      "related": [
+        "P038"
+      ]
+    },
+    {
+      "id": "P040",
+      "name": "Apple Xperia 5",
+      "description": "A professional smartphones from Apple, with long battery life.",
+      "price": 435.95,
+      "currency": "USD",
+      "brand": "Apple",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 25,
+      "related": [
+        "P018"
+      ]
+    },
+    {
+      "id": "P041",
+      "name": "Apple iPhone 15 Pro",
+      "description": "A premium smartphones from Apple, with advanced features.",
+      "price": 765.72,
+      "currency": "USD",
+      "brand": "Apple",
+      "category": "Electronics",
+      "subcategory": "Smartphones",
+      "stock": 56,
+      "related": [
+        "P011",
+        "P012",
+        "P002"
+      ]
+    },
+    {
+      "id": "P042",
+      "name": "H&M Leather Jacket",
+      "description": "A premium jackets from H&M, comfortable fit.",
+      "price": 238.27,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 61,
+      "related": [
+        "P071",
+        "P073",
+        "P068"
+      ]
+    },
+    {
+      "id": "P043",
+      "name": "Adidas Running Shoes",
+      "description": "A premium shoes from Adidas, timeless style.",
+      "price": 185.63,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 10,
+      "related": [
+        "P074",
+        "P076"
+      ]
+    },
+    {
+      "id": "P044",
+      "name": "H&M Summer Dress",
+      "description": "A innovative dresses from H&M, made from quality materials.",
+      "price": 145.21,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 2,
+      "related": [
+        "P042"
+      ]
+    },
+    {
+      "id": "P045",
+      "name": "Levi's Jeans Ultra",
+      "description": "A innovative pants from Levi's, perfect for any occasion.",
+      "price": 131.79,
+      "currency": "USD",
+      "brand": "Levi's",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 35,
+      "related": [
+        "P066"
+      ]
+    },
+    {
+      "id": "P046",
+      "name": "Puma Dress Pants",
+      "description": "A premium pants from Puma, comfortable fit.",
+      "price": 251.75,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 29,
+      "related": [
+        "P049",
+        "P068"
+      ]
+    },
+    {
+      "id": "P047",
+      "name": "Nike Maxi Dress",
+      "description": "A reliable dresses from Nike, made from quality materials.",
+      "price": 210.09,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 27,
+      "related": [
+        "P056"
+      ]
+    },
+    {
+      "id": "P048",
+      "name": "Puma Cocktail Dress",
+      "description": null,
+      "price": 177.82,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 39,
+      "related": [
+        "P079",
+        "P070"
+      ]
+    },
+    {
+      "id": "P049",
+      "name": "Zara Dress Pants",
+      "description": "A stylish pants from Zara, perfect for any occasion.",
+      "price": 24.9,
+      "currency": "USD",
+      "brand": "Zara",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 64,
+      "related": []
+    },
+    {
+      "id": "P050",
+      "name": "Uniqlo Jeans Elite",
+      "description": "A high-quality pants from Uniqlo, timeless style.",
+      "price": 292.3,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 80,
+      "related": []
+    },
+    {
+      "id": "P051",
+      "name": "Uniqlo Loafers",
+      "description": "A innovative shoes from Uniqlo, made from quality materials.",
+      "price": 247.08,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 33,
+      "related": [
+        "P053",
+        "P080"
+      ]
+    },
+    {
+      "id": "P052",
+      "name": "Nike Parka Max",
+      "description": "A professional jackets from Nike, timeless style.",
+      "price": 133.63,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 65,
+      "related": []
+    },
+    {
+      "id": "P053",
+      "name": "H&M Sandals Plus",
+      "description": "A innovative shoes from H&M, made from quality materials.",
+      "price": 185.81,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 15,
+      "related": [
+        "P076"
+      ]
+    },
+    {
+      "id": "P054",
+      "name": "Adidas Windbreaker",
+      "description": "A stylish jackets from Adidas, timeless style.",
+      "price": 135.73,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 53,
+      "related": [
+        "P043",
+        "P048",
+        "P064"
+      ]
+    },
+    {
+      "id": "P055",
+      "name": "Nike Jeans",
+      "description": "A premium pants from Nike, perfect for any occasion.",
+      "price": 222.18,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 4,
+      "related": []
+    },
+    {
+      "id": "P056",
+      "name": "H&M Evening Gown",
+      "description": "A durable dresses from H&M, timeless style.",
+      "price": 86.26,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 14,
+      "related": [
+        "P078"
+      ]
+    },
+    {
+      "id": "P057",
+      "name": "H&M Bomber Pro",
+      "description": "A high-quality jackets from H&M, timeless style.",
+      "price": 129.1,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 90,
+      "related": [
+        "P067"
+      ]
+    },
+    {
+      "id": "P058",
+      "name": "Uniqlo Chinos",
+      "description": "A high-quality pants from Uniqlo, made from quality materials.",
+      "price": 155.62,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 18,
+      "related": []
+    },
+    {
+      "id": "P059",
+      "name": "Uniqlo Classic Fit",
+      "description": "A premium shirts from Uniqlo, perfect for any occasion.",
+      "price": 235.85,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Shirts",
+      "stock": 23,
+      "related": [
+        "P082",
+        "P076"
+      ]
+    },
+    {
+      "id": "P060",
+      "name": "H&M Parka",
+      "description": "A stylish jackets from H&M, perfect for any occasion.",
+      "price": 103.57,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 20,
+      "related": []
+    },
+    {
+      "id": "P061",
+      "name": "Nike Bomber",
+      "description": "A stylish jackets from Nike, perfect for any occasion.",
+      "price": 19.57,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 5,
+      "related": [
+        "P049",
+        "P046"
+      ]
+    },
+    {
+      "id": "P062",
+      "name": "Puma Dress Pants",
+      "description": "A high-quality pants from Puma, timeless style.",
+      "price": 45.6,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 8,
+      "related": [
+        "P045",
+        "P071",
+        "P070"
+      ]
+    },
+    {
+      "id": "P063",
+      "name": "Zara Boots",
+      "description": "A reliable shoes from Zara, timeless style.",
+      "price": 290.87,
+      "currency": "USD",
+      "brand": "Zara",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 89,
+      "related": [
+        "P081",
+        "P058",
+        "P074"
+      ]
+    },
+    {
+      "id": "P064",
+      "name": "Puma Sandals",
+      "description": "A high-quality shoes from Puma, comfortable fit.",
+      "price": 282.61,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 88,
+      "related": [
+        "P062",
+        "P063"
+      ]
+    },
+    {
+      "id": "P065",
+      "name": "Levi's Boots",
+      "description": "A professional shoes from Levi's, timeless style.",
+      "price": 160.2,
+      "currency": "USD",
+      "brand": "Levi's",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 23,
+      "related": [
+        "P067"
+      ]
+    },
+    {
+      "id": "P066",
+      "name": "Puma T-Shirt",
+      "description": "A durable shirts from Puma, made from quality materials.",
+      "price": 54.03,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Shirts",
+      "stock": 71,
+      "related": []
+    },
+    {
+      "id": "P067",
+      "name": "Uniqlo Boots",
+      "description": "A professional shoes from Uniqlo, timeless style.",
+      "price": 72.23,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 76,
+      "related": [
+        "P075",
+        "P081",
+        "P077"
+      ]
+    },
+    {
+      "id": "P068",
+      "name": "H&M T-Shirt",
+      "description": "A premium shirts from H&M, made from quality materials.",
+      "price": 150.93,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Shirts",
+      "stock": 33,
+      "related": []
+    },
+    {
+      "id": "P069",
+      "name": "Gap Denim Jacket",
+      "description": "A innovative jackets from Gap, comfortable fit.",
+      "price": 164,
+      "currency": "USD",
+      "brand": "Gap",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 11,
+      "related": [
+        "P049",
+        "P054"
+      ]
+    },
+    {
+      "id": "P070",
+      "name": "Uniqlo Denim Jacket",
+      "description": "A stylish jackets from Uniqlo, timeless style.",
+      "price": 24.1,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 3,
+      "related": [
+        "P054",
+        "P056",
+        "P080"
+      ]
+    },
+    {
+      "id": "P071",
+      "name": "Uniqlo Bomber Premium",
+      "description": "A professional jackets from Uniqlo, perfect for any occasion.",
+      "price": 146.76,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 0,
+      "related": [
+        "P042",
+        "P076",
+        "P062"
+      ]
+    },
+    {
+      "id": "P072",
+      "name": "Nike Dress Pants Ultra",
+      "description": "A reliable pants from Nike, made from quality materials.",
+      "price": 163.17,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 86,
+      "related": [
+        "P060",
+        "P047"
+      ]
+    },
+    {
+      "id": "P073",
+      "name": "Levi's Bomber Plus",
+      "description": "A innovative jackets from Levi's, comfortable fit.",
+      "price": 52.28,
+      "currency": "USD",
+      "brand": "Levi's",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 34,
+      "related": [
+        "P049",
+        "P078",
+        "P081"
+      ]
+    },
+    {
+      "id": "P074",
+      "name": "Uniqlo Bomber",
+      "description": "A high-quality jackets from Uniqlo, timeless style.",
+      "price": 217.51,
+      "currency": "USD",
+      "brand": "Uniqlo",
+      "category": "Clothing",
+      "subcategory": "Jackets",
+      "stock": 96,
+      "related": [
+        "P058",
+        "P045"
+      ]
+    },
+    {
+      "id": "P075",
+      "name": "Puma Cocktail Dress",
+      "description": "A professional dresses from Puma, perfect for any occasion.",
+      "price": 183.2,
+      "currency": "USD",
+      "brand": "Puma",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 31,
+      "related": []
+    },
+    {
+      "id": "P076",
+      "name": "Adidas Dress Pants Ultra",
+      "description": "A reliable pants from Adidas, timeless style.",
+      "price": 183.01,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 37,
+      "related": [
+        "P042",
+        "P065"
+      ]
+    },
+    {
+      "id": "P077",
+      "name": "Levi's T-Shirt",
+      "description": "A durable shirts from Levi's, perfect for any occasion.",
+      "price": 107.22,
+      "currency": "USD",
+      "brand": "Levi's",
+      "category": "Clothing",
+      "subcategory": "Shirts",
+      "stock": 2,
+      "related": [
+        "P054"
+      ]
+    },
+    {
+      "id": "P078",
+      "name": "H&M Jeans",
+      "description": "A reliable pants from H&M, comfortable fit.",
+      "price": 140.87,
+      "currency": "USD",
+      "brand": "H&M",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 67,
+      "related": []
+    },
+    {
+      "id": "P079",
+      "name": "Zara Loafers Premium",
+      "description": "A durable shoes from Zara, comfortable fit.",
+      "price": 156.06,
+      "currency": "USD",
+      "brand": "Zara",
+      "category": "Clothing",
+      "subcategory": "Shoes",
+      "stock": 9,
+      "related": [
+        "P082"
+      ]
+    },
+    {
+      "id": "P080",
+      "name": "Gap Cocktail Dress Premium",
+      "description": "A reliable dresses from Gap, timeless style.",
+      "price": 241.5,
+      "currency": "USD",
+      "brand": "Gap",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 18,
+      "related": [
+        "P043",
+        "P057"
+      ]
+    },
+    {
+      "id": "P081",
+      "name": "Adidas Maxi Dress",
+      "description": "A professional dresses from Adidas, timeless style.",
+      "price": 29.66,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Clothing",
+      "subcategory": "Dresses",
+      "stock": 60,
+      "related": []
+    },
+    {
+      "id": "P082",
+      "name": "Adidas Jeans",
+      "description": "A durable pants from Adidas, perfect for any occasion.",
+      "price": 146.64,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Clothing",
+      "subcategory": "Pants",
+      "stock": 33,
+      "related": []
+    },
+    {
+      "id": "P083",
+      "name": "Cuisinart Coffee Maker",
+      "description": "A premium kitchen from Cuisinart, built to last.",
+      "price": 56.52,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 0,
+      "related": [
+        "P094"
+      ]
+    },
+    {
+      "id": "P084",
+      "name": "DeWalt Food Processor",
+      "description": "A durable kitchen from DeWalt, space-saving design.",
+      "price": 882.81,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 74,
+      "related": [
+        "P110"
+      ]
+    },
+    {
+      "id": "P085",
+      "name": "Black & Decker Toolbox Elite",
+      "description": "A high-quality tools from Black & Decker, built to last.",
+      "price": 713.6,
+      "currency": "USD",
+      "brand": "Black & Decker",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 29,
+      "related": [
+        "P092",
+        "P122"
+      ]
+    },
+    {
+      "id": "P086",
+      "name": "KitchenAid Comforter",
+      "description": null,
+      "price": 1310.06,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 87,
+      "related": [
+        "P097",
+        "P102",
+        "P083"
+      ]
+    },
+    {
+      "id": "P087",
+      "name": "DeWalt Lamp",
+      "description": "A premium decor from DeWalt, built to last.",
+      "price": 377.77,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 97,
+      "related": [
+        "P094",
+        "P118"
+      ]
+    },
+    {
+      "id": "P088",
+      "name": "KitchenAid Stand Mixer",
+      "description": "A professional kitchen from KitchenAid, modern aesthetic.",
+      "price": 570.26,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 99,
+      "related": [
+        "P114",
+        "P109",
+        "P108"
+      ]
+    },
+    {
+      "id": "P089",
+      "name": "DeWalt Dining Table",
+      "description": "A durable furniture from DeWalt, easy to assemble.",
+      "price": 759.97,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Furniture",
+      "stock": 46,
+      "related": [
+        "P111",
+        "P090",
+        "P103"
+      ]
+    },
+    {
+      "id": "P090",
+      "name": "Black & Decker Wall Art",
+      "description": "A professional decor from Black & Decker, modern aesthetic.",
+      "price": 347.03,
+      "currency": "USD",
+      "brand": "Black & Decker",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 84,
+      "related": [
+        "P092"
+      ]
+    },
+    {
+      "id": "P091",
+      "name": "KitchenAid Comforter",
+      "description": "A reliable bedding from KitchenAid, easy to assemble.",
+      "price": 1440.05,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 49,
+      "related": []
+    },
+    {
+      "id": "P092",
+      "name": "KitchenAid Saw",
+      "description": "A stylish tools from KitchenAid, built to last.",
+      "price": 1199.19,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 45,
+      "related": []
+    },
+    {
+      "id": "P093",
+      "name": "Cuisinart Pillow",
+      "description": "A durable bedding from Cuisinart, easy to assemble.",
+      "price": 552.51,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 9,
+      "related": [
+        "P088",
+        "P111",
+        "P102"
+      ]
+    },
+    {
+      "id": "P094",
+      "name": "DeWalt Rug",
+      "description": "A reliable decor from DeWalt, built to last.",
+      "price": 1493.64,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 7,
+      "related": [
+        "P113"
+      ]
+    },
+    {
+      "id": "P095",
+      "name": "Black & Decker Coffee Maker",
+      "description": "A stylish kitchen from Black & Decker, easy to assemble.",
+      "price": 101.07,
+      "currency": "USD",
+      "brand": "Black & Decker",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 0,
+      "related": [
+        "P120",
+        "P099"
+      ]
+    },
+    {
+      "id": "P096",
+      "name": "DeWalt Duvet Cover",
+      "description": "A professional bedding from DeWalt, easy to assemble.",
+      "price": 704.6,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 94,
+      "related": []
+    },
+    {
+      "id": "P097",
+      "name": "KitchenAid Toolbox",
+      "description": "A innovative tools from KitchenAid, easy to assemble.",
+      "price": 1402.94,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 4,
+      "related": [
+        "P112",
+        "P102",
+        "P086"
+      ]
+    },
+    {
+      "id": "P098",
+      "name": "Black & Decker Ladder",
+      "description": "A reliable tools from Black & Decker, easy to assemble.",
+      "price": 1084.2,
+      "currency": "USD",
+      "brand": "Black & Decker",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 18,
+      "related": []
+    },
+    {
+      "id": "P099",
+      "name": "IKEA Mattress Pad",
+      "description": "A reliable bedding from IKEA, built to last.",
+      "price": 1358.93,
+      "currency": "USD",
+      "brand": "IKEA",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 54,
+      "related": [
+        "P083",
+        "P112"
+      ]
+    },
+    {
+      "id": "P100",
+      "name": "Bosch Blender",
+      "description": "A stylish kitchen from Bosch, modern aesthetic.",
+      "price": 1389.3,
+      "currency": "USD",
+      "brand": "Bosch",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 84,
+      "related": []
+    },
+    {
+      "id": "P101",
+      "name": "KitchenAid Mattress Pad Ultra",
+      "description": "A high-quality bedding from KitchenAid, easy to assemble.",
+      "price": 1122.89,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 35,
+      "related": [
+        "P116",
+        "P083",
+        "P093"
+      ]
+    },
+    {
+      "id": "P102",
+      "name": "IKEA Lamp Deluxe",
+      "description": "A stylish decor from IKEA, built to last.",
+      "price": 1175.96,
+      "currency": "USD",
+      "brand": "IKEA",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 34,
+      "related": []
+    },
+    {
+      "id": "P103",
+      "name": "KitchenAid Drill",
+      "description": "A premium tools from KitchenAid, space-saving design.",
+      "price": 303.02,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 95,
+      "related": []
+    },
+    {
+      "id": "P104",
+      "name": "KitchenAid Food Processor",
+      "description": "A durable kitchen from KitchenAid, space-saving design.",
+      "price": 1464.66,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 7,
+      "related": [
+        "P095"
+      ]
+    },
+    {
+      "id": "P105",
+      "name": "Cuisinart Sofa Max",
+      "description": "A reliable furniture from Cuisinart, built to last.",
+      "price": 1011.04,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Furniture",
+      "stock": 3,
+      "related": []
+    },
+    {
+      "id": "P106",
+      "name": "Cuisinart Bookshelf Plus",
+      "description": "A durable furniture from Cuisinart, easy to assemble.",
+      "price": 716,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Furniture",
+      "stock": 68,
+      "related": []
+    },
+    {
+      "id": "P107",
+      "name": "DeWalt Vase",
+      "description": "A premium decor from DeWalt, built to last.",
+      "price": 880.11,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 58,
+      "related": [
+        "P123",
+        "P118",
+        "P088"
+      ]
+    },
+    {
+      "id": "P108",
+      "name": "DeWalt Ladder",
+      "description": "A premium tools from DeWalt, space-saving design.",
+      "price": 1199.5,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 79,
+      "related": [
+        "P102",
+        "P117",
+        "P091"
+      ]
+    },
+    {
+      "id": "P109",
+      "name": "Bosch Comforter",
+      "description": "A reliable bedding from Bosch, built to last.",
+      "price": 293.66,
+      "currency": "USD",
+      "brand": "Bosch",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 95,
+      "related": []
+    },
+    {
+      "id": "P110",
+      "name": "Bosch Sheet Set",
+      "description": "A high-quality bedding from Bosch, easy to assemble.",
+      "price": 354.86,
+      "currency": "USD",
+      "brand": "Bosch",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 99,
+      "related": [
+        "P085"
+      ]
+    },
+    {
+      "id": "P111",
+      "name": "Cuisinart Bookshelf",
+      "description": "A durable furniture from Cuisinart, easy to assemble.",
+      "price": 1481.3,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Furniture",
+      "stock": 0,
+      "related": [
+        "P099",
+        "P120",
+        "P122"
+      ]
+    },
+    {
+      "id": "P112",
+      "name": "DeWalt Vase",
+      "description": "A durable decor from DeWalt, easy to assemble.",
+      "price": 703.37,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 93,
+      "related": [
+        "P110",
+        "P096",
+        "P102"
+      ]
+    },
+    {
+      "id": "P113",
+      "name": "KitchenAid Sheet Set",
+      "description": "A stylish bedding from KitchenAid, space-saving design.",
+      "price": 911.44,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 62,
+      "related": [
+        "P096",
+        "P104"
+      ]
+    },
+    {
+      "id": "P114",
+      "name": "DeWalt Vase Elite",
+      "description": null,
+      "price": 586.99,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 9,
+      "related": [
+        "P111",
+        "P094",
+        "P093"
+      ]
+    },
+    {
+      "id": "P115",
+      "name": "IKEA Vase",
+      "description": "A durable decor from IKEA, easy to assemble.",
+      "price": 358.61,
+      "currency": "USD",
+      "brand": "IKEA",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 5,
+      "related": []
+    },
+    {
+      "id": "P116",
+      "name": "KitchenAid Sheet Set",
+      "description": "A innovative bedding from KitchenAid, built to last.",
+      "price": 286.78,
+      "currency": "USD",
+      "brand": "KitchenAid",
+      "category": "Home & Garden",
+      "subcategory": "Bedding",
+      "stock": 20,
+      "related": []
+    },
+    {
+      "id": "P117",
+      "name": "Black & Decker Vase Plus",
+      "description": "A innovative decor from Black & Decker, space-saving design.",
+      "price": 706.06,
+      "currency": "USD",
+      "brand": "Black & Decker",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 34,
+      "related": [
+        "P106",
+        "P123"
+      ]
+    },
+    {
+      "id": "P118",
+      "name": "IKEA Toolbox Ultra",
+      "description": "A premium tools from IKEA, space-saving design.",
+      "price": 422.04,
+      "currency": "USD",
+      "brand": "IKEA",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 0,
+      "related": []
+    },
+    {
+      "id": "P119",
+      "name": "Cuisinart Wall Art",
+      "description": "A premium decor from Cuisinart, space-saving design.",
+      "price": 365.23,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Decor",
+      "stock": 37,
+      "related": [
+        "P117"
+      ]
+    },
+    {
+      "id": "P120",
+      "name": "Bosch Food Processor",
+      "description": null,
+      "price": 507.43,
+      "currency": "USD",
+      "brand": "Bosch",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 51,
+      "related": []
+    },
+    {
+      "id": "P121",
+      "name": "Cuisinart Blender",
+      "description": "A premium kitchen from Cuisinart, modern aesthetic.",
+      "price": 560.28,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Kitchen",
+      "stock": 10,
+      "related": []
+    },
+    {
+      "id": "P122",
+      "name": "Cuisinart Saw",
+      "description": "A premium tools from Cuisinart, space-saving design.",
+      "price": 297.96,
+      "currency": "USD",
+      "brand": "Cuisinart",
+      "category": "Home & Garden",
+      "subcategory": "Tools",
+      "stock": 59,
+      "related": []
+    },
+    {
+      "id": "P123",
+      "name": "DeWalt Sofa",
+      "description": "A stylish furniture from DeWalt, easy to assemble.",
+      "price": 1401.57,
+      "currency": "USD",
+      "brand": "DeWalt",
+      "category": "Home & Garden",
+      "subcategory": "Furniture",
+      "stock": 43,
+      "related": [
+        "P086"
+      ]
+    },
+    {
+      "id": "P124",
+      "name": "Adidas Football",
+      "description": "A reliable team sports from Adidas, lightweight and durable.",
+      "price": 541.68,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 84,
+      "related": [
+        "P130"
+      ]
+    },
+    {
+      "id": "P125",
+      "name": "Under Armour Yoga Mat",
+      "description": "A reliable fitness from Under Armour, performance-oriented.",
+      "price": 270.96,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 91,
+      "related": []
+    },
+    {
+      "id": "P126",
+      "name": "Coleman Paddleboard",
+      "description": "A durable water sports from Coleman, designed for athletes.",
+      "price": 186.43,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 43,
+      "related": []
+    },
+    {
+      "id": "P127",
+      "name": "Wilson Life Jacket",
+      "description": "A durable water sports from Wilson, performance-oriented.",
+      "price": 735,
+      "currency": "USD",
+      "brand": "Wilson",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 43,
+      "related": [
+        "P128",
+        "P140",
+        "P157"
+      ]
+    },
+    {
+      "id": "P128",
+      "name": "REI Treadmill",
+      "description": "A premium fitness from REI, performance-oriented.",
+      "price": 777.38,
+      "currency": "USD",
+      "brand": "REI",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 21,
+      "related": [
+        "P163",
+        "P144"
+      ]
+    },
+    {
+      "id": "P129",
+      "name": "Spalding Tennis Racket",
+      "description": "A reliable team sports from Spalding, all-weather.",
+      "price": 866.01,
+      "currency": "USD",
+      "brand": "Spalding",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 97,
+      "related": [
+        "P138",
+        "P140",
+        "P155"
+      ]
+    },
+    {
+      "id": "P130",
+      "name": "Nike Water Gun",
+      "description": "A professional outdoor from Nike, all-weather.",
+      "price": 645.67,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 28,
+      "related": [
+        "P139",
+        "P124"
+      ]
+    },
+    {
+      "id": "P131",
+      "name": "Coleman Football",
+      "description": "A stylish team sports from Coleman, designed for athletes.",
+      "price": 700.99,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 46,
+      "related": []
+    },
+    {
+      "id": "P132",
+      "name": "Nike Swing Set",
+      "description": "A reliable outdoor from Nike, all-weather.",
+      "price": 551.58,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 52,
+      "related": [
+        "P133"
+      ]
+    },
+    {
+      "id": "P133",
+      "name": "Under Armour Baseball Glove",
+      "description": "A durable team sports from Under Armour, all-weather.",
+      "price": 52.49,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 63,
+      "related": [
+        "P145",
+        "P129",
+        "P149"
+      ]
+    },
+    {
+      "id": "P134",
+      "name": "Nike Bike Lock",
+      "description": "A durable cycling from Nike, performance-oriented.",
+      "price": 682.43,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 41,
+      "related": [
+        "P129",
+        "P163"
+      ]
+    },
+    {
+      "id": "P135",
+      "name": "Wilson Football",
+      "description": "A stylish team sports from Wilson, performance-oriented.",
+      "price": 781.81,
+      "currency": "USD",
+      "brand": "Wilson",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 19,
+      "related": [
+        "P126",
+        "P131"
+      ]
+    },
+    {
+      "id": "P136",
+      "name": "Under Armour Yoga Mat Pro",
+      "description": null,
+      "price": 398.66,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 82,
+      "related": []
+    },
+    {
+      "id": "P137",
+      "name": "Under Armour Helmet",
+      "description": "A innovative cycling from Under Armour, performance-oriented.",
+      "price": 316.93,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 0,
+      "related": [
+        "P130"
+      ]
+    },
+    {
+      "id": "P138",
+      "name": "REI Soccer Ball Plus",
+      "description": "A stylish team sports from REI, performance-oriented.",
+      "price": 50.94,
+      "currency": "USD",
+      "brand": "REI",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 87,
+      "related": [
+        "P139",
+        "P154",
+        "P161"
+      ]
+    },
+    {
+      "id": "P139",
+      "name": "Under Armour Water Bottle Pro",
+      "description": null,
+      "price": 112.01,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 42,
+      "related": [
+        "P132",
+        "P157"
+      ]
+    },
+    {
+      "id": "P140",
+      "name": "Under Armour Basketball",
+      "description": "A stylish team sports from Under Armour, lightweight and durable.",
+      "price": 280.5,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 0,
+      "related": []
+    },
+    {
+      "id": "P141",
+      "name": "Coleman Kite",
+      "description": "A professional outdoor from Coleman, designed for athletes.",
+      "price": 175.22,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 2,
+      "related": []
+    },
+    {
+      "id": "P142",
+      "name": "Adidas Treadmill",
+      "description": "A high-quality fitness from Adidas, designed for athletes.",
+      "price": 211.02,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 0,
+      "related": [
+        "P146",
+        "P145"
+      ]
+    },
+    {
+      "id": "P143",
+      "name": "Spalding Football",
+      "description": null,
+      "price": 50.53,
+      "currency": "USD",
+      "brand": "Spalding",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 65,
+      "related": []
+    },
+    {
+      "id": "P144",
+      "name": "Coleman Resistance Bands",
+      "description": "A innovative fitness from Coleman, all-weather.",
+      "price": 430.38,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 8,
+      "related": [
+        "P132",
+        "P157",
+        "P146"
+      ]
+    },
+    {
+      "id": "P145",
+      "name": "Coleman Bike Lock",
+      "description": null,
+      "price": 748.77,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 99,
+      "related": [
+        "P144"
+      ]
+    },
+    {
+      "id": "P146",
+      "name": "Spalding Kayak",
+      "description": "A stylish water sports from Spalding, performance-oriented.",
+      "price": 289.16,
+      "currency": "USD",
+      "brand": "Spalding",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 14,
+      "related": [
+        "P139",
+        "P135"
+      ]
+    },
+    {
+      "id": "P147",
+      "name": "Adidas Yoga Mat",
+      "description": "A reliable fitness from Adidas, designed for athletes.",
+      "price": 156.28,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Sports",
+      "subcategory": "Fitness",
+      "stock": 38,
+      "related": []
+    },
+    {
+      "id": "P148",
+      "name": "Coleman Road Bike",
+      "description": "A high-quality cycling from Coleman, all-weather.",
+      "price": 138.08,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 0,
+      "related": [
+        "P128"
+      ]
+    },
+    {
+      "id": "P149",
+      "name": "Coleman Baseball Glove",
+      "description": "A durable team sports from Coleman, lightweight and durable.",
+      "price": 422.27,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 70,
+      "related": [
+        "P156",
+        "P159"
+      ]
+    },
+    {
+      "id": "P150",
+      "name": "Coleman Basketball Deluxe",
+      "description": "A innovative team sports from Coleman, performance-oriented.",
+      "price": 75.05,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Team Sports",
+      "stock": 60,
+      "related": [
+        "P144",
+        "P163"
+      ]
+    },
+    {
+      "id": "P151",
+      "name": "Adidas Frisbee",
+      "description": "A high-quality outdoor from Adidas, performance-oriented.",
+      "price": 256.91,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 36,
+      "related": []
+    },
+    {
+      "id": "P152",
+      "name": "Nike Paddleboard",
+      "description": "A high-quality water sports from Nike, performance-oriented.",
+      "price": 91.04,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 74,
+      "related": []
+    },
+    {
+      "id": "P153",
+      "name": "Under Armour Water Gun",
+      "description": "A reliable outdoor from Under Armour, lightweight and durable.",
+      "price": 289.87,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 25,
+      "related": [
+        "P139",
+        "P136",
+        "P124"
+      ]
+    },
+    {
+      "id": "P154",
+      "name": "Under Armour Water Gun",
+      "description": "A stylish outdoor from Under Armour, lightweight and durable.",
+      "price": 556.85,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 10,
+      "related": [
+        "P158",
+        "P161",
+        "P163"
+      ]
+    },
+    {
+      "id": "P155",
+      "name": "Nike Water Gun",
+      "description": "A innovative outdoor from Nike, lightweight and durable.",
+      "price": 644.07,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 34,
+      "related": []
+    },
+    {
+      "id": "P156",
+      "name": "Coleman Paddleboard",
+      "description": "A reliable water sports from Coleman, designed for athletes.",
+      "price": 666.03,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 59,
+      "related": [
+        "P125"
+      ]
+    },
+    {
+      "id": "P157",
+      "name": "Nike Wetsuit",
+      "description": "A durable water sports from Nike, performance-oriented.",
+      "price": 530.66,
+      "currency": "USD",
+      "brand": "Nike",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 71,
+      "related": [
+        "P155"
+      ]
+    },
+    {
+      "id": "P158",
+      "name": "Under Armour Mountain Bike",
+      "description": "A premium cycling from Under Armour, designed for athletes.",
+      "price": 31.08,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 84,
+      "related": []
+    },
+    {
+      "id": "P159",
+      "name": "Under Armour Mountain Bike Premium",
+      "description": "A premium cycling from Under Armour, all-weather.",
+      "price": 865.03,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 58,
+      "related": [
+        "P154",
+        "P134"
+      ]
+    },
+    {
+      "id": "P160",
+      "name": "Spalding Wetsuit",
+      "description": "A innovative water sports from Spalding, lightweight and durable.",
+      "price": 630.12,
+      "currency": "USD",
+      "brand": "Spalding",
+      "category": "Sports",
+      "subcategory": "Water Sports",
+      "stock": 0,
+      "related": []
+    },
+    {
+      "id": "P161",
+      "name": "Coleman Kite",
+      "description": "A reliable outdoor from Coleman, all-weather.",
+      "price": 622.12,
+      "currency": "USD",
+      "brand": "Coleman",
+      "category": "Sports",
+      "subcategory": "Outdoor",
+      "stock": 0,
+      "related": [
+        "P140"
+      ]
+    },
+    {
+      "id": "P162",
+      "name": "Adidas Bike Lock Max",
+      "description": null,
+      "price": 255.89,
+      "currency": "USD",
+      "brand": "Adidas",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 86,
+      "related": []
+    },
+    {
+      "id": "P163",
+      "name": "Wilson Mountain Bike Pro",
+      "description": "A premium cycling from Wilson, designed for athletes.",
+      "price": 225.36,
+      "currency": "USD",
+      "brand": "Wilson",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 69,
+      "related": []
+    },
+    {
+      "id": "P164",
+      "name": "Under Armour Road Bike",
+      "description": "A durable cycling from Under Armour, designed for athletes.",
+      "price": 88.64,
+      "currency": "USD",
+      "brand": "Under Armour",
+      "category": "Sports",
+      "subcategory": "Cycling",
+      "stock": 78,
+      "related": [
+        "P135",
+        "P146"
+      ]
+    },
+    {
+      "id": "P165",
+      "name": "Random House World War II",
+      "description": "A premium history from Random House, expertly written.",
+      "price": 54.92,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 65,
+      "related": [
+        "P192",
+        "P170",
+        "P167"
+      ]
+    },
+    {
+      "id": "P166",
+      "name": "Penguin American History",
+      "description": "A durable history from Penguin, critically acclaimed.",
+      "price": 60.84,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 42,
+      "related": [
+        "P184",
+        "P170"
+      ]
+    },
+    {
+      "id": "P167",
+      "name": "Penguin Chemistry Reference",
+      "description": "A professional science from Penguin, critically acclaimed.",
+      "price": 73.2,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 66,
+      "related": [
+        "P173"
+      ]
+    },
+    {
+      "id": "P168",
+      "name": "Simon & Schuster Chemistry Reference",
+      "description": "A durable science from Simon & Schuster, comprehensive guide.",
+      "price": 30.31,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 79,
+      "related": []
+    },
+    {
+      "id": "P169",
+      "name": "Random House Travel Guide",
+      "description": "A high-quality non-fiction from Random House, expertly written.",
+      "price": 21.97,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 89,
+      "related": [
+        "P189"
+      ]
+    },
+    {
+      "id": "P170",
+      "name": "Oxford Romance",
+      "description": "A stylish fiction from Oxford, expertly written.",
+      "price": 69.7,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 37,
+      "related": [
+        "P175",
+        "P177",
+        "P168"
+      ]
+    },
+    {
+      "id": "P171",
+      "name": "Random House Churchill",
+      "description": "A reliable biography from Random House, bestselling.",
+      "price": 16.49,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Biography",
+      "stock": 23,
+      "related": [
+        "P187",
+        "P200",
+        "P205"
+      ]
+    },
+    {
+      "id": "P172",
+      "name": "Penguin Fantasy Series",
+      "description": "A durable fiction from Penguin, bestselling.",
+      "price": 67.03,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 22,
+      "related": [
+        "P179",
+        "P170"
+      ]
+    },
+    {
+      "id": "P173",
+      "name": "Random House Travel Guide Ultra",
+      "description": "A durable non-fiction from Random House, comprehensive guide.",
+      "price": 36.31,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 24,
+      "related": [
+        "P190"
+      ]
+    },
+    {
+      "id": "P174",
+      "name": "Oxford Self-Help Elite",
+      "description": "A premium non-fiction from Oxford, comprehensive guide.",
+      "price": 48.2,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 60,
+      "related": []
+    },
+    {
+      "id": "P175",
+      "name": "HarperCollins Fantasy Series",
+      "description": "A professional fiction from HarperCollins, expertly written.",
+      "price": 18.65,
+      "currency": "USD",
+      "brand": "HarperCollins",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 44,
+      "related": [
+        "P186",
+        "P169"
+      ]
+    },
+    {
+      "id": "P176",
+      "name": "HarperCollins Fantasy Series",
+      "description": "A durable fiction from HarperCollins, bestselling.",
+      "price": 50.45,
+      "currency": "USD",
+      "brand": "HarperCollins",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 58,
+      "related": [
+        "P166"
+      ]
+    },
+    {
+      "id": "P177",
+      "name": "Simon & Schuster Memoir",
+      "description": "A stylish non-fiction from Simon & Schuster, comprehensive guide.",
+      "price": 48.37,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 64,
+      "related": [
+        "P194",
+        "P183"
+      ]
+    },
+    {
+      "id": "P178",
+      "name": "Simon & Schuster Medieval Europe",
+      "description": "A premium history from Simon & Schuster, expertly written.",
+      "price": 29.75,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 14,
+      "related": []
+    },
+    {
+      "id": "P179",
+      "name": "Simon & Schuster Biology Guide",
+      "description": null,
+      "price": 13.1,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 10,
+      "related": [
+        "P201"
+      ]
+    },
+    {
+      "id": "P180",
+      "name": "Random House Cookbook Premium",
+      "description": "A reliable non-fiction from Random House, bestselling.",
+      "price": 32.22,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 77,
+      "related": [
+        "P191",
+        "P178"
+      ]
+    },
+    {
+      "id": "P181",
+      "name": "Simon & Schuster Biology Guide",
+      "description": "A high-quality science from Simon & Schuster, critically acclaimed.",
+      "price": 41.8,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 86,
+      "related": [
+        "P188"
+      ]
+    },
+    {
+      "id": "P182",
+      "name": "Oxford Biology Guide",
+      "description": "A innovative science from Oxford, critically acclaimed.",
+      "price": 51.97,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 16,
+      "related": []
+    },
+    {
+      "id": "P183",
+      "name": "HarperCollins Cookbook Deluxe",
+      "description": "A durable non-fiction from HarperCollins, comprehensive guide.",
+      "price": 52.71,
+      "currency": "USD",
+      "brand": "HarperCollins",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 41,
+      "related": []
+    },
+    {
+      "id": "P184",
+      "name": "Simon & Schuster Churchill",
+      "description": "A premium biography from Simon & Schuster, comprehensive guide.",
+      "price": 36.04,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Biography",
+      "stock": 56,
+      "related": [
+        "P177",
+        "P183"
+      ]
+    },
+    {
+      "id": "P185",
+      "name": "Oxford Medieval Europe",
+      "description": "A high-quality history from Oxford, bestselling.",
+      "price": 59.52,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 28,
+      "related": []
+    },
+    {
+      "id": "P186",
+      "name": "HarperCollins Astronomy Book",
+      "description": "A professional science from HarperCollins, critically acclaimed.",
+      "price": 39.78,
+      "currency": "USD",
+      "brand": "HarperCollins",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 36,
+      "related": [
+        "P198",
+        "P204"
+      ]
+    },
+    {
+      "id": "P187",
+      "name": "Simon & Schuster Astronomy Book",
+      "description": "A innovative science from Simon & Schuster, expertly written.",
+      "price": 76.31,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 43,
+      "related": []
+    },
+    {
+      "id": "P188",
+      "name": "Random House Astronomy Book Max",
+      "description": "A stylish science from Random House, bestselling.",
+      "price": 36.2,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 0,
+      "related": [
+        "P193",
+        "P173"
+      ]
+    },
+    {
+      "id": "P189",
+      "name": "Simon & Schuster Astronomy Book",
+      "description": "A premium science from Simon & Schuster, bestselling.",
+      "price": 45.59,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 32,
+      "related": [
+        "P199"
+      ]
+    },
+    {
+      "id": "P190",
+      "name": "Oxford Business Guide",
+      "description": "A stylish non-fiction from Oxford, critically acclaimed.",
+      "price": 67.64,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 72,
+      "related": [
+        "P177",
+        "P176",
+        "P183"
+      ]
+    },
+    {
+      "id": "P191",
+      "name": "Penguin Self-Help",
+      "description": "A high-quality non-fiction from Penguin, expertly written.",
+      "price": 68.19,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 55,
+      "related": [
+        "P193",
+        "P173"
+      ]
+    },
+    {
+      "id": "P192",
+      "name": "Oxford Physics Textbook",
+      "description": "A durable science from Oxford, bestselling.",
+      "price": 13.28,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 100,
+      "related": []
+    },
+    {
+      "id": "P193",
+      "name": "Penguin Cookbook Elite",
+      "description": "A innovative non-fiction from Penguin, bestselling.",
+      "price": 20.16,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Non-Fiction",
+      "stock": 62,
+      "related": []
+    },
+    {
+      "id": "P194",
+      "name": "Random House Astronomy Book",
+      "description": "A stylish science from Random House, critically acclaimed.",
+      "price": 48.13,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 47,
+      "related": []
+    },
+    {
+      "id": "P195",
+      "name": "Penguin American History Plus",
+      "description": "A professional history from Penguin, bestselling.",
+      "price": 53.29,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 71,
+      "related": []
+    },
+    {
+      "id": "P196",
+      "name": "Penguin American History",
+      "description": "A stylish history from Penguin, bestselling.",
+      "price": 49.19,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 82,
+      "related": [
+        "P166",
+        "P165",
+        "P180"
+      ]
+    },
+    {
+      "id": "P197",
+      "name": "Simon & Schuster Churchill",
+      "description": "A innovative biography from Simon & Schuster, expertly written.",
+      "price": 36.46,
+      "currency": "USD",
+      "brand": "Simon & Schuster",
+      "category": "Books",
+      "subcategory": "Biography",
+      "stock": 50,
+      "related": []
+    },
+    {
+      "id": "P198",
+      "name": "Oxford Medieval Europe",
+      "description": "A professional history from Oxford, comprehensive guide.",
+      "price": 48,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 1,
+      "related": []
+    },
+    {
+      "id": "P199",
+      "name": "HarperCollins Fantasy Series Max",
+      "description": "A professional fiction from HarperCollins, bestselling.",
+      "price": 18.96,
+      "currency": "USD",
+      "brand": "HarperCollins",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 49,
+      "related": [
+        "P172",
+        "P200",
+        "P173"
+      ]
+    },
+    {
+      "id": "P200",
+      "name": "Penguin Thriller",
+      "description": "A high-quality fiction from Penguin, expertly written.",
+      "price": 32.08,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 96,
+      "related": [
+        "P168"
+      ]
+    },
+    {
+      "id": "P201",
+      "name": "Oxford Astronomy Book",
+      "description": "A durable science from Oxford, comprehensive guide.",
+      "price": 64.73,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 68,
+      "related": [
+        "P180"
+      ]
+    },
+    {
+      "id": "P202",
+      "name": "Penguin Thriller",
+      "description": "A premium fiction from Penguin, critically acclaimed.",
+      "price": 35.46,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "Fiction",
+      "stock": 66,
+      "related": [
+        "P175",
+        "P181",
+        "P166"
+      ]
+    },
+    {
+      "id": "P203",
+      "name": "Random House Biology Guide",
+      "description": "A professional science from Random House, expertly written.",
+      "price": 36.21,
+      "currency": "USD",
+      "brand": "Random House",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 86,
+      "related": []
+    },
+    {
+      "id": "P204",
+      "name": "Penguin Ancient Rome",
+      "description": "A stylish history from Penguin, critically acclaimed.",
+      "price": 12.34,
+      "currency": "USD",
+      "brand": "Penguin",
+      "category": "Books",
+      "subcategory": "History",
+      "stock": 83,
+      "related": [
+        "P200",
+        "P196",
+        "P172"
+      ]
+    },
+    {
+      "id": "P205",
+      "name": "Oxford Chemistry Reference",
+      "description": "A premium science from Oxford, comprehensive guide.",
+      "price": 48.4,
+      "currency": "USD",
+      "brand": "Oxford",
+      "category": "Books",
+      "subcategory": "Science",
+      "stock": 2,
+      "related": [
+        "P203",
+        "P204",
+        "P181"
+      ]
+    },
+    {
+      "id": "P206",
+      "name": "Melissa & Doug Learning Tablet",
+      "description": null,
+      "price": 203.37,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 49,
+      "related": [
+        "P212"
+      ]
+    },
+    {
+      "id": "P207",
+      "name": "Hasbro Swing Set",
+      "description": "A reliable outdoor from Hasbro, promotes creativity.",
+      "price": 294.67,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 73,
+      "related": [
+        "P238",
+        "P223",
+        "P218"
+      ]
+    },
+    {
+      "id": "P208",
+      "name": "Playmobil Party Game",
+      "description": "A stylish board games from Playmobil, hours of entertainment.",
+      "price": 202.39,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Board Games",
+      "stock": 0,
+      "related": [
+        "P222"
+      ]
+    },
+    {
+      "id": "P209",
+      "name": "LEGO Puzzle",
+      "description": "A premium board games from LEGO, hours of entertainment.",
+      "price": 277.38,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Board Games",
+      "stock": 84,
+      "related": []
+    },
+    {
+      "id": "P210",
+      "name": "Hasbro Swing Set",
+      "description": "A innovative outdoor from Hasbro, hours of entertainment.",
+      "price": 44.88,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 47,
+      "related": [
+        "P213"
+      ]
+    },
+    {
+      "id": "P211",
+      "name": "Hasbro Superhero Figure",
+      "description": "A stylish action figures from Hasbro, hours of entertainment.",
+      "price": 126.75,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 98,
+      "related": [
+        "P245"
+      ]
+    },
+    {
+      "id": "P212",
+      "name": "LEGO Water Gun Pro",
+      "description": null,
+      "price": 199.94,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 25,
+      "related": []
+    },
+    {
+      "id": "P213",
+      "name": "Fisher-Price Transformers",
+      "description": "A durable action figures from Fisher-Price, age-appropriate.",
+      "price": 72.59,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 78,
+      "related": []
+    },
+    {
+      "id": "P214",
+      "name": "Playmobil Frisbee",
+      "description": null,
+      "price": 183.53,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 0,
+      "related": [
+        "P242"
+      ]
+    },
+    {
+      "id": "P215",
+      "name": "Melissa & Doug Marvel Legends Premium",
+      "description": "A high-quality action figures from Melissa & Doug, safe and fun.",
+      "price": 223.93,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 89,
+      "related": [
+        "P212",
+        "P213"
+      ]
+    },
+    {
+      "id": "P216",
+      "name": "Mattel Water Gun",
+      "description": "A stylish outdoor from Mattel, age-appropriate.",
+      "price": 56.24,
+      "currency": "USD",
+      "brand": "Mattel",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 9,
+      "related": [
+        "P230",
+        "P222",
+        "P234"
+      ]
+    },
+    {
+      "id": "P217",
+      "name": "Melissa & Doug Collector Doll Premium",
+      "description": "A premium dolls from Melissa & Doug, safe and fun.",
+      "price": 120.66,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 0,
+      "related": [
+        "P212",
+        "P229"
+      ]
+    },
+    {
+      "id": "P218",
+      "name": "Playmobil Trivia",
+      "description": "A high-quality board games from Playmobil, safe and fun.",
+      "price": 43.53,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Board Games",
+      "stock": 10,
+      "related": [
+        "P225",
+        "P233"
+      ]
+    },
+    {
+      "id": "P219",
+      "name": "Melissa & Doug Trampoline Deluxe",
+      "description": "A reliable outdoor from Melissa & Doug, safe and fun.",
+      "price": 107.9,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 47,
+      "related": []
+    },
+    {
+      "id": "P220",
+      "name": "LEGO Fashion Doll",
+      "description": "A professional dolls from LEGO, age-appropriate.",
+      "price": 210.9,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 60,
+      "related": [
+        "P246",
+        "P229",
+        "P206"
+      ]
+    },
+    {
+      "id": "P221",
+      "name": "Melissa & Doug Learning Tablet",
+      "description": null,
+      "price": 233.33,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 98,
+      "related": [
+        "P241"
+      ]
+    },
+    {
+      "id": "P222",
+      "name": "Mattel Trivia",
+      "description": "A premium board games from Mattel, age-appropriate.",
+      "price": 113.4,
+      "currency": "USD",
+      "brand": "Mattel",
+      "category": "Toys",
+      "subcategory": "Board Games",
+      "stock": 4,
+      "related": []
+    },
+    {
+      "id": "P223",
+      "name": "Fisher-Price Frisbee Pro",
+      "description": "A stylish outdoor from Fisher-Price, safe and fun.",
+      "price": 115.5,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 37,
+      "related": [
+        "P207",
+        "P240"
+      ]
+    },
+    {
+      "id": "P224",
+      "name": "Mattel Baby Doll Ultra",
+      "description": "A durable dolls from Mattel, hours of entertainment.",
+      "price": 179.74,
+      "currency": "USD",
+      "brand": "Mattel",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 60,
+      "related": [
+        "P225",
+        "P230"
+      ]
+    },
+    {
+      "id": "P225",
+      "name": "Mattel Barbie Plus",
+      "description": "A reliable dolls from Mattel, promotes creativity.",
+      "price": 171.89,
+      "currency": "USD",
+      "brand": "Mattel",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 89,
+      "related": []
+    },
+    {
+      "id": "P226",
+      "name": "Hasbro Fashion Doll Elite",
+      "description": "A reliable dolls from Hasbro, age-appropriate.",
+      "price": 40.52,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 68,
+      "related": []
+    },
+    {
+      "id": "P227",
+      "name": "Fisher-Price Water Gun",
+      "description": "A professional outdoor from Fisher-Price, hours of entertainment.",
+      "price": 219.98,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 38,
+      "related": [
+        "P230",
+        "P246",
+        "P215"
+      ]
+    },
+    {
+      "id": "P228",
+      "name": "Melissa & Doug Star Wars",
+      "description": "A professional action figures from Melissa & Doug, promotes creativity.",
+      "price": 65.79,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 25,
+      "related": [
+        "P236",
+        "P210",
+        "P222"
+      ]
+    },
+    {
+      "id": "P229",
+      "name": "LEGO Star Wars Ultra",
+      "description": "A durable action figures from LEGO, promotes creativity.",
+      "price": 83.3,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 81,
+      "related": []
+    },
+    {
+      "id": "P230",
+      "name": "Fisher-Price Learning Tablet",
+      "description": "A stylish educational from Fisher-Price, hours of entertainment.",
+      "price": 52.85,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 90,
+      "related": [
+        "P225",
+        "P250",
+        "P231"
+      ]
+    },
+    {
+      "id": "P231",
+      "name": "LEGO Frisbee",
+      "description": "A reliable outdoor from LEGO, age-appropriate.",
+      "price": 23.91,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 0,
+      "related": [
+        "P246"
+      ]
+    },
+    {
+      "id": "P232",
+      "name": "Playmobil Kite",
+      "description": "A stylish outdoor from Playmobil, hours of entertainment.",
+      "price": 294.56,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 18,
+      "related": [
+        "P217",
+        "P215",
+        "P250"
+      ]
+    },
+    {
+      "id": "P233",
+      "name": "Hasbro Baby Doll Max",
+      "description": "A premium dolls from Hasbro, hours of entertainment.",
+      "price": 215.03,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 52,
+      "related": [
+        "P215",
+        "P210"
+      ]
+    },
+    {
+      "id": "P234",
+      "name": "Hasbro Superhero Figure",
+      "description": "A stylish action figures from Hasbro, hours of entertainment.",
+      "price": 201.88,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 89,
+      "related": [
+        "P214",
+        "P213"
+      ]
+    },
+    {
+      "id": "P235",
+      "name": "Playmobil Swing Set",
+      "description": "A premium outdoor from Playmobil, hours of entertainment.",
+      "price": 173.26,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 81,
+      "related": [
+        "P250",
+        "P218"
+      ]
+    },
+    {
+      "id": "P236",
+      "name": "LEGO Barbie Pro",
+      "description": "A premium dolls from LEGO, hours of entertainment.",
+      "price": 85.08,
+      "currency": "USD",
+      "brand": "LEGO",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 74,
+      "related": []
+    },
+    {
+      "id": "P237",
+      "name": "Playmobil Frisbee Deluxe",
+      "description": "A stylish outdoor from Playmobil, hours of entertainment.",
+      "price": 135.6,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 48,
+      "related": []
+    },
+    {
+      "id": "P238",
+      "name": "Melissa & Doug Fashion Doll",
+      "description": "A durable dolls from Melissa & Doug, promotes creativity.",
+      "price": 103.33,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 82,
+      "related": [
+        "P243"
+      ]
+    },
+    {
+      "id": "P239",
+      "name": "Melissa & Doug Marvel Legends",
+      "description": "A reliable action figures from Melissa & Doug, age-appropriate.",
+      "price": 70.43,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 73,
+      "related": [
+        "P244"
+      ]
+    },
+    {
+      "id": "P240",
+      "name": "Fisher-Price Water Gun",
+      "description": null,
+      "price": 63.07,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Outdoor",
+      "stock": 41,
+      "related": [
+        "P229",
+        "P237",
+        "P236"
+      ]
+    },
+    {
+      "id": "P241",
+      "name": "Fisher-Price STEM Kit",
+      "description": "A innovative educational from Fisher-Price, hours of entertainment.",
+      "price": 128.11,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 91,
+      "related": [
+        "P208",
+        "P232"
+      ]
+    },
+    {
+      "id": "P242",
+      "name": "Hasbro STEM Kit",
+      "description": "A innovative educational from Hasbro, age-appropriate.",
+      "price": 150.63,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 81,
+      "related": []
+    },
+    {
+      "id": "P243",
+      "name": "Playmobil Transformers",
+      "description": "A innovative action figures from Playmobil, safe and fun.",
+      "price": 242.26,
+      "currency": "USD",
+      "brand": "Playmobil",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 20,
+      "related": []
+    },
+    {
+      "id": "P244",
+      "name": "Melissa & Doug Party Game",
+      "description": "A durable board games from Melissa & Doug, promotes creativity.",
+      "price": 225.33,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Board Games",
+      "stock": 35,
+      "related": []
+    },
+    {
+      "id": "P245",
+      "name": "Fisher-Price Marvel Legends",
+      "description": "A reliable action figures from Fisher-Price, promotes creativity.",
+      "price": 15.68,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 60,
+      "related": [
+        "P215",
+        "P211",
+        "P234"
+      ]
+    },
+    {
+      "id": "P246",
+      "name": "Hasbro STEM Kit Plus",
+      "description": "A stylish educational from Hasbro, age-appropriate.",
+      "price": 150.94,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Educational",
+      "stock": 0,
+      "related": [
+        "P209"
+      ]
+    },
+    {
+      "id": "P247",
+      "name": "Fisher-Price Fashion Doll",
+      "description": "A reliable dolls from Fisher-Price, age-appropriate.",
+      "price": 53.43,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 84,
+      "related": [
+        "P236",
+        "P231"
+      ]
+    },
+    {
+      "id": "P248",
+      "name": "Melissa & Doug Baby Doll",
+      "description": "A innovative dolls from Melissa & Doug, promotes creativity.",
+      "price": 115.58,
+      "currency": "USD",
+      "brand": "Melissa & Doug",
+      "category": "Toys",
+      "subcategory": "Dolls",
+      "stock": 78,
+      "related": []
+    },
+    {
+      "id": "P249",
+      "name": "Fisher-Price Transformers",
+      "description": "A innovative action figures from Fisher-Price, hours of entertainment.",
+      "price": 35.27,
+      "currency": "USD",
+      "brand": "Fisher-Price",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 61,
+      "related": [
+        "P222"
+      ]
+    },
+    {
+      "id": "P250",
+      "name": "Hasbro Marvel Legends",
+      "description": "A high-quality action figures from Hasbro, hours of entertainment.",
+      "price": 161.33,
+      "currency": "USD",
+      "brand": "Hasbro",
+      "category": "Toys",
+      "subcategory": "Action Figures",
+      "stock": 0,
+      "related": []
+    }
+  ]
+}
