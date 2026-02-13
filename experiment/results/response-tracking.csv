@@ -71,12 +71,12 @@ Q012,What is the average price of all products?,aggregation,Markdown,3,,,,,
 Q012,What is the average price of all products?,aggregation,RDF,1,,,,,
 Q012,What is the average price of all products?,aggregation,RDF,2,,,,,
 Q012,What is the average price of all products?,aggregation,RDF,3,,,,,
-Q013,What is the average price of Electronics products?,aggregation,Markdown,1,,,,,
-Q013,What is the average price of Electronics products?,aggregation,Markdown,2,,,,,
-Q013,What is the average price of Electronics products?,aggregation,Markdown,3,,,,,
-Q013,What is the average price of Electronics products?,aggregation,RDF,1,,,,,
-Q013,What is the average price of Electronics products?,aggregation,RDF,2,,,,,
-Q013,What is the average price of Electronics products?,aggregation,RDF,3,,,,,
+Q013,What is the average price of Electronics products?,aggregation,Markdown,1,$1286.33,WRONG,45,Counted 41 products. Sum error: calculated $52729.56,Arithmetic/Transcription
+Q013,What is the average price of Electronics products?,aggregation,Markdown,2,$1403.20,WRONG,48,Counted 41 products. Very close but sum off by ~$4000,Arithmetic/Transcription
+Q013,What is the average price of Electronics products?,aggregation,Markdown,3,$1365.36,WRONG,46,Counted 41 products. Sum error: calculated $55979.71,Arithmetic/Transcription
+Q013,What is the average price of Electronics products?,aggregation,RDF,1,1402.96,CORRECT,12,Used category URI directly in SPARQL,None
+Q013,What is the average price of Electronics products?,aggregation,RDF,2,$1402.96,CORRECT,14,Filtered by category name "Electronics",None
+Q013,What is the average price of Electronics products?,aggregation,RDF,3,1402.96,CORRECT,13,Filtered by category name "Electronics",None,
 Q014,How many products are out of stock?,aggregation,Markdown,1,,,,,
 Q014,How many products are out of stock?,aggregation,Markdown,2,,,,,
 Q014,How many products are out of stock?,aggregation,Markdown,3,,,,,
