@@ -52,12 +52,21 @@ metadata:
 
 **Required fields:**
 - `name`: Skill identifier (1-64 chars, lowercase alphanumeric with single hyphens)
-- `description`: What the skill does (1-1024 characters)
+- `description`: **CRITICAL** - This is what agents see before loading the skill. Must be specific, actionable, and include trigger keywords for when to use the skill (1-1024 characters). See "The description field is critical for skill discovery" section below.
 
 **Optional fields:**
 - `license`: License type (e.g., MIT, Apache-2.0)
 - `compatibility`: Target system (e.g., opencode, claude)
 - `metadata`: String-to-string map for additional context
+
+### Understanding skill discovery
+
+OpenCode skill loading works in two stages:
+
+1. **Pre-load**: Agent sees the `description` field in frontmatter → decides whether to load
+2. **Post-load**: Agent reads the full skill content including "When to use me" → understands how to use it
+
+This means the `description` field must contain enough information for the agent to know when to load the skill, even though the detailed "When to use me" section provides additional guidance after loading.
 
 ## Name validation rules
 
@@ -145,12 +154,35 @@ Optional sections:
 
 ## Best practices
 
-### Keep descriptions specific
-Bad: "Helps with code"
-Good: "Generate unit tests following Jest conventions"
+### The description field is critical for skill discovery
 
-### Write clear triggers
-Help agents understand when to load the skill by being explicit about use cases.
+**IMPORTANT**: The `description` field in the frontmatter is what agents see BEFORE loading the skill. This is how they decide whether to load it.
+
+The description must:
+- **Be specific and actionable** - describe what the skill does and when to use it
+- **Include trigger keywords** - mention the types of questions, tasks, or scenarios
+- **Mention user intent patterns** - even when users don't explicitly ask for the skill
+- **Be 1-1024 characters** - detailed enough to inform the decision
+
+**Bad descriptions** (too vague):
+- "Helps with code"
+- "Query Wikidata"
+- "Generate documentation"
+
+**Good descriptions** (specific with clear triggers):
+- "Generate unit tests following Jest conventions with proper mocking, assertions, and coverage for TypeScript and JavaScript files"
+- "Answer factual questions about people, places, organizations, events, creative works, awards, and other real-world entities by querying Wikidata's knowledge base. Use for biographical info, geographic data, historical facts, lists, counts, and relationships between entities - even when users don't mention Wikidata."
+- "Create API documentation in OpenAPI 3.0 format from existing REST endpoints. Use when users want to document their API, generate swagger files, or need interactive API specs."
+
+**Key insight**: The "When to use me" section inside the skill is useful for guidance AFTER loading, but the description field determines IF the skill gets loaded in the first place.
+
+### Write clear triggers in the description
+
+Include in the description:
+- **Question patterns**: "who", "what", "when", "where", "how many", "list"
+- **Task types**: "analyze", "generate", "query", "transform", "validate"
+- **Domain keywords**: specific technologies, concepts, or subject areas
+- **User intent signals**: "even when users don't mention X", "for Y tasks"
 
 ### Include examples
 Show concrete examples of input/output or before/after states.
@@ -259,7 +291,7 @@ mkdir -p .opencode/skills/pr-review
 ```yaml
 ---
 name: pr-review
-description: Review pull requests following team code standards
+description: Review pull requests for code quality, style, tests, and best practices. Analyze changes, suggest improvements, and verify completeness. Use when reviewing PRs, even if user just says 'review this code' or pastes a GitHub PR link.
 license: MIT
 compatibility: opencode
 metadata:
@@ -278,9 +310,15 @@ Use this skill when:
 - Reviewing a pull request
 - User asks for code review
 - PR link is provided
+- User pastes code changes and asks for feedback
 
 [... rest of skill content ...]
 ```
+
+**Note**: The description field includes:
+- What it does: "Review pull requests for code quality, style, tests, and best practices"
+- Trigger keywords: "review", "PRs", "code", "GitHub PR link"
+- Implicit triggers: "even if user just says 'review this code'"
 
 **Step 4 - Review assumptions:**
 Ask user about:
