@@ -129,10 +129,10 @@ Use this skill when:
 
 ## Best practices I follow
 ### 1. First practice
-Details and examples
+Concise description with key points as bullets
 
 ### 2. Second practice
-Details and examples
+Brief explanation (avoid extensive code examples for each rule)
 
 ## Questions to ask
 When the user request is ambiguous, ask:
@@ -183,6 +183,12 @@ Include in the description:
 - **Task types**: "analyze", "generate", "query", "transform", "validate"
 - **Domain keywords**: specific technologies, concepts, or subject areas
 - **User intent signals**: "even when users don't mention X", "for Y tasks"
+
+### Keep best practices concise
+- State rules clearly as bullet points or short paragraphs
+- Avoid extensive code examples for every rule
+- One illustrative example is enough, not multiple variations
+- Skills are instructions, not tutorials
 
 ### Include examples
 Show concrete examples of input/output or before/after states.
