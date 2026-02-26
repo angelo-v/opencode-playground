@@ -82,6 +82,16 @@ Use these patterns:
 - `creates:` parameter for commands
 - Check before modify patterns
 
+### 2a. Security: Script download verification
+
+**CRITICAL**: When downloading and executing external scripts, ALWAYS verify SHA256 checksums.
+
+- Use `get_url` module with `checksum: "sha256:{{ checksum_variable }}"` parameter
+- The `get_url` module will automatically fail if checksum doesn't match (no additional verification needed)
+- Store the expected checksum in `defaults/main.yml` with comment explaining how to update it
+- Tag download tasks with `security`
+- Never use `curl | bash` or similar patterns that skip verification
+
 ### 3. YAML formatting standards
 
 Follow these conventions:
@@ -167,7 +177,9 @@ Common tag categories:
 - `config` - Configuration file management
 - `services` - Service management
 - `install` - Initial setup tasks
-- `security` - Security-related tasks
+- `security` - Security-related tasks (checksums, verification, authentication)
+- `verify` - Verification and validation tasks
+- `cleanup` - Cleanup and temporary file removal
 - Always include the service/app name as a tag
 
 ## Questions to ask
@@ -180,6 +192,8 @@ When the user request lacks detail, use the Question tool to ask:
 4. **Does this role need configuration templates?** (if yes, create templates/)
 5. **What packages need to be installed?** (for tasks/main.yml)
 6. **Should this role support both install and removal?** (affects variable design)
+7. **For installation scripts: Should the role support multiple variants/engines/versions, or just one specific option?** (Keep it minimal unless user needs flexibility)
+8. **Does the installation involve downloading external scripts or binaries?** (if yes, implement checksum verification)
 
 ## Standard role structure
 
@@ -321,6 +335,11 @@ Before finalizing a role, verify:
 - [ ] Tasks are idempotent (safe to run multiple times)
 - [ ] Handlers are only created if needed
 - [ ] Templates are only created if needed
+- [ ] Downloaded scripts/binaries are verified with checksums
+- [ ] Checksum variables are documented in defaults/main.yml
 - [ ] README.md documents all variables and usage
+- [ ] README.md includes instructions for updating checksums
 - [ ] YAML formatting follows 2-space indentation
 - [ ] No unnecessary directories created
+- [ ] No support for multiple variants unless explicitly requested
+- [ ] Security tags applied to verification tasks
