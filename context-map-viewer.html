@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DDD Context Map</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: .5px; }
+    header span { font-size: .85rem; color: #8892b0; }
+
+    #cy {
+      width: 100%;
+      height: calc(100vh - 56px);
+      background: #f4f6f9;
+    }
+
+    /* ── File picker overlay ───────────────────────────────────────── */
+    #file-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(26,26,46,.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    #file-overlay.hidden { display: none; }
+    #file-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.25);
+      padding: 36px 40px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+    }
+    #file-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    #file-card > p { font-size: .85rem; color: #666; margin-bottom: 24px; }
+    #btn-open {
+      display: inline-block;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 600;
+      border: none;
+      transition: background .15s;
+    }
+    #btn-open:hover { background: #2e2e55; }
+    /* fallback hidden input */
+    #file-input { display: none; }
+
+    /* ── Recent files ──────────────────────────────────────────────── */
+    #recent-section {
+      margin-top: 28px;
+      text-align: left;
+    }
+    #recent-section h3 {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    #recent-list { list-style: none; }
+    #recent-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    #recent-list li:hover { background: #f0f4ff; }
+    #recent-list .r-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+    #recent-list .r-time {
+      font-size: .75rem;
+      color: #999;
+      flex-shrink: 0;
+    }
+    #recent-list .r-err {
+      font-size: .75rem;
+      color: #c0392b;
+      flex-shrink: 0;
+    }
+    #clear-history {
+      display: block;
+      margin-top: 10px;
+      font-size: .75rem;
+      color: #aaa;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      text-align: center;
+      width: 100%;
+    }
+    #clear-history:hover { color: #666; }
+
+    /* ── Tooltip panel ─────────────────────────────────────────────── */
+    #tooltip {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 300px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      padding: 16px;
+      z-index: 999;
+      border-top: 4px solid #4a90d9;
+    }
+    #tooltip.rel { border-top-color: #e07b39; }
+    #tooltip h2  { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+    #tooltip .type-badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .badge-app    { background: #dbeafe; color: #1d4ed8; }
+    .badge-sys    { background: #fef3c7; color: #b45309; }
+    .badge-ud     { background: #f3e8ff; color: #7e22ce; }
+    .badge-cs     { background: #ffedd5; color: #9a3412; }
+    #tooltip p  { font-size: .82rem; line-height: 1.5; color: #444; margin-bottom: 8px; }
+    #tooltip .section-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: #888; margin: 8px 0 4px;
+    }
+    #tooltip .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+    #tooltip .pill {
+      font-size: .75rem;
+      background: #f0f4ff;
+      color: #3b5bdb;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    #tooltip .pill.role-ohs { background: #fef9c3; color: #854d0e; }
+    #tooltip .pill.role-acl { background: #fce7f3; color: #9d174d; }
+    #tooltip .pill.tech     { background: #f0fdf4; color: #166534; }
+    #tooltip .close-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: #888;
+    }
+    #tooltip .close-btn:hover { color: #333; }
+
+    /* ── Legend ────────────────────────────────────────────────────── */
+    #legend {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.1);
+      padding: 12px 16px;
+      font-size: .78rem;
+      z-index: 998;
+    }
+    #legend h3 { font-size: .75rem; font-weight: 700; text-transform: uppercase;
+                 letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+    .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .legend-dot {
+      width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
+    }
+    .legend-line {
+      width: 28px; height: 3px; flex-shrink: 0; border-radius: 2px;
+    }
+    .legend-line.dashed {
+      background: repeating-linear-gradient(to right,
+        #e07b39 0, #e07b39 5px, transparent 5px, transparent 9px);
+      height: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>DDD Context Map</h1>
+  <span>Click a node or edge for details</span>
+</header>
+
+<!-- File picker overlay -->
+<div id="file-overlay">
+  <div id="file-card">
+    <h2>DDD Context Map</h2>
+    <p>Open a Turtle (.ttl) file to visualise your context map.</p>
+    <button id="btn-open">Open .ttl file</button>
+    <!-- fallback for browsers without File System Access API -->
+    <input type="file" id="file-input" accept=".ttl,text/turtle">
+    <div id="recent-section" style="display:none">
+      <h3>Recent files</h3>
+      <ul id="recent-list"></ul>
+      <button id="clear-history">Clear history</button>
+    </div>
+  </div>
+</div>
+
+<div id="cy"></div>
+
+<!-- Tooltip panel -->
+<div id="tooltip">
+  <button class="close-btn" onclick="document.getElementById('tooltip').style.display='none'">&#x2715;</button>
+  <h2 id="tt-title"></h2>
+  <div id="tt-badge" class="type-badge"></div>
+  <p id="tt-vision"></p>
+  <div id="tt-resp-section">
+    <div class="section-label">Responsibilities</div>
+    <div id="tt-resp" class="pills"></div>
+  </div>
+  <div id="tt-tech-section">
+    <div class="section-label">Technology</div>
+    <div id="tt-tech" class="pills"></div>
+  </div>
+  <div id="tt-roles-section">
+    <div class="section-label">Roles</div>
+    <div id="tt-roles" class="pills"></div>
+  </div>
+  <div id="tt-agg-section">
+    <div class="section-label">Exposed Aggregate</div>
+    <div id="tt-agg" class="pills"></div>
+  </div>
+</div>
+
+<!-- Legend -->
+<div id="legend">
+  <h3>Legend</h3>
+  <div class="legend-row"><div class="legend-dot" style="background:#4a90d9;"></div> ApplicationContext</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#e6b84a;"></div> SystemContext</div>
+  <div class="legend-row" style="margin-top:8px;">
+    <div class="legend-line" style="background:#9b59b6;height:2px;"></div>
+    UpstreamDownstream
+  </div>
+  <div class="legend-row">
+    <div class="legend-line dashed"></div>
+    CustomerSupplier
+  </div>
+</div>
+
+<!-- CDN: N3.js (Turtle parser) -->
+<script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
+<!-- CDN: Cytoscape.js -->
+<script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+<!-- CDN: Dagre layout engine + Cytoscape adapter -->
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+<script>
+// ────────────────────────────────────────────────────────────────────────────
+// 1.  IndexedDB helpers for storing FileSystemFileHandles
+// ────────────────────────────────────────────────────────────────────────────
+const DB_NAME    = 'ddd-context-map';
+const DB_VERSION = 1;
+const STORE_NAME = 'recent-files';
+const MAX_RECENT = 5;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      e.target.result.createObjectStore(STORE_NAME, { keyPath: 'name' });
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function saveHandle(handle) {
+  const db      = await openDB();
+  const tx      = db.transaction(STORE_NAME, 'readwrite');
+  const store   = tx.objectStore(STORE_NAME);
+  // upsert
+  store.put({ name: handle.name, lastOpened: Date.now(), handle });
+  // enforce MAX_RECENT: read all, delete oldest if needed
+  return new Promise(resolve => {
+    tx.oncomplete = async () => {
+      const db2    = await openDB();
+      const tx2    = db2.transaction(STORE_NAME, 'readwrite');
+      const store2 = tx2.objectStore(STORE_NAME);
+      const all    = await idbGetAll(store2);
+      if (all.length > MAX_RECENT) {
+        all.sort((a, b) => a.lastOpened - b.lastOpened);
+        const toDelete = all.slice(0, all.length - MAX_RECENT);
+        toDelete.forEach(r => store2.delete(r.name));
+      }
+      tx2.oncomplete = resolve;
+    };
+  });
+}
+
+function idbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    const req = store.getAll();
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function loadRecent() {
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readonly');
+  const store = tx.objectStore(STORE_NAME);
+  const all   = await idbGetAll(store);
+  return all.sort((a, b) => b.lastOpened - a.lastOpened);
+}
+
+async function clearRecent() {
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 2.  File System Access API or <input> fallback
+// ────────────────────────────────────────────────────────────────────────────
+const hasFSA = typeof window.showOpenFilePicker === 'function';
+
+function relativeTime(ts) {
+  const diff = Date.now() - ts;
+  const mins  = Math.floor(diff / 60000);
+  if (mins < 1)   return 'just now';
+  if (mins < 60)  return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs  < 24)  return hrs  + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+async function readHandleAndDisplay(handle) {
+  // Request / verify read permission
+  let perm = await handle.queryPermission({ mode: 'read' });
+  if (perm !== 'granted') {
+    perm = await handle.requestPermission({ mode: 'read' });
+  }
+  if (perm !== 'granted') {
+    showOverlayError('Permission denied for "' + handle.name + '".');
+    return;
+  }
+  const file = await handle.getFile();
+  const text = await file.text();
+  await saveHandle(handle);
+  hideOverlay();
+  tryBuildGraph(text);
+}
+
+function showOverlayError(msg) {
+  // show error inside card without hiding overlay
+  let errEl = document.getElementById('overlay-error');
+  if (!errEl) {
+    errEl = document.createElement('p');
+    errEl.id = 'overlay-error';
+    errEl.style.cssText = 'color:#c0392b;font-size:.8rem;margin-top:12px;';
+    document.getElementById('file-card').appendChild(errEl);
+  }
+  errEl.textContent = msg;
+}
+
+function hideOverlay() {
+  document.getElementById('file-overlay').classList.add('hidden');
+  const errEl = document.getElementById('overlay-error');
+  if (errEl) errEl.textContent = '';
+}
+
+function tryBuildGraph(text) {
+  try {
+    buildGraph(text);
+  } catch (err) {
+    document.getElementById('cy').innerHTML =
+      '<p style="padding:2rem;color:#c0392b;font-family:monospace">' + err + '</p>';
+  }
+}
+
+// ── Open button ──────────────────────────────────────────────────────────────
+document.getElementById('btn-open').addEventListener('click', async () => {
+  if (hasFSA) {
+    let handles;
+    try {
+      handles = await window.showOpenFilePicker({
+        types: [{ description: 'Turtle RDF', accept: { 'text/turtle': ['.ttl'] } }],
+        multiple: false,
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') showOverlayError(e.message);
+      return;
+    }
+    await readHandleAndDisplay(handles[0]);
+  } else {
+    // fallback: trigger hidden <input>
+    document.getElementById('file-input').click();
+  }
+});
+
+// fallback <input> handler
+document.getElementById('file-input').addEventListener('change', function(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    hideOverlay();
+    tryBuildGraph(e.target.result);
+  };
+  reader.readAsText(file);
+});
+
+// ── Recent files list ────────────────────────────────────────────────────────
+async function renderRecent() {
+  if (!hasFSA) return; // handles not available without FSA
+  const items = await loadRecent();
+  const section = document.getElementById('recent-section');
+  const list    = document.getElementById('recent-list');
+  list.innerHTML = '';
+  if (!items.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  items.forEach(rec => {
+    const li      = document.createElement('li');
+    li.title      = rec.name;
+    const name    = document.createElement('span');
+    name.className = 'r-name';
+    name.textContent = rec.name;
+    const time    = document.createElement('span');
+    time.className = 'r-time';
+    time.textContent = relativeTime(rec.lastOpened);
+    li.appendChild(name);
+    li.appendChild(time);
+    li.addEventListener('click', async () => {
+      time.className  = 'r-time';
+      time.textContent = '...';
+      try {
+        await readHandleAndDisplay(rec.handle);
+        // update timestamp
+        await saveHandle(rec.handle);
+      } catch (e) {
+        time.className  = 'r-err';
+        time.textContent = 'Error';
+        showOverlayError(e.message);
+      }
+    });
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('clear-history').addEventListener('click', async () => {
+  await clearRecent();
+  renderRecent();
+});
+
+// initialise recent list on load
+renderRecent();
+
+function buildGraph(TURTLE) {
+
+// ────────────────────────────────────────────────────────────────────────────
+// 2.  Ontology IRI constants
+// ────────────────────────────────────────────────────────────────────────────
+const V    = 'https://vocab.example/ddd-context-map#';
+const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
+const RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+
+const IRI = {
+  type:               RDF  + 'type',
+  label:              RDFS + 'label',
+  BoundedContext:     V    + 'BoundedContext',
+  contextType:        V    + 'contextType',
+  ApplicationContext: V    + 'ApplicationContext',
+  SystemContext:      V    + 'SystemContext',
+  domainVision:       V    + 'domainVisionStatement',
+  responsibility:     V    + 'responsibility',
+  technology:         V    + 'implementationTechnology',
+  UpstreamDownstream: V    + 'UpstreamDownstreamRelationship',
+  CustomerSupplier:   V    + 'CustomerSupplierRelationship',
+  upstream:           V    + 'upstream',
+  downstream:         V    + 'downstream',
+  upstreamRole:       V    + 'upstreamRole',
+  downstreamRole:     V    + 'downstreamRole',
+  exposedAggregate:   V    + 'exposedAggregate',
+  integrationTech:    V    + 'integrationTechnology',
+  OpenHostService:    V    + 'OpenHostService',
+  AntiCorruptionLayer:V    + 'AntiCorruptionLayer',
+};
+
+// ────────────────────────────────────────────────────────────────────────────
+// 3.  Parse Turtle → N3.Store
+// ────────────────────────────────────────────────────────────────────────────
+const BASE_IRI = 'http://example.org/context-map';
+const store    = new N3.Store();
+const parser   = new N3.Parser({ baseIRI: BASE_IRI });
+store.addQuads(parser.parse(TURTLE));
+
+// Helpers
+const nn     = (iri) => N3.DataFactory.namedNode(iri);
+const getAll = (s, p) =>
+  store.getQuads(s ? nn(s) : null, nn(p), null, null).map(q => q.object.value);
+const getOne = (s, p) => { const r = getAll(s, p); return r.length ? r[0] : null; };
+
+function shortRole(iri) {
+  if (iri === IRI.OpenHostService)      return 'OHS';
+  if (iri === IRI.AntiCorruptionLayer)  return 'ACL';
+  return (iri || '').split('#')[1] || iri;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 4.  Extract nodes (Bounded Contexts)
+// ────────────────────────────────────────────────────────────────────────────
+const nodeData = {};
+const cyNodes  = [];
+
+for (const q of store.match(null, nn(IRI.type), nn(IRI.BoundedContext), null)) {
+  const id      = q.subject.value;
+  const label   = getOne(id, IRI.label)        || id.split('#')[1] || id;
+  const ctxType = getOne(id, IRI.contextType)  || '';
+  const vision  = getOne(id, IRI.domainVision) || '';
+  const resp    = getAll(id, IRI.responsibility);
+  const tech    = getAll(id, IRI.technology);
+  const isSystem = ctxType === IRI.SystemContext;
+
+  nodeData[id] = { label, ctxType, vision, resp, tech };
+
+  cyNodes.push({
+    data: { id, label, ctxType: isSystem ? 'system' : 'application' }
+  });
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 5.  Extract edges (Relationships)
+// ────────────────────────────────────────────────────────────────────────────
+const edgeData = {};
+const cyEdges  = [];
+
+for (const relType of [IRI.UpstreamDownstream, IRI.CustomerSupplier]) {
+  for (const q of store.match(null, nn(IRI.type), nn(relType), null)) {
+    const id     = q.subject.value;
+    const label  = getOne(id, IRI.label)        || '';
+    const upNode = getOne(id, IRI.upstream);
+    const dnNode = getOne(id, IRI.downstream);
+    const upRole = getOne(id, IRI.upstreamRole);
+    const dnRole = getOne(id, IRI.downstreamRole);
+    const tech   = getOne(id, IRI.integrationTech) || '';
+    const aggs   = getAll(id, IRI.exposedAggregate);
+
+    if (!upNode || !dnNode) continue;
+
+    const isUD = relType === IRI.UpstreamDownstream;
+
+    // Show only the relationship name on the edge; technology is in the tooltip
+    const edgeLabel = label;
+
+    edgeData[id] = {
+      label, relType: isUD ? 'UpstreamDownstream' : 'CustomerSupplier',
+      upRole, dnRole, tech, aggs, upNode, dnNode
+    };
+
+    cyEdges.push({
+      data: {
+        id,
+        source:  upNode,
+        target:  dnNode,
+        label:   edgeLabel,
+        relType: isUD ? 'ud' : 'cs',
+      }
+    });
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 6.  Register Dagre + initialise Cytoscape
+// ────────────────────────────────────────────────────────────────────────────
+cytoscape.use(cytoscapeDagre);
+
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: { nodes: cyNodes, edges: cyEdges },
+  wheelSensitivity: 0.3,
+
+  style: [
+    {
+      selector: 'node',
+      style: {
+        'shape':            'roundrectangle',
+        'background-color': '#4a90d9',
+        'border-width':     2,
+        'border-color':     '#357abd',
+        'label':            'data(label)',
+        'color':            '#fff',
+        'font-size':        13,
+        'font-weight':      600,
+        'text-valign':      'center',
+        'text-halign':      'center',
+        'text-wrap':        'wrap',
+        'text-max-width':   140,
+        'width':            165,
+        'height':           62,
+      }
+    },
+    {
+      selector: 'node[ctxType = "system"]',
+      style: {
+        'background-color': '#e6b84a',
+        'border-color':     '#c49830',
+        'color':            '#3a2800',
+      }
+    },
+    {
+      selector: 'node:selected',
+      style: { 'border-width': 3, 'border-color': '#fff' }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width':                    2,
+        'curve-style':              'bezier',
+        'target-arrow-shape':       'triangle',
+        'label':                    'data(label)',
+        'font-size':                10,
+        'text-rotation':            'autorotate',
+        'text-background-color':    '#f4f6f9',
+        'text-background-opacity':  1,
+        'text-background-padding':  '3px',
+        'text-border-opacity':      0,
+      }
+    },
+    {
+      selector: 'edge[relType = "ud"]',
+      style: {
+        'line-color':          '#9b59b6',
+        'target-arrow-color':  '#9b59b6',
+        'color':               '#7d3c98',
+      }
+    },
+    {
+      selector: 'edge[relType = "cs"]',
+      style: {
+        'line-color':          '#e07b39',
+        'target-arrow-color':  '#e07b39',
+        'line-style':          'dashed',
+        'line-dash-pattern':   [6, 4],
+        'color':               '#b85c1a',
+      }
+    },
+    {
+      selector: 'edge:selected',
+      style: { 'width': 3 }
+    },
+  ],
+
+  layout: {
+    name:    'dagre',
+    rankDir: 'LR',
+    nodeSep: 60,
+    rankSep: 180,
+    edgeSep: 20,
+    padding: 50,
+    animate: false,
+  },
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// 7.  Tooltip logic
+// ────────────────────────────────────────────────────────────────────────────
+const tooltip    = document.getElementById('tooltip');
+const ttTitle    = document.getElementById('tt-title');
+const ttBadge    = document.getElementById('tt-badge');
+const ttVision   = document.getElementById('tt-vision');
+const ttResp     = document.getElementById('tt-resp');
+const ttRespSec  = document.getElementById('tt-resp-section');
+const ttTech     = document.getElementById('tt-tech');
+const ttTechSec  = document.getElementById('tt-tech-section');
+const ttRoles    = document.getElementById('tt-roles');
+const ttRolesSec = document.getElementById('tt-roles-section');
+const ttAgg      = document.getElementById('tt-agg');
+const ttAggSec   = document.getElementById('tt-agg-section');
+
+function pills(container, items, cssClass) {
+  container.innerHTML = '';
+  (items || []).forEach(t => {
+    const s = document.createElement('span');
+    s.className = 'pill ' + (cssClass || '');
+    s.textContent = t;
+    container.appendChild(s);
+  });
+}
+
+cy.on('tap', 'node', function(evt) {
+  const id = evt.target.id();
+  const d  = nodeData[id];
+  if (!d) return;
+
+  ttTitle.textContent = d.label;
+  const isSystem = d.ctxType === IRI.SystemContext;
+  ttBadge.textContent = isSystem ? 'System Context' : 'Application Context';
+  ttBadge.className   = 'type-badge ' + (isSystem ? 'badge-sys' : 'badge-app');
+  ttVision.textContent = d.vision || '';
+
+  pills(ttResp, d.resp);
+  ttRespSec.style.display = d.resp.length ? '' : 'none';
+
+  pills(ttTech, d.tech, 'tech');
+  ttTechSec.style.display = d.tech.length ? '' : 'none';
+
+  ttRolesSec.style.display = 'none';
+  ttAggSec.style.display   = 'none';
+
+  tooltip.className      = '';
+  tooltip.style.display  = 'block';
+});
+
+cy.on('tap', 'edge', function(evt) {
+  const id = evt.target.id();
+  const d  = edgeData[id];
+  if (!d) return;
+
+  ttTitle.textContent = d.label;
+  const isUD = d.relType === 'UpstreamDownstream';
+  ttBadge.textContent = isUD ? 'Upstream / Downstream' : 'Customer / Supplier';
+  ttBadge.className   = 'type-badge ' + (isUD ? 'badge-ud' : 'badge-cs');
+
+  const upLabel = nodeData[d.upNode] ? nodeData[d.upNode].label : d.upNode;
+  const dnLabel = nodeData[d.dnNode] ? nodeData[d.dnNode].label : d.dnNode;
+  ttVision.textContent = upLabel + '  \u2192  ' + dnLabel;
+
+  ttRespSec.style.display = 'none';
+
+  pills(ttTech, d.tech ? [d.tech] : [], 'tech');
+  ttTechSec.style.display = d.tech ? '' : 'none';
+
+  ttRoles.innerHTML = '';
+  const roles = [];
+  if (d.upRole) roles.push({ text: shortRole(d.upRole) + ' (upstream)',   cls: 'role-ohs' });
+  if (d.dnRole) roles.push({ text: shortRole(d.dnRole) + ' (downstream)', cls: 'role-acl' });
+  roles.forEach(r => {
+    const s = document.createElement('span');
+    s.className = 'pill ' + r.cls;
+    s.textContent = r.text;
+    ttRoles.appendChild(s);
+  });
+  ttRolesSec.style.display = roles.length ? '' : 'none';
+
+  pills(ttAgg, d.aggs);
+  ttAggSec.style.display = d.aggs.length ? '' : 'none';
+
+  tooltip.className     = 'rel';
+  tooltip.style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) tooltip.style.display = 'none';
+});
+} // end buildGraph
+</script>
+</body>
+</html>

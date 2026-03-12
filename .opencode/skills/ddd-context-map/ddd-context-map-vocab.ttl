@@ -1,0 +1,382 @@
+@base <https://vocab.example/ddd-context-map#> .
+
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dddcm: <https://vocab.example/ddd-context-map#> .
+
+# ---------------------------------------------------------------------------
+# Ontology declaration
+# ---------------------------------------------------------------------------
+
+<https://vocab.example/ddd-context-map>
+    a owl:Ontology ;
+    rdfs:label "DDD Context Map Vocabulary"@en ;
+    rdfs:comment "A vocabulary for describing Domain-Driven Design context maps, bounded contexts, and their relationships. Based on the pattern language of Evans (2003/2015), Vernon (2013), and Context Mapper (Kapferer & Zimmermann 2020)."@en ;
+    dcterms:title "DDD Context Map Vocabulary"@en ;
+    owl:versionInfo "1.0.0" .
+
+# ---------------------------------------------------------------------------
+# Classes — Top-level structural concepts
+# ---------------------------------------------------------------------------
+
+dddcm:ContextMap
+    a rdfs:Class ;
+    rdfs:label "Context Map"@en ;
+    rdfs:comment "A map that captures the relationships and integrations between all bounded contexts in a system landscape or organisation."@en .
+
+dddcm:BoundedContext
+    a rdfs:Class ;
+    rdfs:label "Bounded Context"@en ;
+    rdfs:comment "An explicit boundary within which a domain model is defined and applicable. All terms and concepts within the boundary have a single, unambiguous meaning."@en .
+
+dddcm:Domain
+    a rdfs:Class ;
+    rdfs:label "Domain"@en ;
+    rdfs:comment "A sphere of knowledge or activity. The top-level problem space that the organisation operates in."@en .
+
+dddcm:Subdomain
+    a rdfs:Class ;
+    rdfs:label "Subdomain"@en ;
+    rdfs:comment "A coherent sub-area of the domain. Classified as Core, Supporting, or Generic."@en ;
+    rdfs:subClassOf dddcm:Domain .
+
+dddcm:Team
+    a rdfs:Class ;
+    rdfs:label "Team"@en ;
+    rdfs:comment "A development team. On an organisational context map a team is modelled as a specialised bounded context that realises one or more system bounded contexts."@en ;
+    rdfs:subClassOf dddcm:BoundedContext .
+
+# ---------------------------------------------------------------------------
+# Classes — Relationship types
+# ---------------------------------------------------------------------------
+
+dddcm:ContextRelationship
+    a rdfs:Class ;
+    rdfs:label "Context Relationship"@en ;
+    rdfs:comment "Abstract superclass for all relationships between bounded contexts."@en .
+
+dddcm:SymmetricRelationship
+    a rdfs:Class ;
+    rdfs:label "Symmetric Relationship"@en ;
+    rdfs:comment "A relationship in which both bounded contexts have equal standing. Neither is upstream nor downstream."@en ;
+    rdfs:subClassOf dddcm:ContextRelationship .
+
+dddcm:Partnership
+    a rdfs:Class ;
+    rdfs:label "Partnership"@en ;
+    rdfs:comment "Two bounded contexts that are tightly coupled: the teams co-evolve their models, plan together, and share success and failure. Neither can succeed without the other."@en ;
+    rdfs:subClassOf dddcm:SymmetricRelationship .
+
+dddcm:SharedKernel
+    a rdfs:Class ;
+    rdfs:label "Shared Kernel"@en ;
+    rdfs:comment "Two bounded contexts share an explicitly agreed subset of the domain model (e.g. a shared library or schema). Neither team may change the shared part without consulting the other."@en ;
+    rdfs:subClassOf dddcm:SymmetricRelationship .
+
+dddcm:SeparateWays
+    a rdfs:Class ;
+    rdfs:label "Separate Ways"@en ;
+    rdfs:comment "A deliberate decision that two bounded contexts will not integrate. Teams find specialised solutions independently."@en ;
+    rdfs:subClassOf dddcm:ContextRelationship .
+
+dddcm:BigBallOfMud
+    a rdfs:Class ;
+    rdfs:label "Big Ball of Mud"@en ;
+    rdfs:comment "A diagnostic marker for a poorly-structured system with mixed models and unclear boundaries. Used to prevent model pollution from spreading into neighbouring contexts."@en ;
+    rdfs:subClassOf dddcm:ContextRelationship .
+
+dddcm:UpstreamDownstreamRelationship
+    a rdfs:Class ;
+    rdfs:label "Upstream-Downstream Relationship"@en ;
+    rdfs:comment "An asymmetric relationship: changes in the upstream context may affect the downstream context but not vice versa."@en ;
+    rdfs:subClassOf dddcm:ContextRelationship .
+
+dddcm:CustomerSupplierRelationship
+    a rdfs:Class ;
+    rdfs:label "Customer-Supplier Relationship"@en ;
+    rdfs:comment "A specialised upstream-downstream relationship in which the downstream team (customer) has negotiating power: the upstream team (supplier) factors downstream priorities into its planning."@en ;
+    rdfs:subClassOf dddcm:UpstreamDownstreamRelationship .
+
+# ---------------------------------------------------------------------------
+# Classes — Upstream/downstream roles (applied to relationships)
+# ---------------------------------------------------------------------------
+
+dddcm:RelationshipRole
+    a rdfs:Class ;
+    rdfs:label "Relationship Role"@en ;
+    rdfs:comment "A role played by one side of a context relationship."@en .
+
+dddcm:UpstreamRole
+    a rdfs:Class ;
+    rdfs:label "Upstream Role"@en ;
+    rdfs:comment "A role applicable to the upstream side of an asymmetric relationship."@en ;
+    rdfs:subClassOf dddcm:RelationshipRole .
+
+dddcm:DownstreamRole
+    a rdfs:Class ;
+    rdfs:label "Downstream Role"@en ;
+    rdfs:comment "A role applicable to the downstream side of an asymmetric relationship."@en ;
+    rdfs:subClassOf dddcm:RelationshipRole .
+
+dddcm:OpenHostService
+    a dddcm:UpstreamRole ;
+    rdfs:label "Open Host Service"@en ;
+    rdfs:comment "The upstream context exposes a well-defined, versioned protocol or API accessible to multiple downstreams. Decouples consumers from internal model changes."@en .
+
+dddcm:PublishedLanguage
+    a dddcm:UpstreamRole ;
+    rdfs:label "Published Language"@en ;
+    rdfs:comment "The upstream context uses a well-documented, shared interchange language (e.g. JSON Schema, iCalendar, HL7 FHIR). Typically used together with Open Host Service."@en .
+
+dddcm:AntiCorruptionLayer
+    a dddcm:DownstreamRole ;
+    rdfs:label "Anti-Corruption Layer"@en ;
+    rdfs:comment "The downstream context builds an isolation/translation layer that shields its own model from upstream changes. Preferred when the upstream model would otherwise pollute the downstream."@en .
+
+dddcm:Conformist
+    a dddcm:DownstreamRole ;
+    rdfs:label "Conformist"@en ;
+    rdfs:comment "The downstream context slavishly adopts the upstream model with no translation. Eliminates translation complexity at the cost of model purity. Mutually exclusive with Anti-Corruption Layer."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Domain classification values
+# ---------------------------------------------------------------------------
+
+dddcm:SubdomainType
+    a rdfs:Class ;
+    rdfs:label "Subdomain Type"@en ;
+    rdfs:comment "The strategic classification of a subdomain."@en .
+
+dddcm:CoreDomain
+    a dddcm:SubdomainType ;
+    rdfs:label "Core Domain"@en ;
+    rdfs:comment "The primary competitive differentiator; the most important subdomain requiring the best modelling effort."@en .
+
+dddcm:SupportingDomain
+    a dddcm:SubdomainType ;
+    rdfs:label "Supporting Domain"@en ;
+    rdfs:comment "Necessary for the business but not differentiating. Custom-built but not the primary focus."@en .
+
+dddcm:GenericSubdomain
+    a dddcm:SubdomainType ;
+    rdfs:label "Generic Subdomain"@en ;
+    rdfs:comment "A commodity capability that others have already solved well. Buy or adopt rather than build."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Context map / bounded context metadata values
+# ---------------------------------------------------------------------------
+
+dddcm:MapType
+    a rdfs:Class ;
+    rdfs:label "Map Type"@en .
+
+dddcm:SystemLandscape
+    a dddcm:MapType ;
+    rdfs:label "System Landscape"@en ;
+    rdfs:comment "A context map showing technical system boundaries."@en .
+
+dddcm:Organisational
+    a dddcm:MapType ;
+    rdfs:label "Organisational"@en ;
+    rdfs:comment "A context map showing team boundaries alongside system boundaries."@en .
+
+dddcm:MapState
+    a rdfs:Class ;
+    rdfs:label "Map State"@en .
+
+dddcm:AsIs
+    a dddcm:MapState ;
+    rdfs:label "As-Is"@en ;
+    rdfs:comment "The context map describes the current state of the system."@en .
+
+dddcm:ToBe
+    a dddcm:MapState ;
+    rdfs:label "To-Be"@en ;
+    rdfs:comment "The context map describes a desired future state."@en .
+
+dddcm:ContextType
+    a rdfs:Class ;
+    rdfs:label "Context Type"@en .
+
+dddcm:FeatureContext
+    a dddcm:ContextType ;
+    rdfs:label "Feature"@en ;
+    rdfs:comment "A bounded context implementing a specific product feature."@en .
+
+dddcm:ApplicationContext
+    a dddcm:ContextType ;
+    rdfs:label "Application"@en ;
+    rdfs:comment "A bounded context representing a deployable application."@en .
+
+dddcm:SystemContext
+    a dddcm:ContextType ;
+    rdfs:label "System"@en ;
+    rdfs:comment "A bounded context representing an external or legacy system."@en .
+
+dddcm:TeamContext
+    a dddcm:ContextType ;
+    rdfs:label "Team"@en ;
+    rdfs:comment "A bounded context representing a development team (used on organisational maps)."@en .
+
+# ---------------------------------------------------------------------------
+# Properties — ContextMap
+# ---------------------------------------------------------------------------
+
+dddcm:contains
+    a rdf:Property ;
+    rdfs:label "contains"@en ;
+    rdfs:comment "Relates a context map to a bounded context that is a member of it."@en ;
+    rdfs:domain dddcm:ContextMap ;
+    rdfs:range dddcm:BoundedContext .
+
+dddcm:hasRelationship
+    a rdf:Property ;
+    rdfs:label "has relationship"@en ;
+    rdfs:comment "Relates a context map to a relationship between two of its bounded contexts."@en ;
+    rdfs:domain dddcm:ContextMap ;
+    rdfs:range dddcm:ContextRelationship .
+
+dddcm:mapType
+    a rdf:Property ;
+    rdfs:label "map type"@en ;
+    rdfs:comment "The type of a context map: SystemLandscape or Organisational."@en ;
+    rdfs:domain dddcm:ContextMap ;
+    rdfs:range dddcm:MapType .
+
+dddcm:mapState
+    a rdf:Property ;
+    rdfs:label "map state"@en ;
+    rdfs:comment "Whether the context map describes the current state (AsIs) or a desired future state (ToBe)."@en ;
+    rdfs:domain dddcm:ContextMap ;
+    rdfs:range dddcm:MapState .
+
+# ---------------------------------------------------------------------------
+# Properties — BoundedContext
+# ---------------------------------------------------------------------------
+
+dddcm:domainVisionStatement
+    a rdf:Property ;
+    rdfs:label "domain vision statement"@en ;
+    rdfs:comment "A short statement (1–3 sentences) describing the business purpose and scope of a bounded context."@en ;
+    rdfs:domain dddcm:BoundedContext ;
+    rdfs:range xsd:string .
+
+dddcm:implementationTechnology
+    a rdf:Property ;
+    rdfs:label "implementation technology"@en ;
+    rdfs:comment "The technology stack used to implement the bounded context, e.g. 'Java, Spring Boot' or 'Node.js, PostgreSQL'."@en ;
+    rdfs:domain dddcm:BoundedContext ;
+    rdfs:range xsd:string .
+
+dddcm:responsibility
+    a rdf:Property ;
+    rdfs:label "responsibility"@en ;
+    rdfs:comment "A key aggregate, data set, or capability that the bounded context owns."@en ;
+    rdfs:domain dddcm:BoundedContext ;
+    rdfs:range xsd:string .
+
+dddcm:contextType
+    a rdf:Property ;
+    rdfs:label "context type"@en ;
+    rdfs:comment "The structural classification of the bounded context: Feature, Application, System, or Team."@en ;
+    rdfs:domain dddcm:BoundedContext ;
+    rdfs:range dddcm:ContextType .
+
+dddcm:implementsDomain
+    a rdf:Property ;
+    rdfs:label "implements domain"@en ;
+    rdfs:comment "Relates a bounded context to the subdomain or domain it realises."@en ;
+    rdfs:domain dddcm:BoundedContext ;
+    rdfs:range dddcm:Domain .
+
+dddcm:realizesContext
+    a rdf:Property ;
+    rdfs:label "realizes context"@en ;
+    rdfs:comment "For a Team bounded context: the system or application bounded context that this team builds."@en ;
+    rdfs:domain dddcm:Team ;
+    rdfs:range dddcm:BoundedContext .
+
+# ---------------------------------------------------------------------------
+# Properties — Domain / Subdomain
+# ---------------------------------------------------------------------------
+
+dddcm:subdomainType
+    a rdf:Property ;
+    rdfs:label "subdomain type"@en ;
+    rdfs:comment "The strategic classification of the subdomain: CoreDomain, SupportingDomain, or GenericSubdomain."@en ;
+    rdfs:domain dddcm:Subdomain ;
+    rdfs:range dddcm:SubdomainType .
+
+# ---------------------------------------------------------------------------
+# Properties — ContextRelationship
+# ---------------------------------------------------------------------------
+
+dddcm:relationshipName
+    a rdf:Property ;
+    rdfs:label "relationship name"@en ;
+    rdfs:comment "An optional human-readable label for the relationship."@en ;
+    rdfs:domain dddcm:ContextRelationship ;
+    rdfs:range xsd:string .
+
+dddcm:integrationTechnology
+    a rdf:Property ;
+    rdfs:label "integration technology"@en ;
+    rdfs:comment "The technical mechanism used for integration, e.g. 'RESTful HTTP', 'Apache Kafka events', 'gRPC', 'shared database'."@en ;
+    rdfs:domain dddcm:ContextRelationship ;
+    rdfs:range xsd:string .
+
+# Properties — SymmetricRelationship
+
+dddcm:participant
+    a rdf:Property ;
+    rdfs:label "participant"@en ;
+    rdfs:comment "One of the two equal participants in a symmetric relationship."@en ;
+    rdfs:domain dddcm:SymmetricRelationship ;
+    rdfs:range dddcm:BoundedContext .
+
+dddcm:sharedArtifact
+    a rdf:Property ;
+    rdfs:label "shared artifact"@en ;
+    rdfs:comment "A description of the code, schema, or model artifact shared between the two bounded contexts in a Shared Kernel relationship."@en ;
+    rdfs:domain dddcm:SharedKernel ;
+    rdfs:range xsd:string .
+
+# Properties — UpstreamDownstreamRelationship
+
+dddcm:upstream
+    a rdf:Property ;
+    rdfs:label "upstream"@en ;
+    rdfs:comment "The upstream bounded context in an asymmetric relationship. Changes here may affect the downstream."@en ;
+    rdfs:domain dddcm:UpstreamDownstreamRelationship ;
+    rdfs:range dddcm:BoundedContext .
+
+dddcm:downstream
+    a rdf:Property ;
+    rdfs:label "downstream"@en ;
+    rdfs:comment "The downstream bounded context in an asymmetric relationship. Depends on the upstream."@en ;
+    rdfs:domain dddcm:UpstreamDownstreamRelationship ;
+    rdfs:range dddcm:BoundedContext .
+
+dddcm:upstreamRole
+    a rdf:Property ;
+    rdfs:label "upstream role"@en ;
+    rdfs:comment "A role played by the upstream context: OpenHostService and/or PublishedLanguage."@en ;
+    rdfs:domain dddcm:UpstreamDownstreamRelationship ;
+    rdfs:range dddcm:UpstreamRole .
+
+dddcm:downstreamRole
+    a rdf:Property ;
+    rdfs:label "downstream role"@en ;
+    rdfs:comment "A role played by the downstream context: AntiCorruptionLayer or Conformist (mutually exclusive)."@en ;
+    rdfs:domain dddcm:UpstreamDownstreamRelationship ;
+    rdfs:range dddcm:DownstreamRole .
+
+dddcm:exposedAggregate
+    a rdf:Property ;
+    rdfs:label "exposed aggregate"@en ;
+    rdfs:comment "An aggregate or data set from the upstream context that is exposed to the downstream."@en ;
+    rdfs:domain dddcm:UpstreamDownstreamRelationship ;
+    rdfs:range xsd:string .
