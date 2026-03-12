@@ -156,6 +156,9 @@
     .badge-sys    { background: #fef3c7; color: #b45309; }
     .badge-ud     { background: #f3e8ff; color: #7e22ce; }
     .badge-cs     { background: #ffedd5; color: #9a3412; }
+    .badge-partnership { background: #dcfce7; color: #166534; }
+    .badge-sharedk     { background: #ccfbf1; color: #065f46; }
+    .badge-separatew   { background: #f1f5f9; color: #475569; }
     #tooltip p  { font-size: .82rem; line-height: 1.5; color: #444; margin-bottom: 8px; }
     #tooltip .section-label {
       font-size: .7rem; font-weight: 700; text-transform: uppercase;
@@ -261,13 +264,25 @@
   <h3>Legend</h3>
   <div class="legend-row"><div class="legend-dot" style="background:#4a90d9;"></div> ApplicationContext</div>
   <div class="legend-row"><div class="legend-dot" style="background:#e6b84a;"></div> SystemContext</div>
-  <div class="legend-row" style="margin-top:8px;">
+  <div class="legend-row">
     <div class="legend-line" style="background:#9b59b6;height:2px;"></div>
     UpstreamDownstream
   </div>
   <div class="legend-row">
     <div class="legend-line dashed"></div>
     CustomerSupplier
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#27ae60;height:2px;"></div>
+    Partnership
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:repeating-linear-gradient(to right,#16a085 0,#16a085 2px,transparent 2px,transparent 5px);height:2px;"></div>
+    SharedKernel
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:repeating-linear-gradient(to right,#95a5a6 0,#95a5a6 2px,transparent 2px,transparent 8px);height:2px;"></div>
+    SeparateWays
   </div>
 </div>
 
@@ -501,12 +516,17 @@ const IRI = {
   technology:         V    + 'implementationTechnology',
   UpstreamDownstream: V    + 'UpstreamDownstreamRelationship',
   CustomerSupplier:   V    + 'CustomerSupplierRelationship',
+  Partnership:        V    + 'Partnership',
+  SharedKernel:       V    + 'SharedKernel',
+  SeparateWays:       V    + 'SeparateWays',
   upstream:           V    + 'upstream',
   downstream:         V    + 'downstream',
+  participant:        V    + 'participant',
   upstreamRole:       V    + 'upstreamRole',
   downstreamRole:     V    + 'downstreamRole',
   exposedAggregate:   V    + 'exposedAggregate',
   integrationTech:    V    + 'integrationTechnology',
+  sharedArtifact:     V    + 'sharedArtifact',
   OpenHostService:    V    + 'OpenHostService',
   AntiCorruptionLayer:V    + 'AntiCorruptionLayer',
 };
@@ -574,9 +594,6 @@ for (const relType of [IRI.UpstreamDownstream, IRI.CustomerSupplier]) {
 
     const isUD = relType === IRI.UpstreamDownstream;
 
-    // Show only the relationship name on the edge; technology is in the tooltip
-    const edgeLabel = label;
-
     edgeData[id] = {
       label, relType: isUD ? 'UpstreamDownstream' : 'CustomerSupplier',
       upRole, dnRole, tech, aggs, upNode, dnNode
@@ -587,9 +604,34 @@ for (const relType of [IRI.UpstreamDownstream, IRI.CustomerSupplier]) {
         id,
         source:  upNode,
         target:  dnNode,
-        label:   edgeLabel,
+        label,
         relType: isUD ? 'ud' : 'cs',
       }
+    });
+  }
+}
+
+// Symmetric relationships: Partnership, SharedKernel, SeparateWays
+for (const relType of [IRI.Partnership, IRI.SharedKernel, IRI.SeparateWays]) {
+  for (const q of store.match(null, nn(IRI.type), nn(relType), null)) {
+    const id           = q.subject.value;
+    const label        = getOne(id, IRI.label)           || '';
+    const participants = getAll(id, IRI.participant);
+    const tech         = getOne(id, IRI.integrationTech) || '';
+    const artifact     = getOne(id, IRI.sharedArtifact)  || '';
+
+    if (participants.length < 2) continue;
+
+    const relTypeName = relType.split('#')[1]; // 'Partnership' | 'SharedKernel' | 'SeparateWays'
+    const relTypeKey  = relTypeName.toLowerCase().replace('kernel', 'k').replace('ways', 'w'); // 'partnership' | 'sharedk' | 'separatew'
+
+    // Use first two participants; undirected — source/target order is arbitrary
+    const [src, tgt] = participants;
+
+    edgeData[id] = { label, relType: relTypeName, tech, artifact, upNode: src, dnNode: tgt };
+
+    cyEdges.push({
+      data: { id, source: src, target: tgt, label, relType: relTypeKey }
     });
   }
 }
@@ -670,6 +712,37 @@ const cy = cytoscape({
       }
     },
     {
+      selector: 'edge[relType = "partnership"]',
+      style: {
+        'line-color':          '#27ae60',
+        'target-arrow-shape':  'none',
+        'source-arrow-shape':  'none',
+        'line-style':          'solid',
+        'color':               '#1e8449',
+      }
+    },
+    {
+      selector: 'edge[relType = "sharedk"]',
+      style: {
+        'line-color':          '#16a085',
+        'target-arrow-shape':  'none',
+        'source-arrow-shape':  'none',
+        'line-style':          'dotted',
+        'color':               '#0e6655',
+      }
+    },
+    {
+      selector: 'edge[relType = "separatew"]',
+      style: {
+        'line-color':          '#95a5a6',
+        'target-arrow-shape':  'none',
+        'source-arrow-shape':  'none',
+        'line-style':          'dashed',
+        'line-dash-pattern':   [2, 6],
+        'color':               '#717d7e',
+      }
+    },
+    {
       selector: 'edge:selected',
       style: { 'width': 3 }
     },
@@ -742,13 +815,31 @@ cy.on('tap', 'edge', function(evt) {
   if (!d) return;
 
   ttTitle.textContent = d.label;
-  const isUD = d.relType === 'UpstreamDownstream';
-  ttBadge.textContent = isUD ? 'Upstream / Downstream' : 'Customer / Supplier';
-  ttBadge.className   = 'type-badge ' + (isUD ? 'badge-ud' : 'badge-cs');
 
-  const upLabel = nodeData[d.upNode] ? nodeData[d.upNode].label : d.upNode;
-  const dnLabel = nodeData[d.dnNode] ? nodeData[d.dnNode].label : d.dnNode;
-  ttVision.textContent = upLabel + '  \u2192  ' + dnLabel;
+  const symmetricTypes = ['Partnership', 'SharedKernel', 'SeparateWays'];
+  const isSymmetric    = symmetricTypes.includes(d.relType);
+  const isUD           = d.relType === 'UpstreamDownstream';
+
+  const badgeMap = {
+    UpstreamDownstream: ['Upstream / Downstream', 'badge-ud'],
+    CustomerSupplier:   ['Customer / Supplier',   'badge-cs'],
+    Partnership:        ['Partnership',            'badge-partnership'],
+    SharedKernel:       ['Shared Kernel',          'badge-sharedk'],
+    SeparateWays:       ['Separate Ways',          'badge-separatew'],
+  };
+  const [badgeText, badgeCls] = badgeMap[d.relType] || [d.relType, ''];
+  ttBadge.textContent = badgeText;
+  ttBadge.className   = 'type-badge ' + badgeCls;
+
+  if (isSymmetric) {
+    const aLabel = nodeData[d.upNode] ? nodeData[d.upNode].label : d.upNode;
+    const bLabel = nodeData[d.dnNode] ? nodeData[d.dnNode].label : d.dnNode;
+    ttVision.textContent = aLabel + '  \u2194  ' + bLabel;
+  } else {
+    const upLabel = nodeData[d.upNode] ? nodeData[d.upNode].label : d.upNode;
+    const dnLabel = nodeData[d.dnNode] ? nodeData[d.dnNode].label : d.dnNode;
+    ttVision.textContent = upLabel + '  \u2192  ' + dnLabel;
+  }
 
   ttRespSec.style.display = 'none';
 
@@ -757,8 +848,11 @@ cy.on('tap', 'edge', function(evt) {
 
   ttRoles.innerHTML = '';
   const roles = [];
-  if (d.upRole) roles.push({ text: shortRole(d.upRole) + ' (upstream)',   cls: 'role-ohs' });
-  if (d.dnRole) roles.push({ text: shortRole(d.dnRole) + ' (downstream)', cls: 'role-acl' });
+  if (!isSymmetric) {
+    if (d.upRole) roles.push({ text: shortRole(d.upRole) + ' (upstream)',   cls: 'role-ohs' });
+    if (d.dnRole) roles.push({ text: shortRole(d.dnRole) + ' (downstream)', cls: 'role-acl' });
+  }
+  if (d.artifact) roles.push({ text: 'Shared: ' + d.artifact, cls: '' });
   roles.forEach(r => {
     const s = document.createElement('span');
     s.className = 'pill ' + r.cls;
@@ -767,8 +861,8 @@ cy.on('tap', 'edge', function(evt) {
   });
   ttRolesSec.style.display = roles.length ? '' : 'none';
 
-  pills(ttAgg, d.aggs);
-  ttAggSec.style.display = d.aggs.length ? '' : 'none';
+  pills(ttAgg, d.aggs || []);
+  ttAggSec.style.display = (d.aggs && d.aggs.length) ? '' : 'none';
 
   tooltip.className     = 'rel';
   tooltip.style.display = 'block';
