@@ -1,0 +1,327 @@
+@base <http://example.org/context-map#> .
+
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dddcm: <https://vocab.example/ddd-context-map#> .
+@prefix :      <http://example.org/context-map#> .
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Context Map
+# Exercises: ContextMap, mapType, mapState
+# ─────────────────────────────────────────────────────────────────────────────
+
+:ShopMap
+    a dddcm:ContextMap ;
+    rdfs:label "Online Shop – System Landscape" ;
+    dddcm:mapType  dddcm:SystemLandscape ;
+    dddcm:mapState dddcm:AsIs ;
+    dddcm:contains
+        :OrderingContext,
+        :CatalogContext,
+        :InventoryContext,
+        :PaymentGateway,
+        :NotificationContext,
+        :SearchContext,
+        :RecommendationContext,
+        :LegacyERP,
+        :TeamOrdering,
+        :TeamPlatform ;
+    dddcm:hasRelationship
+        :Rel_Ordering_Catalog,
+        :Rel_Ordering_Inventory,
+        :Rel_Ordering_Payment,
+        :Rel_Ordering_Notification,
+        :Rel_Catalog_Search,
+        :Rel_Catalog_Recommendation,
+        :Rel_Inventory_ERP,
+        :Rel_Search_Recommendation,
+        :Rel_TeamOrdering_Ordering,
+        :Rel_TeamPlatform_Catalog,
+        :Rel_TeamPlatform_Search .
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Domains & Subdomains
+# Exercises: Domain, Subdomain, subdomainType (Core / Supporting / Generic)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:ShopDomain
+    a dddcm:Domain ;
+    rdfs:label "Online Retail" .
+
+:OrderDomain
+    a dddcm:Subdomain ;
+    rdfs:label "Order Management" ;
+    dddcm:subdomainType dddcm:CoreDomain .
+
+:CatalogDomain
+    a dddcm:Subdomain ;
+    rdfs:label "Product Catalogue" ;
+    dddcm:subdomainType dddcm:CoreDomain .
+
+:InventoryDomain
+    a dddcm:Subdomain ;
+    rdfs:label "Inventory & Fulfilment" ;
+    dddcm:subdomainType dddcm:SupportingDomain .
+
+:NotificationDomain
+    a dddcm:Subdomain ;
+    rdfs:label "Notifications" ;
+    dddcm:subdomainType dddcm:GenericSubdomain .
+
+:SearchDomain
+    a dddcm:Subdomain ;
+    rdfs:label "Search" ;
+    dddcm:subdomainType dddcm:SupportingDomain .
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Bounded Contexts
+# Exercises: BoundedContext, contextType (Application / System / Feature),
+#            domainVisionStatement, responsibility, implementationTechnology,
+#            implementsDomain
+# ─────────────────────────────────────────────────────────────────────────────
+
+:OrderingContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Ordering" ;
+    dddcm:contextType          dddcm:ApplicationContext ;
+    dddcm:domainVisionStatement
+        "Manages the full lifecycle of customer orders from placement through to fulfilment confirmation." ;
+    dddcm:responsibility       "Order aggregate" ;
+    dddcm:responsibility       "Cart management" ;
+    dddcm:responsibility       "Order status transitions" ;
+    dddcm:implementationTechnology "Java 21, Spring Boot, PostgreSQL" ;
+    dddcm:implementsDomain     :OrderDomain .
+
+:CatalogContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Product Catalogue" ;
+    dddcm:contextType          dddcm:ApplicationContext ;
+    dddcm:domainVisionStatement
+        "Owns the authoritative product information model including pricing, categories, and media assets." ;
+    dddcm:responsibility       "Product aggregate" ;
+    dddcm:responsibility       "Category hierarchy" ;
+    dddcm:responsibility       "Pricing rules" ;
+    dddcm:implementationTechnology "Node.js, MongoDB" ;
+    dddcm:implementsDomain     :CatalogDomain .
+
+:InventoryContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Inventory" ;
+    dddcm:contextType          dddcm:ApplicationContext ;
+    dddcm:domainVisionStatement
+        "Tracks real-time stock levels and coordinates reservation and release of inventory for orders." ;
+    dddcm:responsibility       "StockItem aggregate" ;
+    dddcm:responsibility       "Reservation management" ;
+    dddcm:implementationTechnology "Go, Redis, PostgreSQL" ;
+    dddcm:implementsDomain     :InventoryDomain .
+
+:PaymentGateway
+    a dddcm:BoundedContext ;
+    rdfs:label "Payment Gateway" ;
+    dddcm:contextType          dddcm:SystemContext ;
+    dddcm:domainVisionStatement
+        "Third-party payment processing system. Owned externally; integrated via REST API." ;
+    dddcm:implementationTechnology "Stripe API" .
+
+:NotificationContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Notifications" ;
+    dddcm:contextType          dddcm:ApplicationContext ;
+    dddcm:domainVisionStatement
+        "Delivers transactional and marketing messages across email, SMS, and push channels." ;
+    dddcm:responsibility       "Message routing" ;
+    dddcm:responsibility       "Template rendering" ;
+    dddcm:implementationTechnology "Python, Celery, SendGrid" ;
+    dddcm:implementsDomain     :NotificationDomain .
+
+:SearchContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Search" ;
+    dddcm:contextType          dddcm:FeatureContext ;
+    dddcm:domainVisionStatement
+        "Provides fast, relevance-ranked product search powered by a dedicated search index." ;
+    dddcm:responsibility       "Full-text search index" ;
+    dddcm:responsibility       "Faceted filtering" ;
+    dddcm:implementationTechnology "TypeScript, Elasticsearch" ;
+    dddcm:implementsDomain     :SearchDomain .
+
+:RecommendationContext
+    a dddcm:BoundedContext ;
+    rdfs:label "Recommendations" ;
+    dddcm:contextType          dddcm:FeatureContext ;
+    dddcm:domainVisionStatement
+        "Generates personalised product recommendations using collaborative filtering." ;
+    dddcm:responsibility       "Recommendation model" ;
+    dddcm:responsibility       "A/B test variants" ;
+    dddcm:implementationTechnology "Python, SciPy, Apache Kafka" .
+
+:LegacyERP
+    a dddcm:BoundedContext ;
+    rdfs:label "Legacy ERP" ;
+    dddcm:contextType          dddcm:SystemContext ;
+    dddcm:domainVisionStatement
+        "On-premise ERP system handling procurement and warehouse management. No active development." ;
+    dddcm:implementationTechnology "SAP ECC 6.0" .
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Team Bounded Contexts
+# Exercises: Team (subClassOf BoundedContext), TeamContext, realizesContext
+# ─────────────────────────────────────────────────────────────────────────────
+
+:TeamOrdering
+    a dddcm:Team ;
+    rdfs:label "Team Checkout" ;
+    dddcm:contextType   dddcm:TeamContext ;
+    dddcm:domainVisionStatement
+        "Cross-functional team responsible for the ordering and payment flows." ;
+    dddcm:realizesContext :OrderingContext .
+
+:TeamPlatform
+    a dddcm:Team ;
+    rdfs:label "Team Platform" ;
+    dddcm:contextType   dddcm:TeamContext ;
+    dddcm:domainVisionStatement
+        "Platform team owning the product catalogue and search infrastructure." ;
+    dddcm:realizesContext :CatalogContext ;
+    dddcm:realizesContext :SearchContext .
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Relationships
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── UpstreamDownstream with OHS + PL upstream roles (multi-valued)
+#    and ACL downstream role
+#    Exercises: UpstreamDownstreamRelationship, upstream, downstream,
+#               upstreamRole (two values), downstreamRole, exposedAggregate,
+#               integrationTechnology, relationshipName
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Ordering_Catalog
+    a dddcm:UpstreamDownstreamRelationship ;
+    rdfs:label "Ordering reads catalogue" ;
+    dddcm:relationshipName     "Catalogue API" ;
+    dddcm:upstream             :CatalogContext ;
+    dddcm:downstream           :OrderingContext ;
+    dddcm:upstreamRole         dddcm:OpenHostService ;
+    dddcm:upstreamRole         dddcm:PublishedLanguage ;
+    dddcm:downstreamRole       dddcm:AntiCorruptionLayer ;
+    dddcm:exposedAggregate     "Product" ;
+    dddcm:exposedAggregate     "Price" ;
+    dddcm:integrationTechnology "RESTful HTTP / JSON" .
+
+# ── CustomerSupplier with ACL downstream
+#    Exercises: CustomerSupplierRelationship
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Ordering_Inventory
+    a dddcm:CustomerSupplierRelationship ;
+    rdfs:label "Ordering reserves stock" ;
+    dddcm:upstream             :InventoryContext ;
+    dddcm:downstream           :OrderingContext ;
+    dddcm:upstreamRole         dddcm:OpenHostService ;
+    dddcm:downstreamRole       dddcm:AntiCorruptionLayer ;
+    dddcm:exposedAggregate     "StockReservation" ;
+    dddcm:integrationTechnology "Apache Kafka events" .
+
+# ── UpstreamDownstream with Conformist downstream
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Ordering_Payment
+    a dddcm:UpstreamDownstreamRelationship ;
+    rdfs:label "Ordering submits payment" ;
+    dddcm:upstream             :PaymentGateway ;
+    dddcm:downstream           :OrderingContext ;
+    dddcm:upstreamRole         dddcm:OpenHostService ;
+    dddcm:downstreamRole       dddcm:Conformist ;
+    dddcm:integrationTechnology "Stripe REST API" .
+
+# ── UpstreamDownstream — Ordering → Notifications (OHS upstream, no ACL)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Ordering_Notification
+    a dddcm:UpstreamDownstreamRelationship ;
+    rdfs:label "Order events trigger notifications" ;
+    dddcm:upstream             :OrderingContext ;
+    dddcm:downstream           :NotificationContext ;
+    dddcm:upstreamRole         dddcm:OpenHostService ;
+    dddcm:integrationTechnology "Apache Kafka events" .
+
+# ── SharedKernel — Catalogue shares ProductDTO with Search
+#    Exercises: SharedKernel, participant (×2), sharedArtifact
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Catalog_Search
+    a dddcm:SharedKernel ;
+    rdfs:label "Catalogue/Search shared model" ;
+    dddcm:participant   :CatalogContext ;
+    dddcm:participant   :SearchContext ;
+    dddcm:sharedArtifact "ProductIndexDTO (shared npm package @shop/product-schema)" ;
+    dddcm:integrationTechnology "Shared npm package" .
+
+# ── Partnership — Catalogue and Recommendations co-evolve
+#    Exercises: Partnership, participant (×2)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Catalog_Recommendation
+    a dddcm:Partnership ;
+    rdfs:label "Catalogue ↔ Recommendations partnership" ;
+    dddcm:participant   :CatalogContext ;
+    dddcm:participant   :RecommendationContext ;
+    dddcm:integrationTechnology "Apache Kafka events" .
+
+# ── UpstreamDownstream — Inventory reads from Legacy ERP, no ACL (Conformist)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Inventory_ERP
+    a dddcm:UpstreamDownstreamRelationship ;
+    rdfs:label "Inventory syncs from ERP" ;
+    dddcm:upstream             :LegacyERP ;
+    dddcm:downstream           :InventoryContext ;
+    dddcm:downstreamRole       dddcm:AntiCorruptionLayer ;
+    dddcm:integrationTechnology "Nightly SFTP batch + SAP BAPI" .
+
+# ── SeparateWays — Search and Recommendations operate independently
+#    Exercises: SeparateWays, participant (×2)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_Search_Recommendation
+    a dddcm:SeparateWays ;
+    rdfs:label "Search / Recommendations: separate ways" ;
+    dddcm:participant   :SearchContext ;
+    dddcm:participant   :RecommendationContext .
+
+# ── BigBallOfMud — Legacy ERP is a diagnostic marker
+#    Exercises: BigBallOfMud, upstream/downstream notation
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_ERP_Mud
+    a dddcm:BigBallOfMud ;
+    rdfs:label "ERP – Big Ball of Mud" ;
+    dddcm:upstream   :LegacyERP ;
+    dddcm:downstream :InventoryContext .
+
+# ── Team → realizes (already captured above, but also linked via hasRelationship)
+#    Exercises: Team, realizesContext, CustomerSupplierRelationship (team-to-context)
+# ─────────────────────────────────────────────────────────────────────────────
+
+:Rel_TeamOrdering_Ordering
+    a dddcm:CustomerSupplierRelationship ;
+    rdfs:label "Team Checkout owns Ordering" ;
+    dddcm:upstream             :OrderingContext ;
+    dddcm:downstream           :TeamOrdering ;
+    dddcm:upstreamRole         dddcm:OpenHostService .
+
+:Rel_TeamPlatform_Catalog
+    a dddcm:CustomerSupplierRelationship ;
+    rdfs:label "Team Platform owns Catalogue" ;
+    dddcm:upstream             :CatalogContext ;
+    dddcm:downstream           :TeamPlatform ;
+    dddcm:upstreamRole         dddcm:OpenHostService .
+
+:Rel_TeamPlatform_Search
+    a dddcm:CustomerSupplierRelationship ;
+    rdfs:label "Team Platform owns Search" ;
+    dddcm:upstream             :SearchContext ;
+    dddcm:downstream           :TeamPlatform ;
+    dddcm:upstreamRole         dddcm:OpenHostService .

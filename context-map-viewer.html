@@ -23,6 +23,24 @@
     }
     header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: .5px; }
     header span { font-size: .85rem; color: #8892b0; }
+    #header-meta {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .meta-badge {
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .meta-badge.state-asis   { background: #1e3a5f; color: #93c5fd; }
+    .meta-badge.state-tobe   { background: #1a3a2e; color: #6ee7b7; }
+    .meta-badge.type-sl      { background: #2d2d4e; color: #c4b5fd; }
+    .meta-badge.type-org     { background: #3a2d1a; color: #fcd34d; }
 
     #cy {
       width: 100%;
@@ -65,7 +83,6 @@
       transition: background .15s;
     }
     #btn-open:hover { background: #2e2e55; }
-    /* fallback hidden input */
     #file-input { display: none; }
 
     /* ── Recent files ──────────────────────────────────────────────── */
@@ -152,13 +169,16 @@
       text-transform: uppercase;
       letter-spacing: .5px;
     }
-    .badge-app    { background: #dbeafe; color: #1d4ed8; }
-    .badge-sys    { background: #fef3c7; color: #b45309; }
-    .badge-ud     { background: #f3e8ff; color: #7e22ce; }
-    .badge-cs     { background: #ffedd5; color: #9a3412; }
-    .badge-partnership { background: #dcfce7; color: #166534; }
-    .badge-sharedk     { background: #ccfbf1; color: #065f46; }
-    .badge-separatew   { background: #f1f5f9; color: #475569; }
+    .badge-app        { background: #dbeafe; color: #1d4ed8; }
+    .badge-sys        { background: #fef3c7; color: #b45309; }
+    .badge-feature    { background: #ede9fe; color: #6d28d9; }
+    .badge-team       { background: #fce7f3; color: #9d174d; }
+    .badge-ud         { background: #f3e8ff; color: #7e22ce; }
+    .badge-cs         { background: #ffedd5; color: #9a3412; }
+    .badge-partnership    { background: #dcfce7; color: #166534; }
+    .badge-sharedk        { background: #ccfbf1; color: #065f46; }
+    .badge-separatew      { background: #f1f5f9; color: #475569; }
+    .badge-bigballofmud   { background: #fee2e2; color: #991b1b; }
     #tooltip p  { font-size: .82rem; line-height: 1.5; color: #444; margin-bottom: 8px; }
     #tooltip .section-label {
       font-size: .7rem; font-weight: 700; text-transform: uppercase;
@@ -173,8 +193,13 @@
       border-radius: 99px;
     }
     #tooltip .pill.role-ohs { background: #fef9c3; color: #854d0e; }
+    #tooltip .pill.role-pl  { background: #fff7ed; color: #9a3412; }
     #tooltip .pill.role-acl { background: #fce7f3; color: #9d174d; }
+    #tooltip .pill.role-cf  { background: #fef2f2; color: #991b1b; }
     #tooltip .pill.tech     { background: #f0fdf4; color: #166534; }
+    #tooltip .pill.subdomain-core      { background: #fef9c3; color: #713f12; }
+    #tooltip .pill.subdomain-supporting { background: #e0f2fe; color: #0c4a6e; }
+    #tooltip .pill.subdomain-generic   { background: #f0fdf4; color: #14532d; }
     #tooltip .close-btn {
       position: absolute; top: 10px; right: 12px;
       background: none; border: none; cursor: pointer;
@@ -200,6 +225,9 @@
     .legend-dot {
       width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
     }
+    .legend-dot.team-dot {
+      border-radius: 50%;
+    }
     .legend-line {
       width: 28px; height: 3px; flex-shrink: 0; border-radius: 2px;
     }
@@ -215,6 +243,7 @@
 <header>
   <h1>DDD Context Map</h1>
   <span>Click a node or edge for details</span>
+  <div id="header-meta"></div>
 </header>
 
 <!-- File picker overlay -->
@@ -223,7 +252,6 @@
     <h2>DDD Context Map</h2>
     <p>Open a Turtle (.ttl) file to visualise your context map.</p>
     <button id="btn-open">Open .ttl file</button>
-    <!-- fallback for browsers without File System Access API -->
     <input type="file" id="file-input" accept=".ttl,text/turtle">
     <div id="recent-section" style="display:none">
       <h3>Recent files</h3>
@@ -241,6 +269,14 @@
   <h2 id="tt-title"></h2>
   <div id="tt-badge" class="type-badge"></div>
   <p id="tt-vision"></p>
+  <div id="tt-domain-section">
+    <div class="section-label">Domain</div>
+    <div id="tt-domain" class="pills"></div>
+  </div>
+  <div id="tt-realizes-section">
+    <div class="section-label">Realizes</div>
+    <div id="tt-realizes" class="pills"></div>
+  </div>
   <div id="tt-resp-section">
     <div class="section-label">Responsibilities</div>
     <div id="tt-resp" class="pills"></div>
@@ -254,7 +290,7 @@
     <div id="tt-roles" class="pills"></div>
   </div>
   <div id="tt-agg-section">
-    <div class="section-label">Exposed Aggregate</div>
+    <div class="section-label">Exposed Aggregates</div>
     <div id="tt-agg" class="pills"></div>
   </div>
 </div>
@@ -264,6 +300,8 @@
   <h3>Legend</h3>
   <div class="legend-row"><div class="legend-dot" style="background:#4a90d9;"></div> ApplicationContext</div>
   <div class="legend-row"><div class="legend-dot" style="background:#e6b84a;"></div> SystemContext</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#a855f7;"></div> FeatureContext</div>
+  <div class="legend-row"><div class="legend-dot team-dot" style="background:#ec4899;"></div> TeamContext</div>
   <div class="legend-row">
     <div class="legend-line" style="background:#9b59b6;height:2px;"></div>
     UpstreamDownstream
@@ -283,6 +321,10 @@
   <div class="legend-row">
     <div class="legend-line" style="background:repeating-linear-gradient(to right,#95a5a6 0,#95a5a6 2px,transparent 2px,transparent 8px);height:2px;"></div>
     SeparateWays
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:repeating-linear-gradient(to right,#e53e3e 0,#e53e3e 3px,transparent 3px,transparent 7px);height:2px;"></div>
+    BigBallOfMud
   </div>
 </div>
 
@@ -318,9 +360,7 @@ async function saveHandle(handle) {
   const db      = await openDB();
   const tx      = db.transaction(STORE_NAME, 'readwrite');
   const store   = tx.objectStore(STORE_NAME);
-  // upsert
   store.put({ name: handle.name, lastOpened: Date.now(), handle });
-  // enforce MAX_RECENT: read all, delete oldest if needed
   return new Promise(resolve => {
     tx.oncomplete = async () => {
       const db2    = await openDB();
@@ -375,7 +415,6 @@ function relativeTime(ts) {
 }
 
 async function readHandleAndDisplay(handle) {
-  // Request / verify read permission
   let perm = await handle.queryPermission({ mode: 'read' });
   if (perm !== 'granted') {
     perm = await handle.requestPermission({ mode: 'read' });
@@ -392,7 +431,6 @@ async function readHandleAndDisplay(handle) {
 }
 
 function showOverlayError(msg) {
-  // show error inside card without hiding overlay
   let errEl = document.getElementById('overlay-error');
   if (!errEl) {
     errEl = document.createElement('p');
@@ -433,12 +471,10 @@ document.getElementById('btn-open').addEventListener('click', async () => {
     }
     await readHandleAndDisplay(handles[0]);
   } else {
-    // fallback: trigger hidden <input>
     document.getElementById('file-input').click();
   }
 });
 
-// fallback <input> handler
 document.getElementById('file-input').addEventListener('change', function(evt) {
   const file = evt.target.files[0];
   if (!file) return;
@@ -452,7 +488,7 @@ document.getElementById('file-input').addEventListener('change', function(evt) {
 
 // ── Recent files list ────────────────────────────────────────────────────────
 async function renderRecent() {
-  if (!hasFSA) return; // handles not available without FSA
+  if (!hasFSA) return;
   const items = await loadRecent();
   const section = document.getElementById('recent-section');
   const list    = document.getElementById('recent-list');
@@ -475,7 +511,6 @@ async function renderRecent() {
       time.textContent = '...';
       try {
         await readHandleAndDisplay(rec.handle);
-        // update timestamp
         await saveHandle(rec.handle);
       } catch (e) {
         time.className  = 'r-err';
@@ -492,7 +527,6 @@ document.getElementById('clear-history').addEventListener('click', async () => {
   renderRecent();
 });
 
-// initialise recent list on load
 renderRecent();
 
 function buildGraph(TURTLE) {
@@ -505,30 +539,61 @@ const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
 const RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 
 const IRI = {
-  type:               RDF  + 'type',
-  label:              RDFS + 'label',
-  BoundedContext:     V    + 'BoundedContext',
-  contextType:        V    + 'contextType',
-  ApplicationContext: V    + 'ApplicationContext',
-  SystemContext:      V    + 'SystemContext',
-  domainVision:       V    + 'domainVisionStatement',
-  responsibility:     V    + 'responsibility',
-  technology:         V    + 'implementationTechnology',
-  UpstreamDownstream: V    + 'UpstreamDownstreamRelationship',
-  CustomerSupplier:   V    + 'CustomerSupplierRelationship',
-  Partnership:        V    + 'Partnership',
-  SharedKernel:       V    + 'SharedKernel',
-  SeparateWays:       V    + 'SeparateWays',
-  upstream:           V    + 'upstream',
-  downstream:         V    + 'downstream',
-  participant:        V    + 'participant',
-  upstreamRole:       V    + 'upstreamRole',
-  downstreamRole:     V    + 'downstreamRole',
-  exposedAggregate:   V    + 'exposedAggregate',
-  integrationTech:    V    + 'integrationTechnology',
-  sharedArtifact:     V    + 'sharedArtifact',
-  OpenHostService:    V    + 'OpenHostService',
-  AntiCorruptionLayer:V    + 'AntiCorruptionLayer',
+  // core RDF/RDFS
+  type:                   RDF  + 'type',
+  label:                  RDFS + 'label',
+  // classes — nodes
+  BoundedContext:         V    + 'BoundedContext',
+  Team:                   V    + 'Team',
+  Domain:                 V    + 'Domain',
+  Subdomain:              V    + 'Subdomain',
+  ContextMap:             V    + 'ContextMap',
+  // context type values
+  contextType:            V    + 'contextType',
+  ApplicationContext:     V    + 'ApplicationContext',
+  SystemContext:          V    + 'SystemContext',
+  FeatureContext:         V    + 'FeatureContext',
+  TeamContext:            V    + 'TeamContext',
+  // bounded context properties
+  domainVision:           V    + 'domainVisionStatement',
+  responsibility:         V    + 'responsibility',
+  technology:             V    + 'implementationTechnology',
+  implementsDomain:       V    + 'implementsDomain',
+  realizesContext:        V    + 'realizesContext',
+  // domain/subdomain
+  subdomainType:          V    + 'subdomainType',
+  CoreDomain:             V    + 'CoreDomain',
+  SupportingDomain:       V    + 'SupportingDomain',
+  GenericSubdomain:       V    + 'GenericSubdomain',
+  // context map properties
+  mapType:                V    + 'mapType',
+  mapState:               V    + 'mapState',
+  SystemLandscape:        V    + 'SystemLandscape',
+  Organisational:         V    + 'Organisational',
+  AsIs:                   V    + 'AsIs',
+  ToBe:                   V    + 'ToBe',
+  // relationship classes
+  UpstreamDownstream:     V    + 'UpstreamDownstreamRelationship',
+  CustomerSupplier:       V    + 'CustomerSupplierRelationship',
+  Partnership:            V    + 'Partnership',
+  SharedKernel:           V    + 'SharedKernel',
+  SeparateWays:           V    + 'SeparateWays',
+  BigBallOfMud:           V    + 'BigBallOfMud',
+  // relationship properties
+  upstream:               V    + 'upstream',
+  downstream:             V    + 'downstream',
+  participant:            V    + 'participant',
+  upstreamRole:           V    + 'upstreamRole',
+  downstreamRole:         V    + 'downstreamRole',
+  exposedAggregate:       V    + 'exposedAggregate',
+  integrationTech:        V    + 'integrationTechnology',
+  sharedArtifact:         V    + 'sharedArtifact',
+  relationshipName:       V    + 'relationshipName',
+  // role values
+  OpenHostService:        V    + 'OpenHostService',
+  PublishedLanguage:      V    + 'PublishedLanguage',
+  AntiCorruptionLayer:    V    + 'AntiCorruptionLayer',
+  Conformist:             V    + 'Conformist',
 };
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -545,58 +610,145 @@ const getAll = (s, p) =>
   store.getQuads(s ? nn(s) : null, nn(p), null, null).map(q => q.object.value);
 const getOne = (s, p) => { const r = getAll(s, p); return r.length ? r[0] : null; };
 
+// ── Role display helpers ──────────────────────────────────────────────────────
 function shortRole(iri) {
-  if (iri === IRI.OpenHostService)      return 'OHS';
-  if (iri === IRI.AntiCorruptionLayer)  return 'ACL';
-  return (iri || '').split('#')[1] || iri;
+  const map = {
+    [IRI.OpenHostService]:   'OHS',
+    [IRI.PublishedLanguage]: 'PL',
+    [IRI.AntiCorruptionLayer]: 'ACL',
+    [IRI.Conformist]:        'CF',
+  };
+  return map[iri] || (iri || '').split('#')[1] || iri;
+}
+
+function roleCssClass(iri) {
+  if (iri === IRI.OpenHostService)    return 'role-ohs';
+  if (iri === IRI.PublishedLanguage)  return 'role-pl';
+  if (iri === IRI.AntiCorruptionLayer) return 'role-acl';
+  if (iri === IRI.Conformist)         return 'role-cf';
+  return '';
+}
+
+// ── Subdomain type label ──────────────────────────────────────────────────────
+function subdomainTypeLabel(iri) {
+  if (iri === IRI.CoreDomain)        return { text: 'Core Domain',        cls: 'subdomain-core' };
+  if (iri === IRI.SupportingDomain)  return { text: 'Supporting Domain',  cls: 'subdomain-supporting' };
+  if (iri === IRI.GenericSubdomain)  return { text: 'Generic Subdomain',  cls: 'subdomain-generic' };
+  return { text: (iri || '').split('#')[1] || iri, cls: '' };
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// 4.  Extract nodes (Bounded Contexts)
+// 4.  Read ContextMap metadata (mapType, mapState)
+// ────────────────────────────────────────────────────────────────────────────
+const headerMeta = document.getElementById('header-meta');
+headerMeta.innerHTML = '';
+for (const q of store.match(null, nn(IRI.type), nn(IRI.ContextMap), null)) {
+  const mapId    = q.subject.value;
+  const mapType  = getOne(mapId, IRI.mapType);
+  const mapState = getOne(mapId, IRI.mapState);
+
+  if (mapState) {
+    const isAsIs = mapState === IRI.AsIs;
+    const badge  = document.createElement('span');
+    badge.className   = 'meta-badge ' + (isAsIs ? 'state-asis' : 'state-tobe');
+    badge.textContent = isAsIs ? 'As-Is' : 'To-Be';
+    headerMeta.appendChild(badge);
+  }
+  if (mapType) {
+    const isSL   = mapType === IRI.SystemLandscape;
+    const badge  = document.createElement('span');
+    badge.className   = 'meta-badge ' + (isSL ? 'type-sl' : 'type-org');
+    badge.textContent = isSL ? 'System Landscape' : 'Organisational';
+    headerMeta.appendChild(badge);
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 5.  Build Domain/Subdomain lookup
+// ────────────────────────────────────────────────────────────────────────────
+// domainInfo[iri] = { label, subdomainType }
+const domainInfo = {};
+for (const cls of [IRI.Domain, IRI.Subdomain]) {
+  for (const q of store.match(null, nn(IRI.type), nn(cls), null)) {
+    const id   = q.subject.value;
+    const lbl  = getOne(id, IRI.label) || id.split('#')[1] || id;
+    const sdt  = getOne(id, IRI.subdomainType);
+    domainInfo[id] = { label: lbl, subdomainType: sdt };
+  }
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 6.  Extract nodes (Bounded Contexts)
 // ────────────────────────────────────────────────────────────────────────────
 const nodeData = {};
 const cyNodes  = [];
 
+// Collect both plain BoundedContexts and Team (subclass of BoundedContext)
+const bcSubjects = new Set();
 for (const q of store.match(null, nn(IRI.type), nn(IRI.BoundedContext), null)) {
-  const id      = q.subject.value;
-  const label   = getOne(id, IRI.label)        || id.split('#')[1] || id;
-  const ctxType = getOne(id, IRI.contextType)  || '';
-  const vision  = getOne(id, IRI.domainVision) || '';
-  const resp    = getAll(id, IRI.responsibility);
-  const tech    = getAll(id, IRI.technology);
-  const isSystem = ctxType === IRI.SystemContext;
+  bcSubjects.add(q.subject.value);
+}
+for (const q of store.match(null, nn(IRI.type), nn(IRI.Team), null)) {
+  bcSubjects.add(q.subject.value);
+}
 
-  nodeData[id] = { label, ctxType, vision, resp, tech };
+for (const id of bcSubjects) {
+  const label        = getOne(id, IRI.label)           || id.split('#')[1] || id;
+  const ctxTypeRaw   = getOne(id, IRI.contextType)     || '';
+  const vision       = getOne(id, IRI.domainVision)    || '';
+  const resp         = getAll(id, IRI.responsibility);
+  const tech         = getAll(id, IRI.technology);
+  const domainIri    = getOne(id, IRI.implementsDomain);
+  const realizesIris = getAll(id, IRI.realizesContext);
+
+  // Determine display type key
+  let ctxKey = 'application';
+  if (ctxTypeRaw === IRI.SystemContext)  ctxKey = 'system';
+  if (ctxTypeRaw === IRI.FeatureContext) ctxKey = 'feature';
+  if (ctxTypeRaw === IRI.TeamContext)    ctxKey = 'team';
+  // Also detect via rdf:type Team
+  const isTeamType = store.getQuads(nn(id), nn(IRI.type), nn(IRI.Team), null).length > 0;
+  if (isTeamType) ctxKey = 'team';
+
+  nodeData[id] = { label, ctxTypeRaw, ctxKey, vision, resp, tech, domainIri, realizesIris };
 
   cyNodes.push({
-    data: { id, label, ctxType: isSystem ? 'system' : 'application' }
+    data: { id, label, ctxKey }
   });
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// 5.  Extract edges (Relationships)
+// 7.  Extract edges (Relationships)
 // ────────────────────────────────────────────────────────────────────────────
 const edgeData = {};
 const cyEdges  = [];
 
+// Helper: prefer relationshipName over rdfs:label
+function relLabel(id) {
+  return getOne(id, IRI.relationshipName) || getOne(id, IRI.label) || '';
+}
+
+// Directed relationships
 for (const relType of [IRI.UpstreamDownstream, IRI.CustomerSupplier]) {
   for (const q of store.match(null, nn(IRI.type), nn(relType), null)) {
     const id     = q.subject.value;
-    const label  = getOne(id, IRI.label)        || '';
+    const label  = relLabel(id);
     const upNode = getOne(id, IRI.upstream);
     const dnNode = getOne(id, IRI.downstream);
-    const upRole = getOne(id, IRI.upstreamRole);
-    const dnRole = getOne(id, IRI.downstreamRole);
-    const tech   = getOne(id, IRI.integrationTech) || '';
-    const aggs   = getAll(id, IRI.exposedAggregate);
+    // Multi-valued roles
+    const upRoles = getAll(id, IRI.upstreamRole);
+    const dnRoles = getAll(id, IRI.downstreamRole);
+    const tech    = getOne(id, IRI.integrationTech) || '';
+    const aggs    = getAll(id, IRI.exposedAggregate);
 
     if (!upNode || !dnNode) continue;
 
     const isUD = relType === IRI.UpstreamDownstream;
 
     edgeData[id] = {
-      label, relType: isUD ? 'UpstreamDownstream' : 'CustomerSupplier',
-      upRole, dnRole, tech, aggs, upNode, dnNode
+      label,
+      relType: isUD ? 'UpstreamDownstream' : 'CustomerSupplier',
+      upRoles, dnRoles, tech, aggs, upNode, dnNode
     };
 
     cyEdges.push({
@@ -615,20 +767,24 @@ for (const relType of [IRI.UpstreamDownstream, IRI.CustomerSupplier]) {
 for (const relType of [IRI.Partnership, IRI.SharedKernel, IRI.SeparateWays]) {
   for (const q of store.match(null, nn(IRI.type), nn(relType), null)) {
     const id           = q.subject.value;
-    const label        = getOne(id, IRI.label)           || '';
+    const label        = relLabel(id);
     const participants = getAll(id, IRI.participant);
     const tech         = getOne(id, IRI.integrationTech) || '';
     const artifact     = getOne(id, IRI.sharedArtifact)  || '';
 
     if (participants.length < 2) continue;
 
-    const relTypeName = relType.split('#')[1]; // 'Partnership' | 'SharedKernel' | 'SeparateWays'
-    const relTypeKey  = relTypeName.toLowerCase().replace('kernel', 'k').replace('ways', 'w'); // 'partnership' | 'sharedk' | 'separatew'
+    const relTypeName = relType.split('#')[1];
+    const relTypeKey  = relTypeName.toLowerCase()
+      .replace('kernel', 'k').replace('ways', 'w');
 
-    // Use first two participants; undirected — source/target order is arbitrary
     const [src, tgt] = participants;
 
-    edgeData[id] = { label, relType: relTypeName, tech, artifact, upNode: src, dnNode: tgt };
+    edgeData[id] = {
+      label, relType: relTypeName, tech, artifact,
+      upNode: src, dnNode: tgt,
+      upRoles: [], dnRoles: [], aggs: []
+    };
 
     cyEdges.push({
       data: { id, source: src, target: tgt, label, relType: relTypeKey }
@@ -636,8 +792,37 @@ for (const relType of [IRI.Partnership, IRI.SharedKernel, IRI.SeparateWays]) {
   }
 }
 
+// BigBallOfMud — treated like a symmetric marker (participants or up/downstream)
+for (const q of store.match(null, nn(IRI.type), nn(IRI.BigBallOfMud), null)) {
+  const id           = q.subject.value;
+  const label        = relLabel(id);
+  const participants = getAll(id, IRI.participant);
+  // Also support upstream/downstream notation
+  const upNode       = getOne(id, IRI.upstream);
+  const dnNode       = getOne(id, IRI.downstream);
+
+  let src, tgt;
+  if (participants.length >= 2) {
+    [src, tgt] = participants;
+  } else if (upNode && dnNode) {
+    src = upNode; tgt = dnNode;
+  } else {
+    continue;
+  }
+
+  edgeData[id] = {
+    label, relType: 'BigBallOfMud', tech: '', artifact: '',
+    upNode: src, dnNode: tgt,
+    upRoles: [], dnRoles: [], aggs: []
+  };
+
+  cyEdges.push({
+    data: { id, source: src, target: tgt, label, relType: 'bbom' }
+  });
+}
+
 // ────────────────────────────────────────────────────────────────────────────
-// 6.  Register Dagre + initialise Cytoscape
+// 8.  Register Dagre + initialise Cytoscape
 // ────────────────────────────────────────────────────────────────────────────
 cytoscape.use(cytoscapeDagre);
 
@@ -647,6 +832,7 @@ const cy = cytoscape({
   wheelSensitivity: 0.3,
 
   style: [
+    // ── Base node ──────────────────────────────────────────────────────────
     {
       selector: 'node',
       style: {
@@ -666,18 +852,40 @@ const cy = cytoscape({
         'height':           62,
       }
     },
+    // ── System context ─────────────────────────────────────────────────────
     {
-      selector: 'node[ctxType = "system"]',
+      selector: 'node[ctxKey = "system"]',
       style: {
         'background-color': '#e6b84a',
         'border-color':     '#c49830',
         'color':            '#3a2800',
       }
     },
+    // ── Feature context ────────────────────────────────────────────────────
+    {
+      selector: 'node[ctxKey = "feature"]',
+      style: {
+        'background-color': '#a855f7',
+        'border-color':     '#7c3aed',
+        'color':            '#fff',
+      }
+    },
+    // ── Team context ───────────────────────────────────────────────────────
+    {
+      selector: 'node[ctxKey = "team"]',
+      style: {
+        'shape':            'ellipse',
+        'background-color': '#ec4899',
+        'border-color':     '#be185d',
+        'color':            '#fff',
+      }
+    },
+    // ── Selected ──────────────────────────────────────────────────────────
     {
       selector: 'node:selected',
       style: { 'border-width': 3, 'border-color': '#fff' }
     },
+    // ── Base edge ─────────────────────────────────────────────────────────
     {
       selector: 'edge',
       style: {
@@ -743,6 +951,18 @@ const cy = cytoscape({
       }
     },
     {
+      selector: 'edge[relType = "bbom"]',
+      style: {
+        'line-color':          '#e53e3e',
+        'target-arrow-shape':  'none',
+        'source-arrow-shape':  'none',
+        'line-style':          'dashed',
+        'line-dash-pattern':   [3, 5],
+        'width':               3,
+        'color':               '#c53030',
+      }
+    },
+    {
       selector: 'edge:selected',
       style: { 'width': 3 }
     },
@@ -760,20 +980,24 @@ const cy = cytoscape({
 });
 
 // ────────────────────────────────────────────────────────────────────────────
-// 7.  Tooltip logic
+// 9.  Tooltip logic
 // ────────────────────────────────────────────────────────────────────────────
-const tooltip    = document.getElementById('tooltip');
-const ttTitle    = document.getElementById('tt-title');
-const ttBadge    = document.getElementById('tt-badge');
-const ttVision   = document.getElementById('tt-vision');
-const ttResp     = document.getElementById('tt-resp');
-const ttRespSec  = document.getElementById('tt-resp-section');
-const ttTech     = document.getElementById('tt-tech');
-const ttTechSec  = document.getElementById('tt-tech-section');
-const ttRoles    = document.getElementById('tt-roles');
-const ttRolesSec = document.getElementById('tt-roles-section');
-const ttAgg      = document.getElementById('tt-agg');
-const ttAggSec   = document.getElementById('tt-agg-section');
+const tooltip       = document.getElementById('tooltip');
+const ttTitle       = document.getElementById('tt-title');
+const ttBadge       = document.getElementById('tt-badge');
+const ttVision      = document.getElementById('tt-vision');
+const ttDomain      = document.getElementById('tt-domain');
+const ttDomainSec   = document.getElementById('tt-domain-section');
+const ttRealizes    = document.getElementById('tt-realizes');
+const ttRealizesSec = document.getElementById('tt-realizes-section');
+const ttResp        = document.getElementById('tt-resp');
+const ttRespSec     = document.getElementById('tt-resp-section');
+const ttTech        = document.getElementById('tt-tech');
+const ttTechSec     = document.getElementById('tt-tech-section');
+const ttRoles       = document.getElementById('tt-roles');
+const ttRolesSec    = document.getElementById('tt-roles-section');
+const ttAgg         = document.getElementById('tt-agg');
+const ttAggSec      = document.getElementById('tt-agg-section');
 
 function pills(container, items, cssClass) {
   container.innerHTML = '';
@@ -785,16 +1009,49 @@ function pills(container, items, cssClass) {
   });
 }
 
+function pill(container, text, cssClass) {
+  const s = document.createElement('span');
+  s.className = 'pill ' + (cssClass || '');
+  s.textContent = text;
+  container.appendChild(s);
+}
+
+const ctxTypeBadge = {
+  application: ['Application Context', 'badge-app'],
+  system:      ['System Context',      'badge-sys'],
+  feature:     ['Feature Context',     'badge-feature'],
+  team:        ['Team',                'badge-team'],
+};
+
 cy.on('tap', 'node', function(evt) {
   const id = evt.target.id();
   const d  = nodeData[id];
   if (!d) return;
 
   ttTitle.textContent = d.label;
-  const isSystem = d.ctxType === IRI.SystemContext;
-  ttBadge.textContent = isSystem ? 'System Context' : 'Application Context';
-  ttBadge.className   = 'type-badge ' + (isSystem ? 'badge-sys' : 'badge-app');
+
+  const [badgeText, badgeCls] = ctxTypeBadge[d.ctxKey] || ['Bounded Context', 'badge-app'];
+  ttBadge.textContent = badgeText;
+  ttBadge.className   = 'type-badge ' + badgeCls;
   ttVision.textContent = d.vision || '';
+
+  // Domain / subdomain
+  ttDomain.innerHTML = '';
+  if (d.domainIri && domainInfo[d.domainIri]) {
+    const di  = domainInfo[d.domainIri];
+    const sdt = di.subdomainType ? subdomainTypeLabel(di.subdomainType) : null;
+    pill(ttDomain, di.label, sdt ? sdt.cls : '');
+    if (sdt) pill(ttDomain, sdt.text, sdt.cls);
+  }
+  ttDomainSec.style.display = d.domainIri ? '' : 'none';
+
+  // realizesContext (for Team nodes)
+  ttRealizes.innerHTML = '';
+  (d.realizesIris || []).forEach(rIri => {
+    const rLabel = nodeData[rIri] ? nodeData[rIri].label : (rIri.split('#')[1] || rIri);
+    pill(ttRealizes, rLabel, '');
+  });
+  ttRealizesSec.style.display = (d.realizesIris && d.realizesIris.length) ? '' : 'none';
 
   pills(ttResp, d.resp);
   ttRespSec.style.display = d.resp.length ? '' : 'none';
@@ -805,8 +1062,8 @@ cy.on('tap', 'node', function(evt) {
   ttRolesSec.style.display = 'none';
   ttAggSec.style.display   = 'none';
 
-  tooltip.className      = '';
-  tooltip.style.display  = 'block';
+  tooltip.className     = '';
+  tooltip.style.display = 'block';
 });
 
 cy.on('tap', 'edge', function(evt) {
@@ -814,11 +1071,7 @@ cy.on('tap', 'edge', function(evt) {
   const d  = edgeData[id];
   if (!d) return;
 
-  ttTitle.textContent = d.label;
-
-  const symmetricTypes = ['Partnership', 'SharedKernel', 'SeparateWays'];
-  const isSymmetric    = symmetricTypes.includes(d.relType);
-  const isUD           = d.relType === 'UpstreamDownstream';
+  ttTitle.textContent = d.label || d.relType;
 
   const badgeMap = {
     UpstreamDownstream: ['Upstream / Downstream', 'badge-ud'],
@@ -826,10 +1079,14 @@ cy.on('tap', 'edge', function(evt) {
     Partnership:        ['Partnership',            'badge-partnership'],
     SharedKernel:       ['Shared Kernel',          'badge-sharedk'],
     SeparateWays:       ['Separate Ways',          'badge-separatew'],
+    BigBallOfMud:       ['Big Ball of Mud',         'badge-bigballofmud'],
   };
   const [badgeText, badgeCls] = badgeMap[d.relType] || [d.relType, ''];
   ttBadge.textContent = badgeText;
   ttBadge.className   = 'type-badge ' + badgeCls;
+
+  const symmetricTypes = ['Partnership', 'SharedKernel', 'SeparateWays', 'BigBallOfMud'];
+  const isSymmetric    = symmetricTypes.includes(d.relType);
 
   if (isSymmetric) {
     const aLabel = nodeData[d.upNode] ? nodeData[d.upNode].label : d.upNode;
@@ -841,24 +1098,24 @@ cy.on('tap', 'edge', function(evt) {
     ttVision.textContent = upLabel + '  \u2192  ' + dnLabel;
   }
 
-  ttRespSec.style.display = 'none';
+  ttDomainSec.style.display   = 'none';
+  ttRealizesSec.style.display = 'none';
+  ttRespSec.style.display     = 'none';
 
   pills(ttTech, d.tech ? [d.tech] : [], 'tech');
   ttTechSec.style.display = d.tech ? '' : 'none';
 
+  // Roles (multi-valued, upstream + downstream)
   ttRoles.innerHTML = '';
   const roles = [];
   if (!isSymmetric) {
-    if (d.upRole) roles.push({ text: shortRole(d.upRole) + ' (upstream)',   cls: 'role-ohs' });
-    if (d.dnRole) roles.push({ text: shortRole(d.dnRole) + ' (downstream)', cls: 'role-acl' });
+    (d.upRoles || []).forEach(r =>
+      roles.push({ text: shortRole(r) + ' (upstream)',   cls: roleCssClass(r) }));
+    (d.dnRoles || []).forEach(r =>
+      roles.push({ text: shortRole(r) + ' (downstream)', cls: roleCssClass(r) }));
   }
   if (d.artifact) roles.push({ text: 'Shared: ' + d.artifact, cls: '' });
-  roles.forEach(r => {
-    const s = document.createElement('span');
-    s.className = 'pill ' + r.cls;
-    s.textContent = r.text;
-    ttRoles.appendChild(s);
-  });
+  roles.forEach(r => pill(ttRoles, r.text, r.cls));
   ttRolesSec.style.display = roles.length ? '' : 'none';
 
   pills(ttAgg, d.aggs || []);
