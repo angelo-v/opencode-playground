@@ -172,58 +172,48 @@
       margin-bottom: 24px;
     }
 
-    .slot-row {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .slot {
-      flex: 1;
+    #drop-zone {
       border: 2px dashed #cbd5e1;
       border-radius: 10px;
-      padding: 18px 14px;
+      padding: 30px 20px;
       text-align: center;
       cursor: pointer;
       transition: border-color .15s, background .15s;
-      position: relative;
+      margin-bottom: 16px;
     }
-    .slot:hover { border-color: #6366f1; background: #f8f7ff; }
-    .slot.loaded {
-      border-style: solid;
-      border-color: #22c55e;
-      background: #f0fdf4;
-      cursor: default;
+    #drop-zone:hover, #drop-zone.drag-over {
+      border-color: #6366f1;
+      background: #f8f7ff;
     }
-    .slot.loaded:hover { border-color: #22c55e; background: #f0fdf4; }
-    .slot-icon {
-      font-size: 1.6rem;
-      margin-bottom: 6px;
-    }
-    .slot-label {
-      font-size: .72rem;
+    #drop-zone-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    #drop-zone-primary {
+      font-size: .88rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-      color: #64748b;
+      color: #1a1a2e;
       margin-bottom: 4px;
     }
-    .slot-name {
+    #drop-zone-sub { font-size: .78rem; color: #94a3b8; }
+
+    /* loaded file pills */
+    #loaded-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .loaded-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-size: .8rem;
-      color: #1a1a2e;
       font-weight: 600;
-      word-break: break-all;
     }
-    .slot-hint {
-      font-size: .75rem;
-      color: #94a3b8;
-    }
-    .slot-check {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      font-size: .85rem;
-      color: #22c55e;
-    }
+    .loaded-pill.pill-cm { background: #ede9fe; color: #5b21b6; }
+    .loaded-pill.pill-df { background: #e0f2fe; color: #0c4a6e; }
+    .loaded-pill-name { flex: 1; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .loaded-pill-check { color: #22c55e; font-size: .85rem; }
 
     .overlay-actions {
       display: flex;
@@ -483,25 +473,13 @@
 <div id="file-overlay">
   <div id="file-card">
     <h2>Map Viewer</h2>
-    <p class="subtitle">Open one or both Turtle (.ttl) files to visualise your maps.</p>
+    <p class="subtitle">Select both .ttl files at once — the app links them automatically.</p>
 
-    <div class="slot-row">
-      <!-- Context Map slot -->
-      <div class="slot" id="slot-cm" title="Click to open Context Map file">
-        <div class="slot-icon">&#128204;</div>
-        <div class="slot-label">Context Map</div>
-        <div class="slot-hint" id="slot-cm-hint">Click to open .ttl</div>
-        <div class="slot-name" id="slot-cm-name" style="display:none"></div>
-        <span class="slot-check" id="slot-cm-check" style="display:none">&#10003;</span>
-      </div>
-      <!-- Data Flow slot -->
-      <div class="slot" id="slot-df" title="Click to open Data Flow file">
-        <div class="slot-icon">&#128257;</div>
-        <div class="slot-label">Data Flow</div>
-        <div class="slot-hint" id="slot-df-hint">Click to open .ttl</div>
-        <div class="slot-name" id="slot-df-name" style="display:none"></div>
-        <span class="slot-check" id="slot-df-check" style="display:none">&#10003;</span>
-      </div>
+    <div id="drop-zone">
+      <div id="drop-zone-icon">&#128194;</div>
+      <div id="drop-zone-primary">Click to select files</div>
+      <div id="drop-zone-sub">Select both .ttl files together (Ctrl/Cmd+click), or drag &amp; drop them here</div>
+      <div id="loaded-pills"></div>
     </div>
 
     <div class="overlay-actions">
@@ -518,9 +496,8 @@
   </div>
 </div>
 
-<!-- Hidden file inputs -->
-<input type="file" id="file-input-cm" accept=".ttl,text/turtle" style="display:none">
-<input type="file" id="file-input-df" accept=".ttl,text/turtle" style="display:none">
+<!-- Hidden file input -->
+<input type="file" id="file-input" accept=".ttl,text/turtle" multiple style="display:none">
 
 <!-- Graph canvases -->
 <div id="canvas-wrap">
@@ -646,7 +623,7 @@ const pending = { cm: null, df: null }; // pending text before "View Map" is cli
 // SECTION 1: IndexedDB — pair storage
 // =====================================================================
 const DB_NAME    = 'map-viewer';
-const DB_VERSION = 1;
+const DB_VERSION = 2;  // bumped to clear swapped-slot pairs from earlier sessions
 const STORE_NAME = 'recent-pairs';
 const MAX_RECENT = 5;
 
@@ -654,7 +631,10 @@ function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
     req.onupgradeneeded = e => {
-      e.target.result.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+      const db = e.target.result;
+      // Drop old store if upgrading (clears stale/swapped entries)
+      if (db.objectStoreNames.contains(STORE_NAME)) db.deleteObjectStore(STORE_NAME);
+      db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
     };
     req.onsuccess = e => resolve(e.target.result);
     req.onerror   = e => reject(e.target.error);
@@ -729,44 +709,59 @@ function relativeTime(ts) {
 }
 
 // =====================================================================
-// SECTION 2: File picker overlay — dual slot logic
+// SECTION 2: File picker overlay — single multi-select, auto-assign by type
 // =====================================================================
 const hasFSA = typeof window.showOpenFilePicker === 'function';
 
-// Slot UI helpers
-function markSlotLoaded(which, name) {
-  const slot  = document.getElementById('slot-' + which);
-  const hint  = document.getElementById('slot-' + which + '-hint');
-  const nameEl = document.getElementById('slot-' + which + '-name');
-  const check = document.getElementById('slot-' + which + '-check');
-  slot.classList.add('loaded');
-  slot.title = name;
-  hint.style.display  = 'none';
-  nameEl.textContent  = name;
-  nameEl.style.display = '';
-  check.style.display  = '';
+// ── Classify a turtle text as 'cm' or 'df' ────────────────────────────────────
+// Use the primary map-type declaration as the definitive signal.
+// Both files may import each other's vocab for cross-links, so loose term
+// matching on its own is unreliable (context map uses dflow: prefixes too).
+function detectMapType(text) {
+  // Primary: explicit "a <Something>:DataFlowMap" or "a <Something>:ContextMap" triple
+  if (/\ba\s+\S+:DataFlowMap\b/.test(text)) return 'df';
+  if (/\ba\s+\S+:ContextMap\b/.test(text))  return 'cm';
+  // Fallback for files without a top-level map node
+  if (/\ba\s+\S+:DataFlow\b/.test(text))       return 'df';
+  if (/\ba\s+\S+:BoundedContext\b/.test(text)) return 'cm';
+  return 'unknown';
 }
 
-function markSlotEmpty(which) {
-  const slot  = document.getElementById('slot-' + which);
-  const hint  = document.getElementById('slot-' + which + '-hint');
-  const nameEl = document.getElementById('slot-' + which + '-name');
-  const check = document.getElementById('slot-' + which + '-check');
-  slot.classList.remove('loaded');
-  slot.title = 'Click to open ' + (which === 'cm' ? 'Context Map' : 'Data Flow') + ' file';
-  hint.style.display   = '';
-  nameEl.style.display = 'none';
-  check.style.display  = 'none';
+// ── Render loaded-file pills inside the drop zone ─────────────────────────────
+function renderPills() {
+  const pillsEl = document.getElementById('loaded-pills');
+  pillsEl.innerHTML = '';
+  const entries = [
+    pending.cm ? { cls: 'pill-cm', icon: '&#128204;', label: 'Context Map', name: state.cmFileName } : null,
+    pending.df ? { cls: 'pill-df', icon: '&#128257;', label: 'Data Flow',   name: state.dfFileName } : null,
+  ].filter(Boolean);
+  entries.forEach(e => {
+    const el = document.createElement('div');
+    el.className = 'loaded-pill ' + e.cls;
+    el.innerHTML = '<span>' + e.icon + '</span>' +
+                   '<span class="loaded-pill-name">' + e.label + ': ' + e.name + '</span>' +
+                   '<span class="loaded-pill-check">&#10003;</span>';
+    pillsEl.appendChild(el);
+  });
+  const primary = document.getElementById('drop-zone-primary');
+  const sub     = document.getElementById('drop-zone-sub');
+  if (entries.length === 2) {
+    primary.textContent = 'Both files selected — click to change';
+    sub.textContent     = '';
+  } else if (entries.length === 1) {
+    primary.textContent = 'One file selected — add the second, or click to change';
+    sub.textContent     = 'Select both .ttl files together (Ctrl/Cmd+click)';
+  } else {
+    primary.textContent = 'Click to select files';
+    sub.textContent     = 'Select both .ttl files together (Ctrl/Cmd+click), or drag & drop them here';
+  }
 }
 
 function updateOverlayOpenBtn() {
-  // Enable "View Map" if something is pending OR something is already in state
   const hasAny = !!(pending.cm || pending.df || state.cmText || state.dfText);
   document.getElementById('btn-overlay-open').disabled = !hasAny;
-  // Show "Skip" only when something is already loaded in state
-  const alreadyHasSomething = state.cmText || state.dfText;
   const skipBtn = document.getElementById('btn-overlay-skip');
-  if (alreadyHasSomething) skipBtn.classList.remove('hidden');
+  if (state.cmText || state.dfText) skipBtn.classList.remove('hidden');
   else skipBtn.classList.add('hidden');
 }
 
@@ -775,9 +770,7 @@ function setOverlayError(msg) {
 }
 
 function showOverlay() {
-  // Re-sync slot UI from current state + pending
-  if (state.cmText && !pending.cm) markSlotLoaded('cm', state.cmFileName || 'context-map.ttl');
-  if (state.dfText && !pending.df) markSlotLoaded('df', state.dfFileName || 'data-flow.ttl');
+  renderPills();
   document.getElementById('file-overlay').classList.remove('hidden');
   updateOverlayOpenBtn();
 }
@@ -787,100 +780,104 @@ function hideOverlay() {
   setOverlayError('');
 }
 
-// Open FSA or fallback
-async function openSlot(which) {
-  if (hasFSA) {
-    let handles;
-    try {
-      handles = await window.showOpenFilePicker({
-        types: [{ description: 'Turtle RDF', accept: { 'text/turtle': ['.ttl'] } }],
-        multiple: false,
-      });
-    } catch (e) {
-      if (e.name !== 'AbortError') setOverlayError(e.message);
-      return;
-    }
-    const handle = handles[0];
-    let perm = await handle.queryPermission({ mode: 'read' });
-    if (perm !== 'granted') perm = await handle.requestPermission({ mode: 'read' });
-    if (perm !== 'granted') { setOverlayError('Permission denied for "' + handle.name + '".'); return; }
-    const file = await handle.getFile();
-    const text = await file.text();
-    if (which === 'cm') {
-      pending.cm = text;
-      state.cmHandle   = handle;
-      state.cmFileName = handle.name;
+// ── Assign a list of {text, name, handle?} to pending.cm / pending.df ─────────
+function assignFiles(items) {
+  setOverlayError('');
+  const unknown = [];
+  for (const item of items) {
+    const type = detectMapType(item.text);
+    if (type === 'cm') {
+      pending.cm = item.text; state.cmFileName = item.name;
+      if (item.handle) state.cmHandle = item.handle;
+    } else if (type === 'df') {
+      pending.df = item.text; state.dfFileName = item.name;
+      if (item.handle) state.dfHandle = item.handle;
     } else {
-      pending.df = text;
-      state.dfHandle   = handle;
-      state.dfFileName = handle.name;
+      unknown.push(item.name);
     }
-    markSlotLoaded(which, handle.name);
-    updateOverlayOpenBtn();
-  } else {
-    document.getElementById('file-input-' + which).click();
   }
+  if (unknown.length)
+    setOverlayError('Could not identify: ' + unknown.join(', '));
+  renderPills();
+  updateOverlayOpenBtn();
+
+  // If both slots are now filled, go straight to the map
+  if (pending.cm && pending.df) commitAndOpen();
 }
 
-document.getElementById('slot-cm').addEventListener('click', () => {
-  if (!document.getElementById('slot-cm').classList.contains('loaded')) openSlot('cm');
-});
-document.getElementById('slot-df').addEventListener('click', () => {
-  if (!document.getElementById('slot-df').classList.contains('loaded')) openSlot('df');
-});
-
-// Fallback <input> handlers
-document.getElementById('file-input-cm').addEventListener('change', function(evt) {
-  const file = evt.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    pending.cm = e.target.result;
-    state.cmFileName = file.name;
-    markSlotLoaded('cm', file.name);
-    updateOverlayOpenBtn();
-  };
-  reader.readAsText(file);
-  this.value = '';
-});
-document.getElementById('file-input-df').addEventListener('change', function(evt) {
-  const file = evt.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    pending.df = e.target.result;
-    state.dfFileName = file.name;
-    markSlotLoaded('df', file.name);
-    updateOverlayOpenBtn();
-  };
-  reader.readAsText(file);
-  this.value = '';
-});
-
-// "View Map" button
-document.getElementById('btn-overlay-open').addEventListener('click', () => {
+// ── Commit pending files and open the map ─────────────────────────────────────
+function commitAndOpen() {
   if (pending.cm) state.cmText = pending.cm;
   if (pending.df) state.dfText = pending.df;
   pending.cm = null;
   pending.df = null;
   hideOverlay();
-  // Save pair to IndexedDB
   savePair(state.cmHandle, state.dfHandle, state.cmFileName, state.dfFileName).catch(() => {});
   initMaps();
+}
+
+// ── Open via FSA (multi-select) ───────────────────────────────────────────────
+async function openViaFSA() {
+  let handles;
+  try {
+    handles = await window.showOpenFilePicker({
+      types: [{ description: 'Turtle RDF', accept: { 'text/turtle': ['.ttl'] } }],
+      multiple: true,
+    });
+  } catch (e) {
+    if (e.name !== 'AbortError') setOverlayError(e.message);
+    return;
+  }
+  const items = [];
+  for (const handle of handles) {
+    let perm = await handle.queryPermission({ mode: 'read' });
+    if (perm !== 'granted') perm = await handle.requestPermission({ mode: 'read' });
+    if (perm !== 'granted') { setOverlayError('Permission denied for "' + handle.name + '".'); return; }
+    const file = await handle.getFile();
+    items.push({ text: await file.text(), name: handle.name, handle });
+  }
+  assignFiles(items);
+}
+
+// ── Drop zone click ───────────────────────────────────────────────────────────
+document.getElementById('drop-zone').addEventListener('click', () => {
+  if (hasFSA) openViaFSA();
+  else document.getElementById('file-input').click();
 });
+
+// ── Drag-and-drop ─────────────────────────────────────────────────────────────
+const dropZone = document.getElementById('drop-zone');
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+dropZone.addEventListener('drop', async e => {
+  e.preventDefault();
+  dropZone.classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files).filter(f => f.name.endsWith('.ttl'));
+  if (!files.length) { setOverlayError('Please drop .ttl files.'); return; }
+  const items = await Promise.all(files.map(async f => ({ text: await f.text(), name: f.name })));
+  assignFiles(items);
+});
+
+// ── Fallback <input> ──────────────────────────────────────────────────────────
+document.getElementById('file-input').addEventListener('change', async function() {
+  const files = Array.from(this.files);
+  if (!files.length) return;
+  const items = await Promise.all(files.map(async f => ({ text: await f.text(), name: f.name })));
+  assignFiles(items);
+  this.value = '';
+});
+
+// "View Map" button (manual confirm when only one file was selected)
+document.getElementById('btn-overlay-open').addEventListener('click', commitAndOpen);
 
 // "Skip" button
 document.getElementById('btn-overlay-skip').addEventListener('click', () => {
-  pending.cm = null;
-  pending.df = null;
+  pending.cm = null; pending.df = null;
   hideOverlay();
 });
 
-// "Open files" button in header
+// Header "Open files" button
 document.getElementById('btn-open-files').addEventListener('click', () => {
-  // Reset slot UI for anything not yet loaded
-  if (!state.cmText) markSlotEmpty('cm');
-  if (!state.dfText) markSlotEmpty('df');
   showOverlay();
   renderRecent();
 });
@@ -930,27 +927,17 @@ async function renderRecent() {
     li.addEventListener('click', async () => {
       time.textContent = '...';
       try {
-        if (rec.cmHandle) {
-          let p = await rec.cmHandle.queryPermission({ mode: 'read' });
-          if (p !== 'granted') p = await rec.cmHandle.requestPermission({ mode: 'read' });
-          if (p !== 'granted') throw new Error('Permission denied for ' + rec.cmName);
-          const f = await rec.cmHandle.getFile();
-          pending.cm = await f.text();
-          state.cmHandle = rec.cmHandle;
-          state.cmFileName = rec.cmName;
-          markSlotLoaded('cm', rec.cmName);
+        const items = [];
+        for (const [handle, name] of [[rec.cmHandle, rec.cmName], [rec.dfHandle, rec.dfName]]) {
+          if (!handle) continue;
+          let p = await handle.queryPermission({ mode: 'read' });
+          if (p !== 'granted') p = await handle.requestPermission({ mode: 'read' });
+          if (p !== 'granted') throw new Error('Permission denied for ' + name);
+          const f = await handle.getFile();
+          items.push({ text: await f.text(), name, handle });
         }
-        if (rec.dfHandle) {
-          let p = await rec.dfHandle.queryPermission({ mode: 'read' });
-          if (p !== 'granted') p = await rec.dfHandle.requestPermission({ mode: 'read' });
-          if (p !== 'granted') throw new Error('Permission denied for ' + rec.dfName);
-          const f = await rec.dfHandle.getFile();
-          pending.df = await f.text();
-          state.dfHandle = rec.dfHandle;
-          state.dfFileName = rec.dfName;
-          markSlotLoaded('df', rec.dfName);
-        }
-        updateOverlayOpenBtn();
+        // Re-detect types — don't trust stale slot labels from a previous session
+        assignFiles(items);
       } catch (e) {
         time.className = 'r-err';
         time.textContent = 'Error';
@@ -1494,24 +1481,10 @@ function switchView(to) {
   if (to === 'df' && state.cyDf) state.cyDf.resize();
 }
 
-// Enable/disable toggle buttons + companion button
+// Enable/disable view-toggle buttons
 function updateHeaderButtons() {
-  const cmBtn = document.getElementById('btn-view-cm');
-  const dfBtn = document.getElementById('btn-view-df');
-  const addBtn = document.getElementById('btn-add-companion');
-
-  cmBtn.disabled = !state.cmText;
-  dfBtn.disabled = !state.dfText;
-
-  if (state.cmText && !state.dfText) {
-    addBtn.textContent  = '+ Add Data Flow';
-    addBtn.classList.remove('hidden');
-  } else if (state.dfText && !state.cmText) {
-    addBtn.textContent  = '+ Add Context Map';
-    addBtn.classList.remove('hidden');
-  } else {
-    addBtn.classList.add('hidden');
-  }
+  document.getElementById('btn-view-cm').disabled = !state.cmText;
+  document.getElementById('btn-view-df').disabled = !state.dfText;
 }
 
 // Render header meta badges for the active view
@@ -1918,49 +1891,24 @@ function attachDfEvents() {
 // =====================================================================
 // SECTION 10: Cross-link navigation (jump & highlight)
 // =====================================================================
-function clearHighlights(cy) {
+function jumpToView(view, nodeIris, edgeIris) {
+  const cy = view === 'df' ? state.cyDf : state.cyCm;
+  switchView(view);
+  hideTooltip();
+  if (!cy) return;
   cy.elements().removeClass('xlink-hi');
-}
-
-function jumpToDataFlow(nodeIris, edgeIris) {
-  switchView('df');
-  hideTooltip();
-  if (!state.cyDf) return;
-  clearHighlights(state.cyDf);
-  const targets = [];
-  nodeIris.forEach(iri => {
-    const el = state.cyDf.getElementById(iri);
-    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
-  });
-  edgeIris.forEach(iri => {
-    const el = state.cyDf.getElementById(iri);
-    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
-  });
+  const targets = [...nodeIris, ...edgeIris]
+    .map(iri => cy.getElementById(iri))
+    .filter(el => el && el.length);
+  targets.forEach(el => el.addClass('xlink-hi'));
   if (targets.length) {
-    const col = state.cyDf.collection(targets.flatMap(e => e.toArray ? e.toArray() : [e]));
-    state.cyDf.animate({ fit: { eles: col, padding: 80 } }, { duration: 350 });
+    const col = cy.collection(targets.flatMap(el => el.toArray()));
+    cy.animate({ center: { eles: col }, zoom: Math.min(cy.zoom(), 1.2) }, { duration: 350 });
   }
 }
 
-function jumpToContextMap(nodeIris, edgeIris) {
-  switchView('cm');
-  hideTooltip();
-  if (!state.cyCm) return;
-  clearHighlights(state.cyCm);
-  const targets = [];
-  nodeIris.forEach(iri => {
-    const el = state.cyCm.getElementById(iri);
-    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
-  });
-  edgeIris.forEach(iri => {
-    const el = state.cyCm.getElementById(iri);
-    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
-  });
-  if (targets.length) {
-    const col = state.cyCm.collection(targets.flatMap(e => e.toArray ? e.toArray() : [e]));
-    state.cyCm.animate({ fit: { eles: col, padding: 80 } }, { duration: 350 });
-  }
-}
+function jumpToDataFlow(nodeIris, edgeIris)   { jumpToView('df', nodeIris, edgeIris); }
+function jumpToContextMap(nodeIris, edgeIris) { jumpToView('cm', nodeIris, edgeIris); }
 
 // =====================================================================
 // SECTION 11: Cross-link indicators (subtle ring on linked elements)
