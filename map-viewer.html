@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map Viewer</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+    }
+
+    /* ── Header ────────────────────────────────────────────────────── */
+    header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    header h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .4px;
+      white-space: nowrap;
+      color: #e2e8f0;
+    }
+
+    /* ── View toggle ────────────────────────────────────────────────── */
+    #view-toggle {
+      display: flex;
+      gap: 4px;
+      background: rgba(255,255,255,.08);
+      border-radius: 8px;
+      padding: 3px;
+    }
+    .view-btn {
+      padding: 5px 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .3px;
+      color: #94a3b8;
+      background: transparent;
+      transition: background .15s, color .15s;
+      white-space: nowrap;
+    }
+    .view-btn:disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+    .view-btn.active {
+      background: #fff;
+      color: #1a1a2e;
+    }
+    .view-btn:not(.active):not(:disabled):hover {
+      background: rgba(255,255,255,.15);
+      color: #e2e8f0;
+    }
+
+    /* ── Header right side ─────────────────────────────────────────── */
+    #header-right {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .meta-badge {
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .meta-badge.state-asis   { background: #1e3a5f; color: #93c5fd; }
+    .meta-badge.state-tobe   { background: #1a3a2e; color: #6ee7b7; }
+    .meta-badge.type-sl      { background: #2d2d4e; color: #c4b5fd; }
+    .meta-badge.type-org     { background: #3a2d1a; color: #fcd34d; }
+
+    #btn-add-companion {
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+      white-space: nowrap;
+    }
+    #btn-add-companion:hover {
+      border-color: rgba(255,255,255,.5);
+      color: #e2e8f0;
+    }
+    #btn-add-companion.hidden { display: none; }
+
+    #btn-open-files {
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.2);
+      background: transparent;
+      color: #94a3b8;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+    }
+    #btn-open-files:hover {
+      border-color: rgba(255,255,255,.5);
+      color: #e2e8f0;
+    }
+
+    header span.hint {
+      font-size: .8rem;
+      color: #64748b;
+    }
+
+    /* ── Canvas area ────────────────────────────────────────────────── */
+    #canvas-wrap {
+      position: relative;
+      width: 100%;
+      height: calc(100vh - 52px);
+    }
+    .cy-pane {
+      position: absolute;
+      inset: 0;
+      background: #f4f6f9;
+      display: none;
+    }
+    .cy-pane.active { display: block; }
+    #cy-cm { background: #f4f6f9; }
+    #cy-df { background: #f0f4f8; }
+
+    /* ── File picker overlay ────────────────────────────────────────── */
+    #file-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    #file-overlay.hidden { display: none; }
+
+    #file-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.28);
+      padding: 32px 36px;
+      width: min(520px, 92vw);
+    }
+    #file-card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #1a1a2e;
+    }
+    #file-card > .subtitle {
+      font-size: .83rem;
+      color: #64748b;
+      margin-bottom: 24px;
+    }
+
+    .slot-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .slot {
+      flex: 1;
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      position: relative;
+    }
+    .slot:hover { border-color: #6366f1; background: #f8f7ff; }
+    .slot.loaded {
+      border-style: solid;
+      border-color: #22c55e;
+      background: #f0fdf4;
+      cursor: default;
+    }
+    .slot.loaded:hover { border-color: #22c55e; background: #f0fdf4; }
+    .slot-icon {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    .slot-label {
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .slot-name {
+      font-size: .8rem;
+      color: #1a1a2e;
+      font-weight: 600;
+      word-break: break-all;
+    }
+    .slot-hint {
+      font-size: .75rem;
+      color: #94a3b8;
+    }
+    .slot-check {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      font-size: .85rem;
+      color: #22c55e;
+    }
+
+    .overlay-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: 8px;
+    }
+    #btn-overlay-open {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 9px 22px;
+      border-radius: 7px;
+      border: none;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    #btn-overlay-open:hover { background: #2e2e55; }
+    #btn-overlay-open:disabled { opacity: .4; cursor: not-allowed; }
+    #btn-overlay-skip {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: .83rem;
+      cursor: pointer;
+      padding: 9px 4px;
+    }
+    #btn-overlay-skip:hover { color: #475569; }
+    #btn-overlay-skip.hidden { display: none; }
+
+    /* ── Recent pairs ───────────────────────────────────────────────── */
+    #recent-section {
+      margin-top: 24px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 18px;
+    }
+    #recent-section h3 {
+      font-size: .68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #94a3b8;
+      margin-bottom: 10px;
+    }
+    #recent-list { list-style: none; }
+    #recent-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    #recent-list li:hover { background: #f0f4ff; }
+    .r-names { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+    .r-name {
+      font-size: .82rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .r-name2 {
+      font-size: .75rem;
+      color: #64748b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .r-time { font-size: .72rem; color: #94a3b8; flex-shrink: 0; }
+    .r-err  { font-size: .72rem; color: #ef4444; flex-shrink: 0; }
+    #btn-clear-recent {
+      display: block;
+      margin-top: 10px;
+      font-size: .72rem;
+      color: #94a3b8;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      text-align: center;
+      width: 100%;
+    }
+    #btn-clear-recent:hover { color: #475569; }
+    #overlay-error {
+      color: #ef4444;
+      font-size: .8rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* ── Tooltip panel ─────────────────────────────────────────────── */
+    #tooltip {
+      display: none;
+      position: fixed;
+      top: 68px;
+      right: 20px;
+      width: 310px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.14);
+      padding: 16px;
+      z-index: 999;
+      border-top: 4px solid #6366f1;
+    }
+    #tooltip.rel    { border-top-color: #e07b39; }
+    #tooltip.flow   { border-top-color: #f59e0b; }
+    #tooltip.node-df { border-top-color: #3b82f6; }
+    #tooltip h2 { font-size: .93rem; font-weight: 700; margin-bottom: 5px; }
+    #tooltip .type-badge {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    /* context map badges */
+    .badge-app        { background: #dbeafe; color: #1d4ed8; }
+    .badge-sys        { background: #fef3c7; color: #b45309; }
+    .badge-feature    { background: #ede9fe; color: #6d28d9; }
+    .badge-team       { background: #fce7f3; color: #9d174d; }
+    .badge-ud         { background: #f3e8ff; color: #7e22ce; }
+    .badge-cs         { background: #ffedd5; color: #9a3412; }
+    .badge-partnership    { background: #dcfce7; color: #166534; }
+    .badge-sharedk        { background: #ccfbf1; color: #065f46; }
+    .badge-separatew      { background: #f1f5f9; color: #475569; }
+    .badge-bigballofmud   { background: #fee2e2; color: #991b1b; }
+    /* data flow badges */
+    .badge-event    { background: #dcfce7; color: #166534; }
+    .badge-command  { background: #fee2e2; color: #991b1b; }
+    .badge-query    { background: #e0f2fe; color: #0c4a6e; }
+    .badge-reply    { background: #fdf4ff; color: #7e22ce; }
+    .badge-context  { background: #ede9fe; color: #6d28d9; }
+
+    #tooltip p { font-size: .82rem; line-height: 1.5; color: #444; margin-bottom: 6px; }
+    #tooltip .section-label {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: #94a3b8; margin: 8px 0 4px;
+    }
+    #tooltip .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+    #tooltip .pill {
+      font-size: .73rem;
+      background: #f0f4ff;
+      color: #3b5bdb;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    #tooltip .pill.role-ohs { background: #fef9c3; color: #854d0e; }
+    #tooltip .pill.role-pl  { background: #fff7ed; color: #9a3412; }
+    #tooltip .pill.role-acl { background: #fce7f3; color: #9d174d; }
+    #tooltip .pill.role-cf  { background: #fef2f2; color: #991b1b; }
+    #tooltip .pill.tech     { background: #f0fdf4; color: #166534; }
+    #tooltip .pill.subdomain-core       { background: #fef9c3; color: #713f12; }
+    #tooltip .pill.subdomain-supporting { background: #e0f2fe; color: #0c4a6e; }
+    #tooltip .pill.subdomain-generic    { background: #f0fdf4; color: #14532d; }
+    #tooltip .pill.msg-event   { background: #dcfce7; color: #166534; }
+    #tooltip .pill.msg-command { background: #fee2e2; color: #991b1b; }
+    #tooltip .pill.msg-query   { background: #e0f2fe; color: #0c4a6e; }
+    #tooltip .pill.msg-reply   { background: #fdf4ff; color: #7e22ce; }
+    #tooltip .pill.dir-push    { background: #fef9c3; color: #713f12; }
+    #tooltip .pill.dir-pull    { background: #fff7ed; color: #9a3412; }
+    #tooltip .pill.dir-rr      { background: #f1f5f9; color: #475569; }
+    #tooltip .pill.coord-orch  { background: #dbeafe; color: #1e40af; }
+    #tooltip .pill.coord-chor  { background: #d1fae5; color: #065f46; }
+    #tooltip .pill.channel     { background: #f3e8ff; color: #7c3aed; }
+    #tooltip .pill.trigger     { background: #fef3c7; color: #92400e; }
+
+    /* ── Cross-link jump button ─────────────────────────────────────── */
+    .xlink-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 10px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1.5px solid #6366f1;
+      background: #f5f3ff;
+      color: #4f46e5;
+      font-size: .75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .13s, border-color .13s;
+      width: 100%;
+      justify-content: center;
+    }
+    .xlink-btn:hover { background: #ede9fe; border-color: #4f46e5; }
+    .xlink-btn .xlink-icon { font-size: .9rem; }
+
+    #tooltip .close-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: #94a3b8;
+    }
+    #tooltip .close-btn:hover { color: #1a1a2e; }
+
+    /* ── Legend ────────────────────────────────────────────────────── */
+    #legend {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 14px rgba(0,0,0,.1);
+      padding: 12px 16px;
+      font-size: .77rem;
+      z-index: 998;
+      min-width: 175px;
+    }
+    #legend h3 {
+      font-size: .68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: #94a3b8; margin-bottom: 8px;
+    }
+    .legend-sub {
+      font-size: .66rem; font-weight: 700; color: #b0b8c9;
+      text-transform: uppercase; letter-spacing: .4px;
+      margin: 8px 0 4px;
+    }
+    .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .legend-dot {
+      width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0;
+    }
+    .legend-dot.circle { border-radius: 50%; }
+    .legend-line {
+      width: 26px; height: 2px; flex-shrink: 0; border-radius: 2px;
+    }
+    .legend-line.thick { height: 3px; }
+
+    /* ── Cross-link highlight style (applied via Cytoscape) ─────────── */
+    /* handled in JS via cy classes */
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Map Viewer</h1>
+  <div id="view-toggle">
+    <button class="view-btn active" id="btn-view-cm" disabled title="Context map not loaded">Context Map</button>
+    <button class="view-btn" id="btn-view-df" disabled title="Data flow map not loaded">Data Flow</button>
+  </div>
+  <span class="hint" id="header-hint">Click a node or edge for details</span>
+  <div id="header-right">
+    <div id="header-meta"></div>
+    <button id="btn-add-companion" class="hidden"></button>
+    <button id="btn-open-files">&#128194; Open files</button>
+  </div>
+</header>
+
+<!-- File picker overlay -->
+<div id="file-overlay">
+  <div id="file-card">
+    <h2>Map Viewer</h2>
+    <p class="subtitle">Open one or both Turtle (.ttl) files to visualise your maps.</p>
+
+    <div class="slot-row">
+      <!-- Context Map slot -->
+      <div class="slot" id="slot-cm" title="Click to open Context Map file">
+        <div class="slot-icon">&#128204;</div>
+        <div class="slot-label">Context Map</div>
+        <div class="slot-hint" id="slot-cm-hint">Click to open .ttl</div>
+        <div class="slot-name" id="slot-cm-name" style="display:none"></div>
+        <span class="slot-check" id="slot-cm-check" style="display:none">&#10003;</span>
+      </div>
+      <!-- Data Flow slot -->
+      <div class="slot" id="slot-df" title="Click to open Data Flow file">
+        <div class="slot-icon">&#128257;</div>
+        <div class="slot-label">Data Flow</div>
+        <div class="slot-hint" id="slot-df-hint">Click to open .ttl</div>
+        <div class="slot-name" id="slot-df-name" style="display:none"></div>
+        <span class="slot-check" id="slot-df-check" style="display:none">&#10003;</span>
+      </div>
+    </div>
+
+    <div class="overlay-actions">
+      <button id="btn-overlay-skip" class="hidden">Skip for now</button>
+      <button id="btn-overlay-open" disabled>View Map</button>
+    </div>
+    <div id="overlay-error"></div>
+
+    <div id="recent-section" style="display:none">
+      <h3>Recent</h3>
+      <ul id="recent-list"></ul>
+      <button id="btn-clear-recent">Clear history</button>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden file inputs -->
+<input type="file" id="file-input-cm" accept=".ttl,text/turtle" style="display:none">
+<input type="file" id="file-input-df" accept=".ttl,text/turtle" style="display:none">
+
+<!-- Graph canvases -->
+<div id="canvas-wrap">
+  <div class="cy-pane active" id="cy-cm"></div>
+  <div class="cy-pane" id="cy-df"></div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip">
+  <button class="close-btn" id="tooltip-close">&#x2715;</button>
+  <h2 id="tt-title"></h2>
+  <div id="tt-badge" class="type-badge"></div>
+  <p id="tt-desc"></p>
+
+  <!-- Context map node sections -->
+  <div id="tt-domain-section">
+    <div class="section-label">Domain</div>
+    <div id="tt-domain" class="pills"></div>
+  </div>
+  <div id="tt-realizes-section">
+    <div class="section-label">Realizes</div>
+    <div id="tt-realizes" class="pills"></div>
+  </div>
+  <div id="tt-resp-section">
+    <div class="section-label">Responsibilities</div>
+    <div id="tt-resp" class="pills"></div>
+  </div>
+  <div id="tt-tech-section">
+    <div class="section-label">Technology</div>
+    <div id="tt-tech" class="pills"></div>
+  </div>
+  <!-- Context map edge sections -->
+  <div id="tt-roles-section">
+    <div class="section-label">Roles</div>
+    <div id="tt-roles" class="pills"></div>
+  </div>
+  <div id="tt-agg-section">
+    <div class="section-label">Exposed Aggregates</div>
+    <div id="tt-agg" class="pills"></div>
+  </div>
+
+  <!-- Data flow sections -->
+  <div id="tt-direction-section">
+    <div class="section-label">Direction &amp; Coordination</div>
+    <div id="tt-direction" class="pills"></div>
+  </div>
+  <div id="tt-trigger-section">
+    <div class="section-label">Trigger</div>
+    <div id="tt-trigger" class="pills"></div>
+    <p id="tt-trigger-desc" style="font-size:.78rem;color:#555;margin-top:4px;"></p>
+  </div>
+  <div id="tt-channel-section">
+    <div class="section-label">Channel</div>
+    <div id="tt-channel" class="pills"></div>
+  </div>
+  <div id="tt-payload-section">
+    <div class="section-label">Payload</div>
+    <div id="tt-payload-name" class="pills"></div>
+    <p id="tt-payload-desc" style="font-size:.78rem;color:#555;margin-top:4px;"></p>
+  </div>
+  <div id="tt-notes-section">
+    <div class="section-label">Notes</div>
+    <p id="tt-notes" style="font-size:.78rem;color:#555;"></p>
+  </div>
+
+  <!-- Cross-link button (shown when cross-link exists) -->
+  <div id="tt-xlink-section" style="display:none">
+    <button class="xlink-btn" id="btn-xlink">
+      <span class="xlink-icon">&#8644;</span>
+      <span id="btn-xlink-label">View in other map</span>
+    </button>
+  </div>
+</div>
+
+<!-- Legend -->
+<div id="legend">
+  <h3>Legend</h3>
+  <!-- populated dynamically per active view -->
+</div>
+
+<!-- CDN scripts -->
+<script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
+<script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+<script>
+'use strict';
+// ── Register Dagre once ───────────────────────────────────────────────────────
+cytoscape.use(cytoscapeDagre);
+
+// ── App state ─────────────────────────────────────────────────────────────────
+const state = {
+  activeView: 'cm',       // 'cm' | 'df'
+  cmText: null,           // raw turtle text for context map
+  dfText: null,           // raw turtle text for data flow
+  cmHandle: null,         // FSA handle for context map
+  dfHandle: null,         // FSA handle for data flow
+  cmFileName: null,
+  dfFileName: null,
+  cyCm: null,             // Cytoscape instance for context map
+  cyDf: null,             // Cytoscape instance for data flow
+  cmNodeData: {},         // id → node metadata (context map)
+  cmEdgeData: {},         // id → edge metadata (context map)
+  dfNodeData: {},         // id → node metadata (data flow)
+  dfEdgeData: {},         // id → edge metadata (data flow)
+  domainInfo: {},         // iri → { label, subdomainType }
+  cmParsed: null,         // full parse result for context map
+  dfParsed: null,         // full parse result for data flow
+  // Cross-link index
+  relToFlows: {},         // cm relationship IRI → [df flow IRI, ...]
+  flowToRel: {},          // df flow IRI → cm relationship IRI
+  cmNodeToDfNode: {},     // cm bounded context IRI → df node IRI
+  dfNodeToCmNode: {},     // df node IRI → cm bounded context IRI
+  // Pending cross-link navigation
+  pendingHighlight: null, // { view, ids }
+};
+
+// ── Slot tracking ─────────────────────────────────────────────────────────────
+const pending = { cm: null, df: null }; // pending text before "View Map" is clicked
+
+// =====================================================================
+// SECTION 1: IndexedDB — pair storage
+// =====================================================================
+const DB_NAME    = 'map-viewer';
+const DB_VERSION = 1;
+const STORE_NAME = 'recent-pairs';
+const MAX_RECENT = 5;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      e.target.result.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+function idbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    const req = store.getAll();
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function savePair(cmHandle, dfHandle, cmName, dfName) {
+  if (!cmHandle && !dfHandle) return;
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readwrite');
+  const store = tx.objectStore(STORE_NAME);
+  // Remove existing entry with same name combo to avoid duplicates
+  const all = await idbGetAll(store);
+  for (const rec of all) {
+    if (rec.cmName === cmName && rec.dfName === dfName) {
+      store.delete(rec.id);
+    }
+  }
+  store.put({
+    lastOpened: Date.now(),
+    cmHandle: cmHandle || null,
+    dfHandle: dfHandle || null,
+    cmName: cmName || null,
+    dfName: dfName || null,
+  });
+  return new Promise(resolve => {
+    tx.oncomplete = async () => {
+      // Trim to MAX_RECENT
+      const db2    = await openDB();
+      const tx2    = db2.transaction(STORE_NAME, 'readwrite');
+      const store2 = tx2.objectStore(STORE_NAME);
+      const all2   = await idbGetAll(store2);
+      if (all2.length > MAX_RECENT) {
+        all2.sort((a, b) => a.lastOpened - b.lastOpened);
+        all2.slice(0, all2.length - MAX_RECENT).forEach(r => store2.delete(r.id));
+      }
+      tx2.oncomplete = resolve;
+    };
+  });
+}
+
+async function loadRecentPairs() {
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readonly');
+  const store = tx.objectStore(STORE_NAME);
+  const all   = await idbGetAll(store);
+  return all.sort((a, b) => b.lastOpened - a.lastOpened);
+}
+
+async function clearRecentPairs() {
+  const db = await openDB();
+  const tx = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+}
+
+function relativeTime(ts) {
+  const diff = Date.now() - ts;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1)  return 'just now';
+  if (mins < 60) return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24)  return hrs + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+// =====================================================================
+// SECTION 2: File picker overlay — dual slot logic
+// =====================================================================
+const hasFSA = typeof window.showOpenFilePicker === 'function';
+
+// Slot UI helpers
+function markSlotLoaded(which, name) {
+  const slot  = document.getElementById('slot-' + which);
+  const hint  = document.getElementById('slot-' + which + '-hint');
+  const nameEl = document.getElementById('slot-' + which + '-name');
+  const check = document.getElementById('slot-' + which + '-check');
+  slot.classList.add('loaded');
+  slot.title = name;
+  hint.style.display  = 'none';
+  nameEl.textContent  = name;
+  nameEl.style.display = '';
+  check.style.display  = '';
+}
+
+function markSlotEmpty(which) {
+  const slot  = document.getElementById('slot-' + which);
+  const hint  = document.getElementById('slot-' + which + '-hint');
+  const nameEl = document.getElementById('slot-' + which + '-name');
+  const check = document.getElementById('slot-' + which + '-check');
+  slot.classList.remove('loaded');
+  slot.title = 'Click to open ' + (which === 'cm' ? 'Context Map' : 'Data Flow') + ' file';
+  hint.style.display   = '';
+  nameEl.style.display = 'none';
+  check.style.display  = 'none';
+}
+
+function updateOverlayOpenBtn() {
+  // Enable "View Map" if something is pending OR something is already in state
+  const hasAny = !!(pending.cm || pending.df || state.cmText || state.dfText);
+  document.getElementById('btn-overlay-open').disabled = !hasAny;
+  // Show "Skip" only when something is already loaded in state
+  const alreadyHasSomething = state.cmText || state.dfText;
+  const skipBtn = document.getElementById('btn-overlay-skip');
+  if (alreadyHasSomething) skipBtn.classList.remove('hidden');
+  else skipBtn.classList.add('hidden');
+}
+
+function setOverlayError(msg) {
+  document.getElementById('overlay-error').textContent = msg || '';
+}
+
+function showOverlay() {
+  // Re-sync slot UI from current state + pending
+  if (state.cmText && !pending.cm) markSlotLoaded('cm', state.cmFileName || 'context-map.ttl');
+  if (state.dfText && !pending.df) markSlotLoaded('df', state.dfFileName || 'data-flow.ttl');
+  document.getElementById('file-overlay').classList.remove('hidden');
+  updateOverlayOpenBtn();
+}
+
+function hideOverlay() {
+  document.getElementById('file-overlay').classList.add('hidden');
+  setOverlayError('');
+}
+
+// Open FSA or fallback
+async function openSlot(which) {
+  if (hasFSA) {
+    let handles;
+    try {
+      handles = await window.showOpenFilePicker({
+        types: [{ description: 'Turtle RDF', accept: { 'text/turtle': ['.ttl'] } }],
+        multiple: false,
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') setOverlayError(e.message);
+      return;
+    }
+    const handle = handles[0];
+    let perm = await handle.queryPermission({ mode: 'read' });
+    if (perm !== 'granted') perm = await handle.requestPermission({ mode: 'read' });
+    if (perm !== 'granted') { setOverlayError('Permission denied for "' + handle.name + '".'); return; }
+    const file = await handle.getFile();
+    const text = await file.text();
+    if (which === 'cm') {
+      pending.cm = text;
+      state.cmHandle   = handle;
+      state.cmFileName = handle.name;
+    } else {
+      pending.df = text;
+      state.dfHandle   = handle;
+      state.dfFileName = handle.name;
+    }
+    markSlotLoaded(which, handle.name);
+    updateOverlayOpenBtn();
+  } else {
+    document.getElementById('file-input-' + which).click();
+  }
+}
+
+document.getElementById('slot-cm').addEventListener('click', () => {
+  if (!document.getElementById('slot-cm').classList.contains('loaded')) openSlot('cm');
+});
+document.getElementById('slot-df').addEventListener('click', () => {
+  if (!document.getElementById('slot-df').classList.contains('loaded')) openSlot('df');
+});
+
+// Fallback <input> handlers
+document.getElementById('file-input-cm').addEventListener('change', function(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    pending.cm = e.target.result;
+    state.cmFileName = file.name;
+    markSlotLoaded('cm', file.name);
+    updateOverlayOpenBtn();
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+document.getElementById('file-input-df').addEventListener('change', function(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    pending.df = e.target.result;
+    state.dfFileName = file.name;
+    markSlotLoaded('df', file.name);
+    updateOverlayOpenBtn();
+  };
+  reader.readAsText(file);
+  this.value = '';
+});
+
+// "View Map" button
+document.getElementById('btn-overlay-open').addEventListener('click', () => {
+  if (pending.cm) state.cmText = pending.cm;
+  if (pending.df) state.dfText = pending.df;
+  pending.cm = null;
+  pending.df = null;
+  hideOverlay();
+  // Save pair to IndexedDB
+  savePair(state.cmHandle, state.dfHandle, state.cmFileName, state.dfFileName).catch(() => {});
+  initMaps();
+});
+
+// "Skip" button
+document.getElementById('btn-overlay-skip').addEventListener('click', () => {
+  pending.cm = null;
+  pending.df = null;
+  hideOverlay();
+});
+
+// "Open files" button in header
+document.getElementById('btn-open-files').addEventListener('click', () => {
+  // Reset slot UI for anything not yet loaded
+  if (!state.cmText) markSlotEmpty('cm');
+  if (!state.dfText) markSlotEmpty('df');
+  showOverlay();
+  renderRecent();
+});
+
+// "Add companion" button in header (shown when only one map loaded)
+document.getElementById('btn-add-companion').addEventListener('click', () => {
+  showOverlay();
+  renderRecent();
+});
+
+// Clear history
+document.getElementById('btn-clear-recent').addEventListener('click', async () => {
+  await clearRecentPairs();
+  renderRecent();
+});
+
+// ── Recent pairs list ─────────────────────────────────────────────────────────
+async function renderRecent() {
+  if (!hasFSA) return;
+  const items   = await loadRecentPairs();
+  const section = document.getElementById('recent-section');
+  const list    = document.getElementById('recent-list');
+  list.innerHTML = '';
+  if (!items.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+
+  items.forEach(rec => {
+    const li = document.createElement('li');
+    const names = document.createElement('div');
+    names.className = 'r-names';
+    const n1 = document.createElement('span');
+    n1.className = 'r-name';
+    n1.textContent = rec.cmName || rec.dfName || '(unknown)';
+    names.appendChild(n1);
+    if (rec.cmName && rec.dfName) {
+      const n2 = document.createElement('span');
+      n2.className = 'r-name2';
+      n2.textContent = rec.dfName;
+      names.appendChild(n2);
+    }
+    const time = document.createElement('span');
+    time.className = 'r-time';
+    time.textContent = relativeTime(rec.lastOpened);
+    li.appendChild(names);
+    li.appendChild(time);
+
+    li.addEventListener('click', async () => {
+      time.textContent = '...';
+      try {
+        if (rec.cmHandle) {
+          let p = await rec.cmHandle.queryPermission({ mode: 'read' });
+          if (p !== 'granted') p = await rec.cmHandle.requestPermission({ mode: 'read' });
+          if (p !== 'granted') throw new Error('Permission denied for ' + rec.cmName);
+          const f = await rec.cmHandle.getFile();
+          pending.cm = await f.text();
+          state.cmHandle = rec.cmHandle;
+          state.cmFileName = rec.cmName;
+          markSlotLoaded('cm', rec.cmName);
+        }
+        if (rec.dfHandle) {
+          let p = await rec.dfHandle.queryPermission({ mode: 'read' });
+          if (p !== 'granted') p = await rec.dfHandle.requestPermission({ mode: 'read' });
+          if (p !== 'granted') throw new Error('Permission denied for ' + rec.dfName);
+          const f = await rec.dfHandle.getFile();
+          pending.df = await f.text();
+          state.dfHandle = rec.dfHandle;
+          state.dfFileName = rec.dfName;
+          markSlotLoaded('df', rec.dfName);
+        }
+        updateOverlayOpenBtn();
+      } catch (e) {
+        time.className = 'r-err';
+        time.textContent = 'Error';
+        setOverlayError(e.message);
+      }
+    });
+    list.appendChild(li);
+  });
+}
+
+// Show overlay on load
+renderRecent();
+showOverlay();
+
+// =====================================================================
+// SECTION 3: Context Map — IRI constants + parser + graph builder
+// =====================================================================
+const CM_V    = 'https://vocab.example/ddd-context-map#';
+const CM_RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
+const CM_RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+
+const CM_IRI = {
+  type:                CM_RDF  + 'type',
+  label:               CM_RDFS + 'label',
+  BoundedContext:      CM_V    + 'BoundedContext',
+  Team:                CM_V    + 'Team',
+  Domain:              CM_V    + 'Domain',
+  Subdomain:           CM_V    + 'Subdomain',
+  ContextMap:          CM_V    + 'ContextMap',
+  contextType:         CM_V    + 'contextType',
+  ApplicationContext:  CM_V    + 'ApplicationContext',
+  SystemContext:       CM_V    + 'SystemContext',
+  FeatureContext:      CM_V    + 'FeatureContext',
+  TeamContext:         CM_V    + 'TeamContext',
+  domainVision:        CM_V    + 'domainVisionStatement',
+  responsibility:      CM_V    + 'responsibility',
+  technology:          CM_V    + 'implementationTechnology',
+  implementsDomain:    CM_V    + 'implementsDomain',
+  realizesContext:     CM_V    + 'realizesContext',
+  subdomainType:       CM_V    + 'subdomainType',
+  CoreDomain:          CM_V    + 'CoreDomain',
+  SupportingDomain:    CM_V    + 'SupportingDomain',
+  GenericSubdomain:    CM_V    + 'GenericSubdomain',
+  mapType:             CM_V    + 'mapType',
+  mapState:            CM_V    + 'mapState',
+  SystemLandscape:     CM_V    + 'SystemLandscape',
+  Organisational:      CM_V    + 'Organisational',
+  AsIs:                CM_V    + 'AsIs',
+  ToBe:                CM_V    + 'ToBe',
+  UpstreamDownstream:  CM_V    + 'UpstreamDownstreamRelationship',
+  CustomerSupplier:    CM_V    + 'CustomerSupplierRelationship',
+  Partnership:         CM_V    + 'Partnership',
+  SharedKernel:        CM_V    + 'SharedKernel',
+  SeparateWays:        CM_V    + 'SeparateWays',
+  BigBallOfMud:        CM_V    + 'BigBallOfMud',
+  ContextRelationship: CM_V    + 'ContextRelationship',
+  upstream:            CM_V    + 'upstream',
+  downstream:          CM_V    + 'downstream',
+  participant:         CM_V    + 'participant',
+  upstreamRole:        CM_V    + 'upstreamRole',
+  downstreamRole:      CM_V    + 'downstreamRole',
+  exposedAggregate:    CM_V    + 'exposedAggregate',
+  integrationTech:     CM_V    + 'integrationTechnology',
+  sharedArtifact:      CM_V    + 'sharedArtifact',
+  relationshipName:    CM_V    + 'relationshipName',
+  OpenHostService:     CM_V    + 'OpenHostService',
+  PublishedLanguage:   CM_V    + 'PublishedLanguage',
+  AntiCorruptionLayer: CM_V    + 'AntiCorruptionLayer',
+  Conformist:          CM_V    + 'Conformist',
+};
+
+function parseCm(turtle, baseIRI) {
+  const store  = new N3.Store();
+  const parser = new N3.Parser({ baseIRI: baseIRI || 'http://example.org/context-map' });
+  store.addQuads(parser.parse(turtle));
+
+  const nn     = iri => N3.DataFactory.namedNode(iri);
+  const getAll = (s, p) =>
+    store.getQuads(s ? nn(s) : null, nn(p), null, null).map(q => q.object.value);
+  const getOne = (s, p) => { const r = getAll(s, p); return r.length ? r[0] : null; };
+
+  // Domain/subdomain lookup
+  const domainInfo = {};
+  for (const cls of [CM_IRI.Domain, CM_IRI.Subdomain]) {
+    for (const q of store.match(null, nn(CM_IRI.type), nn(cls), null)) {
+      const id  = q.subject.value;
+      const lbl = getOne(id, CM_IRI.label) || id.split('#').pop().split('/').pop();
+      const sdt = getOne(id, CM_IRI.subdomainType);
+      domainInfo[id] = { label: lbl, subdomainType: sdt };
+    }
+  }
+
+  // Nodes (BoundedContexts + Teams)
+  const nodeData = {};
+  const cyNodes  = [];
+  const bcSet    = new Set();
+  for (const q of store.match(null, nn(CM_IRI.type), nn(CM_IRI.BoundedContext), null)) bcSet.add(q.subject.value);
+  for (const q of store.match(null, nn(CM_IRI.type), nn(CM_IRI.Team),           null)) bcSet.add(q.subject.value);
+
+  for (const id of bcSet) {
+    const label       = getOne(id, CM_IRI.label)          || id.split('#').pop().split('/').pop();
+    const ctxTypeRaw  = getOne(id, CM_IRI.contextType)    || '';
+    const vision      = getOne(id, CM_IRI.domainVision)   || '';
+    const resp        = getAll(id, CM_IRI.responsibility);
+    const tech        = getAll(id, CM_IRI.technology);
+    const domainIri   = getOne(id, CM_IRI.implementsDomain);
+    const realizesIris= getAll(id, CM_IRI.realizesContext);
+    const isTeam      = store.getQuads(nn(id), nn(CM_IRI.type), nn(CM_IRI.Team), null).length > 0;
+
+    let ctxKey = 'application';
+    if (ctxTypeRaw === CM_IRI.SystemContext)  ctxKey = 'system';
+    if (ctxTypeRaw === CM_IRI.FeatureContext) ctxKey = 'feature';
+    if (ctxTypeRaw === CM_IRI.TeamContext || isTeam) ctxKey = 'team';
+
+    nodeData[id] = { label, ctxKey, vision, resp, tech, domainIri, realizesIris };
+    cyNodes.push({ data: { id, label, ctxKey } });
+  }
+
+  // Edges
+  const edgeData = {};
+  const cyEdges  = [];
+
+  function relLabel(id) {
+    return getOne(id, CM_IRI.relationshipName) || getOne(id, CM_IRI.label) || '';
+  }
+
+  // Directed
+  for (const relType of [CM_IRI.UpstreamDownstream, CM_IRI.CustomerSupplier]) {
+    for (const q of store.match(null, nn(CM_IRI.type), nn(relType), null)) {
+      const id      = q.subject.value;
+      const label   = relLabel(id);
+      const upNode  = getOne(id, CM_IRI.upstream);
+      const dnNode  = getOne(id, CM_IRI.downstream);
+      const upRoles = getAll(id, CM_IRI.upstreamRole);
+      const dnRoles = getAll(id, CM_IRI.downstreamRole);
+      const tech    = getOne(id, CM_IRI.integrationTech) || '';
+      const aggs    = getAll(id, CM_IRI.exposedAggregate);
+      if (!upNode || !dnNode) continue;
+      const isUD = relType === CM_IRI.UpstreamDownstream;
+      edgeData[id] = { label, relType: isUD ? 'UpstreamDownstream' : 'CustomerSupplier', upRoles, dnRoles, tech, aggs, upNode, dnNode };
+      cyEdges.push({ data: { id, source: upNode, target: dnNode, label, relType: isUD ? 'ud' : 'cs' } });
+    }
+  }
+  // Symmetric
+  for (const relType of [CM_IRI.Partnership, CM_IRI.SharedKernel, CM_IRI.SeparateWays]) {
+    for (const q of store.match(null, nn(CM_IRI.type), nn(relType), null)) {
+      const id           = q.subject.value;
+      const label        = relLabel(id);
+      const participants = getAll(id, CM_IRI.participant);
+      const tech         = getOne(id, CM_IRI.integrationTech) || '';
+      const artifact     = getOne(id, CM_IRI.sharedArtifact)  || '';
+      if (participants.length < 2) continue;
+      const typeName = relType.split('#').pop();
+      const typeKey  = typeName.toLowerCase().replace('kernel', 'k').replace('ways', 'w');
+      const [src, tgt] = participants;
+      edgeData[id] = { label, relType: typeName, tech, artifact, upNode: src, dnNode: tgt, upRoles: [], dnRoles: [], aggs: [] };
+      cyEdges.push({ data: { id, source: src, target: tgt, label, relType: typeKey } });
+    }
+  }
+  // BigBallOfMud
+  for (const q of store.match(null, nn(CM_IRI.type), nn(CM_IRI.BigBallOfMud), null)) {
+    const id           = q.subject.value;
+    const label        = relLabel(id);
+    const participants = getAll(id, CM_IRI.participant);
+    const upNode       = getOne(id, CM_IRI.upstream);
+    const dnNode       = getOne(id, CM_IRI.downstream);
+    let src, tgt;
+    if (participants.length >= 2) [src, tgt] = participants;
+    else if (upNode && dnNode) { src = upNode; tgt = dnNode; }
+    else continue;
+    edgeData[id] = { label, relType: 'BigBallOfMud', tech: '', artifact: '', upNode: src, dnNode: tgt, upRoles: [], dnRoles: [], aggs: [] };
+    cyEdges.push({ data: { id, source: src, target: tgt, label, relType: 'bbom' } });
+  }
+
+  // Map metadata
+  let mapMeta = [];
+  for (const q of store.match(null, nn(CM_IRI.type), nn(CM_IRI.ContextMap), null)) {
+    const mapId    = q.subject.value;
+    const mapType  = getOne(mapId, CM_IRI.mapType);
+    const mapState = getOne(mapId, CM_IRI.mapState);
+    mapMeta.push({ mapType, mapState });
+  }
+
+  return { nodeData, edgeData, cyNodes, cyEdges, domainInfo, mapMeta, store, nn, getAll, getOne };
+}
+
+function buildCmGraph(parsed) {
+  const { cyNodes, cyEdges } = parsed;
+
+  const cy = cytoscape({
+    container: document.getElementById('cy-cm'),
+    elements: { nodes: cyNodes, edges: cyEdges },
+    wheelSensitivity: 0.3,
+    style: [
+      {
+        selector: 'node',
+        style: {
+          shape: 'roundrectangle',
+          'background-color': '#4a90d9',
+          'border-width': 2, 'border-color': '#357abd',
+          label: 'data(label)', color: '#fff',
+          'font-size': 13, 'font-weight': 600,
+          'text-valign': 'center', 'text-halign': 'center',
+          'text-wrap': 'wrap', 'text-max-width': 140,
+          width: 165, height: 62,
+        }
+      },
+      { selector: 'node[ctxKey = "system"]',  style: { 'background-color': '#e6b84a', 'border-color': '#c49830', color: '#3a2800' } },
+      { selector: 'node[ctxKey = "feature"]', style: { 'background-color': '#a855f7', 'border-color': '#7c3aed', color: '#fff' } },
+      { selector: 'node[ctxKey = "team"]',    style: { shape: 'ellipse', 'background-color': '#ec4899', 'border-color': '#be185d', color: '#fff' } },
+      { selector: 'node:selected',  style: { 'border-width': 3, 'border-color': '#fff' } },
+      { selector: 'node.xlink-hi', style: { 'border-width': 4, 'border-color': '#6366f1' } },
+      {
+        selector: 'edge',
+        style: {
+          width: 2, 'curve-style': 'bezier', 'target-arrow-shape': 'triangle',
+          label: 'data(label)', 'font-size': 10, 'text-rotation': 'autorotate',
+          'text-background-color': '#f4f6f9', 'text-background-opacity': 1, 'text-background-padding': '3px',
+        }
+      },
+      { selector: 'edge[relType = "ud"]', style: {
+          'line-color': '#9b59b6', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none',
+          'source-label': 'U', 'target-label': 'D',
+          'source-text-offset': 20, 'target-text-offset': 20,
+          'font-size': 12, 'font-weight': 700, color: '#7d3c98', 'text-rotation': 'none',
+          'source-text-background-color': '#f4f6f9', 'source-text-background-opacity': 1, 'source-text-background-padding': '2px',
+          'target-text-background-color': '#f4f6f9', 'target-text-background-opacity': 1, 'target-text-background-padding': '2px',
+      }},
+      { selector: 'edge[relType = "cs"]', style: {
+          'line-color': '#e07b39', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none',
+          'source-label': 'U', 'target-label': 'D',
+          'source-text-offset': 20, 'target-text-offset': 20,
+          'font-size': 12, 'font-weight': 700, 'line-style': 'dashed', 'line-dash-pattern': [6, 4],
+          color: '#b85c1a', 'text-rotation': 'none',
+          'source-text-background-color': '#f4f6f9', 'source-text-background-opacity': 1, 'source-text-background-padding': '2px',
+          'target-text-background-color': '#f4f6f9', 'target-text-background-opacity': 1, 'target-text-background-padding': '2px',
+      }},
+      { selector: 'edge[relType = "partnership"]', style: { 'line-color': '#27ae60', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none', color: '#1e8449' } },
+      { selector: 'edge[relType = "sharedk"]',     style: { 'line-color': '#16a085', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none', 'line-style': 'dotted', color: '#0e6655' } },
+      { selector: 'edge[relType = "separatew"]',   style: { 'line-color': '#95a5a6', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none', 'line-style': 'dashed', 'line-dash-pattern': [2, 6], color: '#717d7e' } },
+      { selector: 'edge[relType = "bbom"]',        style: { 'line-color': '#e53e3e', 'target-arrow-shape': 'none', 'source-arrow-shape': 'none', 'line-style': 'dashed', 'line-dash-pattern': [3, 5], width: 3, color: '#c53030' } },
+      { selector: 'edge:selected', style: { width: 3 } },
+      { selector: 'edge.xlink-hi', style: { width: 4, 'line-color': '#6366f1' } },
+    ],
+    layout: { name: 'dagre', rankDir: 'LR', nodeSep: 60, rankSep: 180, edgeSep: 20, padding: 50, animate: false },
+  });
+
+  return cy;
+}
+
+// =====================================================================
+// SECTION 4: Data Flow — IRI constants + parser + graph builder
+// =====================================================================
+const DF_V    = 'https://vocab.example/data-flow#';
+const DF_RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
+const DF_RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+
+const DF_IRI = {
+  type:                DF_RDF  + 'type',
+  label:               DF_RDFS + 'label',
+  DataFlowMap:         DF_V    + 'DataFlowMap',
+  DataFlow:            DF_V    + 'DataFlow',
+  Payload:             DF_V    + 'Payload',
+  IntegrationEvent:    DF_V    + 'IntegrationEvent',
+  Command:             DF_V    + 'Command',
+  Query:               DF_V    + 'Query',
+  Reply:               DF_V    + 'Reply',
+  Push:                DF_V    + 'Push',
+  Pull:                DF_V    + 'Pull',
+  RequestResponse:     DF_V    + 'RequestResponse',
+  Orchestrated:        DF_V    + 'Orchestrated',
+  Choreographed:       DF_V    + 'Choreographed',
+  DomainEventTrigger:       DF_V + 'DomainEventTrigger',
+  IntegrationEventTrigger:  DF_V + 'IntegrationEventTrigger',
+  ScheduledTrigger:         DF_V + 'ScheduledTrigger',
+  CommandTrigger:           DF_V + 'CommandTrigger',
+  hasFlow:             DF_V    + 'hasFlow',
+  describesMap:        DF_V    + 'describesMap',
+  sender:              DF_V    + 'sender',
+  receiver:            DF_V    + 'receiver',
+  messageType:         DF_V    + 'messageType',
+  direction:           DF_V    + 'direction',
+  coordinationStyle:   DF_V    + 'coordinationStyle',
+  hasTrigger:          DF_V    + 'hasTrigger',
+  triggerDescription:  DF_V    + 'triggerDescription',
+  channel:             DF_V    + 'channel',
+  flowName:            DF_V    + 'flowName',
+  notes:               DF_V    + 'notes',
+  carries:             DF_V    + 'carries',
+  refinesRelationship: DF_V    + 'refinesRelationship',
+  aggregateName:       DF_V    + 'aggregateName',
+  payloadDescription:  DF_V    + 'payloadDescription',
+  eventName:           DF_V    + 'eventName',
+  schedule:            DF_V    + 'schedule',
+};
+
+function stripLang(v) { return v ? v.replace(/@\w+(-\w+)*$/, '') : v; }
+
+function parseDf(turtle, baseIRI) {
+  const store  = new N3.Store();
+  const parser = new N3.Parser({ baseIRI: baseIRI || window.location.href });
+  store.addQuads(parser.parse(turtle));
+
+  const nn     = iri => N3.DataFactory.namedNode(iri);
+  const getAll = (s, p) =>
+    store.getQuads(s ? nn(s) : null, nn(p), null, null).map(q => q.object.value);
+  const getOne = (s, p) => { const r = getAll(s, p); return r.length ? r[0] : null; };
+
+  function resolveLabel(iri) {
+    if (!iri) return '';
+    const lbl = getOne(iri, DF_IRI.label);
+    if (lbl) return stripLang(lbl);
+    return iri.split('#').pop().split('/').pop() || iri;
+  }
+
+  function msgTypeKey(iri) {
+    if (iri === DF_IRI.IntegrationEvent) return 'event';
+    if (iri === DF_IRI.Command)          return 'command';
+    if (iri === DF_IRI.Query)            return 'query';
+    if (iri === DF_IRI.Reply)            return 'reply';
+    return 'other';
+  }
+  function coordKey(iri) {
+    if (iri === DF_IRI.Orchestrated)  return 'orch';
+    if (iri === DF_IRI.Choreographed) return 'chor';
+    return 'orch';
+  }
+
+  // Map label
+  let mapLabel = '';
+  let describesMapIri = '';
+  for (const q of store.match(null, nn(DF_IRI.type), nn(DF_IRI.DataFlowMap), null)) {
+    const mapId = q.subject.value;
+    const lbl   = getOne(mapId, DF_IRI.label);
+    if (lbl) mapLabel = stripLang(lbl);
+    const dm = getOne(mapId, DF_IRI.describesMap);
+    if (dm) describesMapIri = dm;
+  }
+
+  // Nodes (bounded contexts = senders/receivers)
+  const contextSet = new Set();
+  for (const q of store.match(null, nn(DF_IRI.sender),   null, null)) contextSet.add(q.object.value);
+  for (const q of store.match(null, nn(DF_IRI.receiver), null, null)) contextSet.add(q.object.value);
+
+  const nodeData = {};
+  const cyNodes  = [];
+  for (const id of contextSet) {
+    const label = resolveLabel(id);
+    nodeData[id] = { label };
+    cyNodes.push({ data: { id, label } });
+  }
+
+  // Edges (DataFlows)
+  const edgeData = {};
+  const cyEdges  = [];
+  // refinesRelationship index: flowIri → cmRelIri
+  const flowToRel = {};
+
+  for (const q of store.match(null, nn(DF_IRI.type), nn(DF_IRI.DataFlow), null)) {
+    const id       = q.subject.value;
+    const sender   = getOne(id, DF_IRI.sender);
+    const receiver = getOne(id, DF_IRI.receiver);
+    if (!sender || !receiver) continue;
+
+    const rawFlowName   = getOne(id, DF_IRI.flowName);
+    const flowName      = stripLang(rawFlowName) || resolveLabel(id);
+    const msgTypeIri    = getOne(id, DF_IRI.messageType);
+    const directionIri  = getOne(id, DF_IRI.direction);
+    const coordIri      = getOne(id, DF_IRI.coordinationStyle);
+    const channel       = stripLang(getOne(id, DF_IRI.channel)) || '';
+    const notes         = stripLang(getOne(id, DF_IRI.notes))   || '';
+    const triggerDesc   = stripLang(getOne(id, DF_IRI.triggerDescription)) || '';
+    const refinesRel    = getOne(id, DF_IRI.refinesRelationship) || '';
+
+    if (refinesRel) flowToRel[id] = refinesRel;
+
+    // Trigger
+    const triggerIri = getOne(id, DF_IRI.hasTrigger);
+    let triggerType = '', eventName = '', schedule = '';
+    if (triggerIri) {
+      const tTypes = store.getQuads(nn(triggerIri), nn(DF_IRI.type), null, null).map(tq => tq.object.value);
+      if (tTypes.includes(DF_IRI.DomainEventTrigger))      triggerType = 'DomainEvent';
+      else if (tTypes.includes(DF_IRI.IntegrationEventTrigger)) triggerType = 'IntegrationEvent';
+      else if (tTypes.includes(DF_IRI.ScheduledTrigger))   triggerType = 'Scheduled';
+      else if (tTypes.includes(DF_IRI.CommandTrigger))     triggerType = 'Command';
+      eventName = stripLang(getOne(triggerIri, DF_IRI.eventName)) || '';
+      schedule  = stripLang(getOne(triggerIri, DF_IRI.schedule))  || '';
+    }
+
+    // Payload
+    const payloadIri = getOne(id, DF_IRI.carries);
+    let payloadName = '', payloadDesc = '';
+    if (payloadIri) {
+      payloadName = stripLang(getOne(payloadIri, DF_IRI.aggregateName))     || resolveLabel(payloadIri);
+      payloadDesc = stripLang(getOne(payloadIri, DF_IRI.payloadDescription)) || '';
+    }
+
+    const mKey = msgTypeKey(msgTypeIri);
+    const cKey = coordKey(coordIri);
+
+    edgeData[id] = { flowName, sender, receiver, msgTypeIri, directionIri, coordIri, mKey, cKey, channel, notes, triggerDesc, triggerType, eventName, schedule, payloadName, payloadDesc, refinesRel };
+    cyEdges.push({ data: { id, source: sender, target: receiver, label: flowName, mKey, cKey } });
+  }
+
+  return { nodeData, edgeData, cyNodes, cyEdges, mapLabel, describesMapIri, flowToRel, store, nn, getAll, getOne };
+}
+
+function buildDfGraph(parsed) {
+  const { cyNodes, cyEdges } = parsed;
+
+  const cy = cytoscape({
+    container: document.getElementById('cy-df'),
+    elements: { nodes: cyNodes, edges: cyEdges },
+    wheelSensitivity: 0.3,
+    style: [
+      {
+        selector: 'node',
+        style: {
+          shape: 'roundrectangle', 'background-color': '#3b82f6',
+          'border-width': 2, 'border-color': '#1d4ed8',
+          label: 'data(label)', color: '#fff',
+          'font-size': 13, 'font-weight': 600,
+          'text-valign': 'center', 'text-halign': 'center',
+          'text-wrap': 'wrap', 'text-max-width': 150,
+          width: 170, height: 64,
+        }
+      },
+      { selector: 'node:selected', style: { 'border-width': 3, 'border-color': '#fff' } },
+      { selector: 'node.xlink-hi', style: { 'border-width': 4, 'border-color': '#6366f1' } },
+      {
+        selector: 'edge',
+        style: {
+          width: 2, 'curve-style': 'bezier', 'target-arrow-shape': 'triangle',
+          label: 'data(label)', 'font-size': 10, 'text-rotation': 'autorotate',
+          'text-background-color': '#f0f4f8', 'text-background-opacity': 1, 'text-background-padding': '3px',
+          'line-color': '#94a3b8', 'target-arrow-color': '#94a3b8',
+        }
+      },
+      { selector: 'edge[mKey = "event"]',   style: { 'line-color': '#22c55e', 'target-arrow-color': '#22c55e', color: '#15803d' } },
+      { selector: 'edge[mKey = "command"]', style: { 'line-color': '#ef4444', 'target-arrow-color': '#ef4444', color: '#b91c1c' } },
+      { selector: 'edge[mKey = "query"]',   style: { 'line-color': '#3b82f6', 'target-arrow-color': '#3b82f6', color: '#1d4ed8' } },
+      { selector: 'edge[mKey = "reply"]',   style: { 'line-color': '#a855f7', 'target-arrow-color': '#a855f7', color: '#7e22ce' } },
+      { selector: 'edge[cKey = "chor"]', style: { 'line-style': 'dashed', 'line-dash-pattern': [6, 4] } },
+      { selector: 'edge:selected', style: { width: 3 } },
+      { selector: 'edge.xlink-hi', style: { width: 4, 'line-color': '#6366f1', 'target-arrow-color': '#6366f1' } },
+    ],
+    layout: { name: 'dagre', rankDir: 'LR', nodeSep: 70, rankSep: 200, edgeSep: 20, padding: 60, animate: false },
+  });
+
+  return cy;
+}
+
+// =====================================================================
+// SECTION 5: Cross-link index builder
+// =====================================================================
+// Builds bidirectional indexes between context map and data flow elements.
+// Call after both parsers have populated state.cmNodeData, state.cmEdgeData,
+// state.dfNodeData, state.dfEdgeData.
+//
+// Results stored in state:
+//   relToFlows[cmEdgeIri]  → [dfFlowIri, ...]
+//   flowToRel[dfFlowIri]   → cmEdgeIri
+//   cmNodeToDfNode[cmIri]  → dfIri
+//   dfNodeToCmNode[dfIri]  → cmIri
+//
+function buildCrossLinkIndex(dfParsed) {
+  state.relToFlows    = {};
+  state.flowToRel     = {};
+  state.cmNodeToDfNode = {};
+  state.dfNodeToCmNode = {};
+
+  // 1. refinesRelationship: df flow → cm relationship edge
+  for (const [flowIri, relIri] of Object.entries(dfParsed.flowToRel)) {
+    if (!relIri) continue;
+    state.flowToRel[flowIri] = relIri;
+    if (!state.relToFlows[relIri]) state.relToFlows[relIri] = [];
+    state.relToFlows[relIri].push(flowIri);
+  }
+
+  // 2. Node identity matching: df node IRI ↔ cm node IRI
+  //    Strategy A — exact IRI match (tight-coupled files like BAVOS)
+  const cmNodeIris = new Set(Object.keys(state.cmNodeData));
+  const dfNodeIris = new Set(Object.keys(state.dfNodeData));
+
+  for (const dfIri of dfNodeIris) {
+    if (cmNodeIris.has(dfIri)) {
+      state.dfNodeToCmNode[dfIri] = dfIri;
+      state.cmNodeToDfNode[dfIri] = dfIri;
+    }
+  }
+
+  // Strategy B — label match (loose files like the demo where IRIs differ)
+  // Build label→IRI map for cm nodes not yet matched
+  const cmLabelToIri = {};
+  for (const [iri, d] of Object.entries(state.cmNodeData)) {
+    if (!state.cmNodeToDfNode[iri]) {
+      cmLabelToIri[(d.label || '').toLowerCase().trim()] = iri;
+    }
+  }
+  for (const [dfIri, d] of Object.entries(state.dfNodeData)) {
+    if (!state.dfNodeToCmNode[dfIri]) {
+      const key = (d.label || '').toLowerCase().trim();
+      if (cmLabelToIri[key]) {
+        const cmIri = cmLabelToIri[key];
+        state.dfNodeToCmNode[dfIri] = cmIri;
+        state.cmNodeToDfNode[cmIri] = dfIri;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// SECTION 6: View switching + initMaps orchestrator
+// =====================================================================
+
+// Switch the active view ('cm' or 'df')
+function switchView(to) {
+  if (to === 'cm' && !state.cmText) return;
+  if (to === 'df' && !state.dfText) return;
+  state.activeView = to;
+
+  // Swap pane visibility
+  document.getElementById('cy-cm').classList.toggle('active', to === 'cm');
+  document.getElementById('cy-df').classList.toggle('active', to === 'df');
+
+  // Toggle buttons
+  document.getElementById('btn-view-cm').classList.toggle('active', to === 'cm');
+  document.getElementById('btn-view-df').classList.toggle('active', to === 'df');
+
+  // Update header meta badges
+  renderHeaderMeta();
+
+  // Update legend
+  renderLegend();
+
+  // Close tooltip
+  hideTooltip();
+
+  // Resize the active cy instance so it fills the pane correctly
+  if (to === 'cm' && state.cyCm) state.cyCm.resize();
+  if (to === 'df' && state.cyDf) state.cyDf.resize();
+}
+
+// Enable/disable toggle buttons + companion button
+function updateHeaderButtons() {
+  const cmBtn = document.getElementById('btn-view-cm');
+  const dfBtn = document.getElementById('btn-view-df');
+  const addBtn = document.getElementById('btn-add-companion');
+
+  cmBtn.disabled = !state.cmText;
+  dfBtn.disabled = !state.dfText;
+
+  if (state.cmText && !state.dfText) {
+    addBtn.textContent  = '+ Add Data Flow';
+    addBtn.classList.remove('hidden');
+  } else if (state.dfText && !state.cmText) {
+    addBtn.textContent  = '+ Add Context Map';
+    addBtn.classList.remove('hidden');
+  } else {
+    addBtn.classList.add('hidden');
+  }
+}
+
+// Render header meta badges for the active view
+function renderHeaderMeta() {
+  const metaEl = document.getElementById('header-meta');
+  metaEl.innerHTML = '';
+
+  if (state.activeView === 'cm' && state.cmParsed) {
+    for (const { mapType, mapState } of state.cmParsed.mapMeta) {
+      if (mapState) {
+        const isAsIs = mapState === CM_IRI.AsIs;
+        const b = document.createElement('span');
+        b.className   = 'meta-badge ' + (isAsIs ? 'state-asis' : 'state-tobe');
+        b.textContent = isAsIs ? 'As-Is' : 'To-Be';
+        metaEl.appendChild(b);
+      }
+      if (mapType) {
+        const isSL = mapType === CM_IRI.SystemLandscape;
+        const b = document.createElement('span');
+        b.className   = 'meta-badge ' + (isSL ? 'type-sl' : 'type-org');
+        b.textContent = isSL ? 'System Landscape' : 'Organisational';
+        metaEl.appendChild(b);
+      }
+    }
+  }
+  // Data flow map has no standard meta badges in the header (label is shown elsewhere)
+}
+
+// Main orchestrator — called when overlay is dismissed with files loaded
+function initMaps() {
+  // Parse whichever texts are available
+  if (state.cmText && !state.cyCm) {
+    try {
+      const parsed = parseCm(state.cmText, 'http://example.org/context-map');
+      state.cmParsed   = parsed;
+      state.cmNodeData = parsed.nodeData;
+      state.cmEdgeData = parsed.edgeData;
+      state.domainInfo = parsed.domainInfo;
+      state.cyCm       = buildCmGraph(parsed);
+      attachCmEvents();
+    } catch (e) {
+      document.getElementById('cy-cm').innerHTML =
+        '<p style="padding:2rem;color:#ef4444;font-family:monospace">Context map parse error: ' + e + '</p>';
+    }
+  }
+
+  if (state.dfText && !state.cyDf) {
+    try {
+      const parsed = parseDf(state.dfText, window.location.href);
+      state.dfParsed   = parsed;
+      state.dfNodeData = parsed.nodeData;
+      state.dfEdgeData = parsed.edgeData;
+      state.cyDf       = buildDfGraph(parsed);
+      attachDfEvents();
+    } catch (e) {
+      document.getElementById('cy-df').innerHTML =
+        '<p style="padding:2rem;color:#ef4444;font-family:monospace">Data flow parse error: ' + e + '</p>';
+    }
+  }
+
+  // Build (or rebuild) cross-link index whenever both maps are loaded
+  if (state.cmParsed && state.dfParsed) {
+    buildCrossLinkIndex(state.dfParsed);
+    applyCrossLinkIndicators();
+  }
+
+  updateHeaderButtons();
+
+  // Switch to the best available view
+  if (state.cmText) switchView('cm');
+  else if (state.dfText) switchView('df');
+
+  renderLegend();
+  renderHeaderMeta();
+}
+
+// =====================================================================
+// SECTION 7: Tooltip helpers
+// =====================================================================
+const tooltip = document.getElementById('tooltip');
+
+function hideTooltip() {
+  tooltip.style.display = 'none';
+  tooltip.className = '';
+  document.getElementById('tt-xlink-section').style.display = 'none';
+}
+
+document.getElementById('tooltip-close').addEventListener('click', hideTooltip);
+
+function showTooltip(cls) {
+  tooltip.className     = cls || '';
+  tooltip.style.display = 'block';
+}
+
+function pill(container, text, cssClass) {
+  const s = document.createElement('span');
+  s.className = 'pill ' + (cssClass || '');
+  s.textContent = text;
+  container.appendChild(s);
+}
+function pills(container, items, cssClass) {
+  container.innerHTML = '';
+  (items || []).forEach(t => pill(container, t, cssClass));
+}
+function showSection(id, visible) {
+  document.getElementById(id).style.display = visible ? '' : 'none';
+}
+
+// Hide all tooltip sections
+function clearTooltip() {
+  ['tt-domain-section','tt-realizes-section','tt-resp-section','tt-tech-section',
+   'tt-roles-section','tt-agg-section','tt-direction-section','tt-trigger-section',
+   'tt-channel-section','tt-payload-section','tt-notes-section','tt-xlink-section']
+    .forEach(id => showSection(id, false));
+  document.getElementById('tt-desc').textContent = '';
+  document.getElementById('tt-domain').innerHTML = '';
+  document.getElementById('tt-realizes').innerHTML = '';
+  document.getElementById('tt-resp').innerHTML = '';
+  document.getElementById('tt-tech').innerHTML = '';
+  document.getElementById('tt-roles').innerHTML = '';
+  document.getElementById('tt-agg').innerHTML = '';
+  document.getElementById('tt-direction').innerHTML = '';
+  document.getElementById('tt-trigger').innerHTML = '';
+  document.getElementById('tt-channel').innerHTML = '';
+  document.getElementById('tt-payload-name').innerHTML = '';
+  document.getElementById('tt-payload-desc').textContent = '';
+  document.getElementById('tt-trigger-desc').textContent = '';
+  document.getElementById('tt-notes').textContent = '';
+}
+
+// ── Role helpers (CM) ─────────────────────────────────────────────────────────
+function shortRole(iri) {
+  const map = {
+    [CM_IRI.OpenHostService]:    'OHS',
+    [CM_IRI.PublishedLanguage]:  'PL',
+    [CM_IRI.AntiCorruptionLayer]:'ACL',
+    [CM_IRI.Conformist]:         'CF',
+  };
+  return map[iri] || iri.split('#').pop() || iri;
+}
+function roleCssClass(iri) {
+  if (iri === CM_IRI.OpenHostService)     return 'role-ohs';
+  if (iri === CM_IRI.PublishedLanguage)   return 'role-pl';
+  if (iri === CM_IRI.AntiCorruptionLayer) return 'role-acl';
+  if (iri === CM_IRI.Conformist)          return 'role-cf';
+  return '';
+}
+function subdomainTypeLabel(iri) {
+  if (iri === CM_IRI.CoreDomain)       return { text: 'Core Domain',       cls: 'subdomain-core' };
+  if (iri === CM_IRI.SupportingDomain) return { text: 'Supporting Domain', cls: 'subdomain-supporting' };
+  if (iri === CM_IRI.GenericSubdomain) return { text: 'Generic Subdomain', cls: 'subdomain-generic' };
+  return { text: iri.split('#').pop() || iri, cls: '' };
+}
+
+// =====================================================================
+// SECTION 8: Context Map event handling + tooltip population
+// =====================================================================
+const ctxTypeBadge = {
+  application: ['Application Context', 'badge-app'],
+  system:      ['System Context',      'badge-sys'],
+  feature:     ['Feature Context',     'badge-feature'],
+  team:        ['Team',                'badge-team'],
+};
+const cmRelBadge = {
+  UpstreamDownstream: ['Upstream / Downstream', 'badge-ud'],
+  CustomerSupplier:   ['Customer / Supplier',   'badge-cs'],
+  Partnership:        ['Partnership',            'badge-partnership'],
+  SharedKernel:       ['Shared Kernel',          'badge-sharedk'],
+  SeparateWays:       ['Separate Ways',          'badge-separatew'],
+  BigBallOfMud:       ['Big Ball of Mud',         'badge-bigballofmud'],
+};
+
+function attachCmEvents() {
+  const cy = state.cyCm;
+
+  cy.on('tap', 'node', function(evt) {
+    const id = evt.target.id();
+    const d  = state.cmNodeData[id];
+    if (!d) return;
+
+    clearTooltip();
+    document.getElementById('tt-title').textContent = d.label;
+    const [bt, bc] = ctxTypeBadge[d.ctxKey] || ['Bounded Context', 'badge-app'];
+    const badge = document.getElementById('tt-badge');
+    badge.textContent = bt; badge.className = 'type-badge ' + bc;
+
+    // Domain
+    const di = d.domainIri ? state.domainInfo[d.domainIri] : null;
+    if (di) {
+      const sdt = di.subdomainType ? subdomainTypeLabel(di.subdomainType) : null;
+      pill(document.getElementById('tt-domain'), di.label, sdt ? sdt.cls : '');
+      if (sdt) pill(document.getElementById('tt-domain'), sdt.text, sdt.cls);
+      showSection('tt-domain-section', true);
+    }
+
+    // Realizes (team)
+    const realizes = d.realizesIris || [];
+    if (realizes.length) {
+      realizes.forEach(rIri => {
+        const rLabel = state.cmNodeData[rIri] ? state.cmNodeData[rIri].label : (rIri.split('#').pop() || rIri);
+        pill(document.getElementById('tt-realizes'), rLabel, '');
+      });
+      showSection('tt-realizes-section', true);
+    }
+
+    pills(document.getElementById('tt-resp'), d.resp);
+    showSection('tt-resp-section', d.resp.length > 0);
+
+    pills(document.getElementById('tt-tech'), d.tech, 'tech');
+    showSection('tt-tech-section', d.tech.length > 0);
+
+    // Cross-link: can we jump to df?
+    const dfIri = state.cmNodeToDfNode[id];
+    if (dfIri && state.dfText) {
+      document.getElementById('btn-xlink-label').textContent = 'View in Data Flow Map';
+      document.getElementById('btn-xlink').onclick = () => jumpToDataFlow([dfIri], []);
+      showSection('tt-xlink-section', true);
+    }
+
+    showTooltip('');
+  });
+
+  cy.on('tap', 'edge', function(evt) {
+    const id = evt.target.id();
+    const d  = state.cmEdgeData[id];
+    if (!d) return;
+
+    clearTooltip();
+    document.getElementById('tt-title').textContent = d.label || d.relType;
+    const [bt, bc] = cmRelBadge[d.relType] || [d.relType, ''];
+    const badge = document.getElementById('tt-badge');
+    badge.textContent = bt; badge.className = 'type-badge ' + bc;
+
+    const symmetricTypes = ['Partnership','SharedKernel','SeparateWays','BigBallOfMud'];
+    const isSym = symmetricTypes.includes(d.relType);
+    const upLabel = state.cmNodeData[d.upNode] ? state.cmNodeData[d.upNode].label : d.upNode;
+    const dnLabel = state.cmNodeData[d.dnNode] ? state.cmNodeData[d.dnNode].label : d.dnNode;
+    document.getElementById('tt-desc').textContent =
+      isSym ? upLabel + '  \u2194  ' + dnLabel : upLabel + '  \u2192  ' + dnLabel;
+
+    if (d.tech) {
+      pills(document.getElementById('tt-tech'), [d.tech], 'tech');
+      showSection('tt-tech-section', true);
+    }
+
+    const roles = [];
+    if (!isSym) {
+      (d.upRoles || []).forEach(r => roles.push({ text: shortRole(r) + ' (upstream)',   cls: roleCssClass(r) }));
+      (d.dnRoles || []).forEach(r => roles.push({ text: shortRole(r) + ' (downstream)', cls: roleCssClass(r) }));
+    }
+    if (d.artifact) roles.push({ text: 'Shared: ' + d.artifact, cls: '' });
+    if (roles.length) {
+      roles.forEach(r => pill(document.getElementById('tt-roles'), r.text, r.cls));
+      showSection('tt-roles-section', true);
+    }
+
+    if (d.aggs && d.aggs.length) {
+      pills(document.getElementById('tt-agg'), d.aggs);
+      showSection('tt-agg-section', true);
+    }
+
+    // Cross-link: flows refining this relationship
+    const flows = state.relToFlows[id] || [];
+    if (flows.length && state.dfText) {
+      const label = flows.length === 1 ? 'View 1 Data Flow' : 'View ' + flows.length + ' Data Flows';
+      document.getElementById('btn-xlink-label').textContent = label;
+      document.getElementById('btn-xlink').onclick = () => jumpToDataFlow([], flows);
+      showSection('tt-xlink-section', true);
+    }
+
+    showTooltip('rel');
+  });
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) hideTooltip();
+  });
+}
+
+// =====================================================================
+// SECTION 9: Data Flow event handling + tooltip population
+// =====================================================================
+const dfDirLabel = {
+  [DF_IRI.Push]:           ['Push',             'dir-push'],
+  [DF_IRI.Pull]:           ['Pull',             'dir-pull'],
+  [DF_IRI.RequestResponse]:['Request-Response', 'dir-rr'],
+};
+const dfCoordLabel = {
+  [DF_IRI.Orchestrated]:  ['Orchestrated',  'coord-orch'],
+  [DF_IRI.Choreographed]: ['Choreographed', 'coord-chor'],
+};
+const dfMsgBadge = {
+  event:   ['Integration Event', 'badge-event'],
+  command: ['Command',           'badge-command'],
+  query:   ['Query',             'badge-query'],
+  reply:   ['Reply',             'badge-reply'],
+  other:   ['Data Flow',         'badge-context'],
+};
+const triggerTypeLabel = {
+  DomainEvent:      'Domain Event Trigger',
+  IntegrationEvent: 'Integration Event Trigger',
+  Scheduled:        'Scheduled Trigger',
+  Command:          'Command Trigger',
+};
+
+function attachDfEvents() {
+  const cy = state.cyDf;
+
+  cy.on('tap', 'node', function(evt) {
+    const id = evt.target.id();
+    const d  = state.dfNodeData[id];
+    if (!d) return;
+
+    clearTooltip();
+    document.getElementById('tt-title').textContent = d.label;
+    const badge = document.getElementById('tt-badge');
+    badge.textContent = 'Bounded Context'; badge.className = 'type-badge badge-context';
+
+    const outFlows = Object.values(state.dfEdgeData).filter(e => e.sender   === id).length;
+    const inFlows  = Object.values(state.dfEdgeData).filter(e => e.receiver === id).length;
+    document.getElementById('tt-desc').textContent =
+      outFlows + ' outgoing flow' + (outFlows !== 1 ? 's' : '') +
+      ', ' + inFlows  + ' incoming flow' + (inFlows  !== 1 ? 's' : '') + '.';
+
+    // Cross-link to cm node
+    const cmIri = state.dfNodeToCmNode[id];
+    if (cmIri && state.cmText) {
+      document.getElementById('btn-xlink-label').textContent = 'View in Context Map';
+      document.getElementById('btn-xlink').onclick = () => jumpToContextMap([cmIri], []);
+      showSection('tt-xlink-section', true);
+    }
+
+    showTooltip('node-df');
+  });
+
+  cy.on('tap', 'edge', function(evt) {
+    const id = evt.target.id();
+    const d  = state.dfEdgeData[id];
+    if (!d) return;
+
+    clearTooltip();
+    document.getElementById('tt-title').textContent = d.flowName;
+    const [bt, bc] = dfMsgBadge[d.mKey] || ['Data Flow', 'badge-context'];
+    const badge = document.getElementById('tt-badge');
+    badge.textContent = bt; badge.className = 'type-badge ' + bc;
+
+    const sLabel = state.dfNodeData[d.sender]   ? state.dfNodeData[d.sender].label   : d.sender;
+    const rLabel = state.dfNodeData[d.receiver] ? state.dfNodeData[d.receiver].label : d.receiver;
+    document.getElementById('tt-desc').textContent = sLabel + '  \u2192  ' + rLabel;
+
+    // Direction + Coordination
+    const dirDiv = document.getElementById('tt-direction');
+    if (d.directionIri && dfDirLabel[d.directionIri]) {
+      const [dl, dc] = dfDirLabel[d.directionIri];
+      pill(dirDiv, dl, dc);
+    }
+    if (d.coordIri && dfCoordLabel[d.coordIri]) {
+      const [cl, cc] = dfCoordLabel[d.coordIri];
+      pill(dirDiv, cl, cc);
+    }
+    showSection('tt-direction-section', !!(d.directionIri || d.coordIri));
+
+    // Trigger
+    const trigDiv = document.getElementById('tt-trigger');
+    if (d.triggerType) {
+      pill(trigDiv, triggerTypeLabel[d.triggerType] || d.triggerType, 'trigger');
+      if (d.eventName) pill(trigDiv, d.eventName, 'trigger');
+      if (d.schedule)  pill(trigDiv, d.schedule,  'trigger');
+    }
+    document.getElementById('tt-trigger-desc').textContent = d.triggerDesc || '';
+    showSection('tt-trigger-section', !!(d.triggerType || d.triggerDesc));
+
+    if (d.channel) {
+      pill(document.getElementById('tt-channel'), d.channel, 'channel');
+      showSection('tt-channel-section', true);
+    }
+
+    if (d.payloadName) {
+      pill(document.getElementById('tt-payload-name'), d.payloadName, '');
+      showSection('tt-payload-section', true);
+    }
+    document.getElementById('tt-payload-desc').textContent = d.payloadDesc || '';
+
+    if (d.notes) {
+      document.getElementById('tt-notes').textContent = d.notes;
+      showSection('tt-notes-section', true);
+    }
+
+    // Cross-link to cm relationship
+    const relIri = state.flowToRel[id];
+    if (relIri && state.cmText) {
+      document.getElementById('btn-xlink-label').textContent = 'View Relationship in Context Map';
+      document.getElementById('btn-xlink').onclick = () => jumpToContextMap([], [relIri]);
+      showSection('tt-xlink-section', true);
+    }
+
+    showTooltip('flow');
+  });
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) hideTooltip();
+  });
+}
+
+// =====================================================================
+// SECTION 10: Cross-link navigation (jump & highlight)
+// =====================================================================
+function clearHighlights(cy) {
+  cy.elements().removeClass('xlink-hi');
+}
+
+function jumpToDataFlow(nodeIris, edgeIris) {
+  switchView('df');
+  hideTooltip();
+  if (!state.cyDf) return;
+  clearHighlights(state.cyDf);
+  const targets = [];
+  nodeIris.forEach(iri => {
+    const el = state.cyDf.getElementById(iri);
+    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
+  });
+  edgeIris.forEach(iri => {
+    const el = state.cyDf.getElementById(iri);
+    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
+  });
+  if (targets.length) {
+    const col = state.cyDf.collection(targets.flatMap(e => e.toArray ? e.toArray() : [e]));
+    state.cyDf.animate({ fit: { eles: col, padding: 80 } }, { duration: 350 });
+  }
+}
+
+function jumpToContextMap(nodeIris, edgeIris) {
+  switchView('cm');
+  hideTooltip();
+  if (!state.cyCm) return;
+  clearHighlights(state.cyCm);
+  const targets = [];
+  nodeIris.forEach(iri => {
+    const el = state.cyCm.getElementById(iri);
+    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
+  });
+  edgeIris.forEach(iri => {
+    const el = state.cyCm.getElementById(iri);
+    if (el && el.length) { el.addClass('xlink-hi'); targets.push(el); }
+  });
+  if (targets.length) {
+    const col = state.cyCm.collection(targets.flatMap(e => e.toArray ? e.toArray() : [e]));
+    state.cyCm.animate({ fit: { eles: col, padding: 80 } }, { duration: 350 });
+  }
+}
+
+// =====================================================================
+// SECTION 11: Cross-link indicators (subtle ring on linked elements)
+// =====================================================================
+// We add a data attribute 'xlinked' so Cytoscape can style them slightly
+// differently (a faint ring). We rely on the xlink-hi class for bold highlight;
+// a separate 'linked' class just signals the element has cross-links.
+function applyCrossLinkIndicators() {
+  if (!state.cyCm || !state.cyDf) return;
+
+  // CM edges that have flows
+  Object.keys(state.relToFlows).forEach(iri => {
+    state.cyCm.getElementById(iri).addClass('linked');
+  });
+  // CM nodes that appear in df
+  Object.keys(state.cmNodeToDfNode).forEach(iri => {
+    state.cyCm.getElementById(iri).addClass('linked');
+  });
+  // DF edges that refine a cm relationship
+  Object.keys(state.flowToRel).forEach(iri => {
+    state.cyDf.getElementById(iri).addClass('linked');
+  });
+  // DF nodes that map to cm nodes
+  Object.keys(state.dfNodeToCmNode).forEach(iri => {
+    state.cyDf.getElementById(iri).addClass('linked');
+  });
+
+  // Add subtle style for 'linked' elements via inline style injection
+  const styleTag = document.createElement('style');
+  // We'll handle this via Cytoscape stylesheet additions instead
+  // (already handled by xlink-hi; linked class is for programmatic reference only)
+}
+
+// =====================================================================
+// SECTION 12: Legend
+// =====================================================================
+function renderLegend() {
+  const legend = document.getElementById('legend');
+  legend.innerHTML = '<h3>Legend</h3>';
+
+  if (state.activeView === 'cm') {
+    legend.innerHTML += `
+      <div class="legend-row"><div class="legend-dot" style="background:#4a90d9;"></div> Application Context</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#e6b84a;"></div> System Context</div>
+      <div class="legend-row"><div class="legend-dot" style="background:#a855f7;"></div> Feature Context</div>
+      <div class="legend-row"><div class="legend-dot circle" style="background:#ec4899;"></div> Team</div>
+      <div class="legend-sub">Relationships</div>
+      <div class="legend-row"><div class="legend-line" style="background:#9b59b6;"></div> Upstream/Downstream</div>
+      <div class="legend-row"><div class="legend-line" style="background:repeating-linear-gradient(to right,#e07b39 0,#e07b39 6px,transparent 6px,transparent 10px);"></div> Customer/Supplier</div>
+      <div class="legend-row"><div class="legend-line" style="background:#27ae60;"></div> Partnership</div>
+      <div class="legend-row"><div class="legend-line" style="background:#16a085;height:2px;border-top:2px dotted #16a085;"></div> Shared Kernel</div>
+      <div class="legend-row"><div class="legend-line" style="background:repeating-linear-gradient(to right,#95a5a6 0,#95a5a6 2px,transparent 2px,transparent 6px);"></div> Separate Ways</div>
+      <div class="legend-row"><div class="legend-line" style="background:repeating-linear-gradient(to right,#e53e3e 0,#e53e3e 3px,transparent 3px,transparent 7px);height:3px;"></div> Big Ball of Mud</div>
+    `;
+  } else {
+    legend.innerHTML += `
+      <div class="legend-row"><div class="legend-dot" style="background:#3b82f6;border-radius:4px;"></div> Bounded Context</div>
+      <div class="legend-sub">Message Types</div>
+      <div class="legend-row"><div class="legend-line" style="background:#22c55e;"></div> Integration Event</div>
+      <div class="legend-row"><div class="legend-line" style="background:#ef4444;"></div> Command</div>
+      <div class="legend-row"><div class="legend-line" style="background:#3b82f6;"></div> Query</div>
+      <div class="legend-row"><div class="legend-line" style="background:#a855f7;"></div> Reply</div>
+      <div class="legend-row"><div class="legend-line" style="background:#94a3b8;"></div> Other</div>
+      <div class="legend-sub">Coordination</div>
+      <div class="legend-row"><div class="legend-line thick" style="background:#64748b;"></div> Orchestrated (solid)</div>
+      <div class="legend-row"><div class="legend-line" style="background:repeating-linear-gradient(to right,#64748b 0,#64748b 6px,transparent 6px,transparent 10px);"></div> Choreographed (dashed)</div>
+    `;
+  }
+}
+
+// =====================================================================
+// SECTION 13: Header view-toggle button events
+// =====================================================================
+document.getElementById('btn-view-cm').addEventListener('click', () => switchView('cm'));
+document.getElementById('btn-view-df').addEventListener('click', () => switchView('df'));
+
+</script>
+</body>
+</html>
