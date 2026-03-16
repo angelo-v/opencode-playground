@@ -38,6 +38,12 @@ The generated TTL file uses this prefix:
 The vocabulary file lives at:
 `file:///workspace/.opencode/skills/ddd-context-map/ddd-context-map-vocab.ttl`
 
+This skill also uses the `dflow:` vocabulary (from the `data-flow-map` skill) to carry cross-links into the data flow map. When linking, add this prefix to the CM file:
+
+```turtle
+@prefix dflow: <https://vocab.example/data-flow#> .
+```
+
 ### Key classes
 
 | Class | URI | Use for |
@@ -107,6 +113,15 @@ The vocabulary file lives at:
 | `dddcm:sharedArtifact` | SharedKernel | Description of the shared code/schema |
 | `dddcm:relationshipName` | ContextRelationship | Optional human label |
 
+#### Cross-links to data flow map (using `dflow:` prefix)
+
+DFM nodes are used as **subjects** in the CM file so domain/range constraints are respected. These are the same triples as in the DFM file, repeated for local traversal.
+
+| Property | Subject (in CM file) | Object (in CM file) |
+|---|---|---|
+| `dflow:describesMap` | `<dfm-file.ttl#flow-map>` (`dflow:DataFlowMap`) | `<#map>` (`dddcm:ContextMap`) |
+| `dflow:refinesRelationship` | `<dfm-file.ttl#flow-X>` (`dflow:DataFlow`) | `<#rel-Y>` (`dddcm:ContextRelationship`) |
+
 ---
 
 ## Interview workflow
@@ -168,6 +183,19 @@ For each relationship, gather:
 6. **Relationship label**: Optional human-readable name for the relationship
 
 After each relationship, ask: "Is there another relationship to add?"
+
+---
+
+### Phase 4 — Data flow map link (optional)
+
+After all relationships are collected, ask:
+
+> "Is there an existing data flow map TTL file that elaborates these relationships? If yes, provide the file path."
+
+If yes, for each relationship that has a corresponding flow, ask:
+- Which relationship maps to which flow URI in the DFM file?
+
+Record the DFM file path and the per-relationship flow URIs — these will become `dflow:describesMap` and `dflow:refinesRelationship` assertions in the generated CM TTL.
 
 ---
 
@@ -248,6 +276,27 @@ Once the interview is complete, use the `rdf-generation` skill to generate the T
     dddcm:sharedArtifact "shared-domain-events npm package"@en .
 ```
 
+### Linking to a data flow map
+
+If the user provided a data flow map file in Phase 4, add `@prefix dflow:` and repeat the DFM's cross-link assertions in the CM TTL — using the **DFM nodes as subjects** so the declared domain/range of `dflow:` properties is satisfied in both files:
+
+```turtle
+@prefix dflow: <https://vocab.example/data-flow#> .
+
+# --- DFM map node links back to this context map ---
+<ecommerce-data-flow-map.ttl#flow-map>
+    dflow:describesMap <#map> .
+
+# --- DFM flow nodes link back to CM relationships ---
+<ecommerce-data-flow-map.ttl#flow-order-to-inventory>
+    dflow:refinesRelationship <#rel-orders-inventory> .
+
+<ecommerce-data-flow-map.ttl#flow-charge-payment>
+    dflow:refinesRelationship <#rel-orders-payments> .
+```
+
+This mirrors exactly the assertions already present in the DFM file, making each file self-contained for traversal. Domain/range of `dflow:describesMap` (domain: `DataFlowMap`, range: `ContextMap`) and `dflow:refinesRelationship` (domain: `DataFlow`, range: `ContextRelationship`) are satisfied in both directions.
+
 ### File naming
 
 Use kebab-case based on the map name: `<map-name>-context-map.ttl`
@@ -268,6 +317,9 @@ Before finalising the TTL file, verify:
 - [ ] `OHS`/`PL` are only used as `dddcm:upstreamRole`, never `dddcm:downstreamRole`
 - [ ] `ACL`/`CF` are only used as `dddcm:downstreamRole`, never `dddcm:upstreamRole`
 - [ ] Symmetric relationships use `dddcm:participant`, not `dddcm:upstream`/`dddcm:downstream`
+- [ ] If linking to a DFM: `@prefix dflow:` is declared
+- [ ] If linking to a DFM: `<#map>` has `dflow:describesMap` pointing to the DFM map node
+- [ ] If linking to a DFM: each linked relationship has `dflow:refinesRelationship` pointing to the correct flow URI
 - [ ] All statements end with `.`
 - [ ] All prefixes used in the file are declared
 - [ ] File saved as `<name>-context-map.ttl`
