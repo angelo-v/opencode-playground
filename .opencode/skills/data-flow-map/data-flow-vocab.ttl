@@ -1,0 +1,304 @@
+@base <https://vocab.example/data-flow#> .
+
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dddcm: <https://vocab.example/ddd-context-map#> .
+@prefix dflow: <https://vocab.example/data-flow#> .
+
+# ---------------------------------------------------------------------------
+# Ontology declaration
+# ---------------------------------------------------------------------------
+
+<https://vocab.example/data-flow>
+    a owl:Ontology ;
+    rdfs:label "Data Flow Vocabulary"@en ;
+    rdfs:comment "A vocabulary for documenting data flows between bounded contexts. Complements the DDD Context Map vocabulary by adding payload, trigger, and direction semantics to integration relationships."@en ;
+    dcterms:title "Data Flow Vocabulary"@en ;
+    owl:imports <https://vocab.example/ddd-context-map> ;
+    owl:versionInfo "1.0.0" .
+
+# ---------------------------------------------------------------------------
+# Classes — Core structural concepts
+# ---------------------------------------------------------------------------
+
+dflow:DataFlowMap
+    a rdfs:Class ;
+    rdfs:label "Data Flow Map"@en ;
+    rdfs:comment "A collection of data flows between bounded contexts. Typically accompanies a DDD context map and elaborates the integration points with payload and trigger detail."@en .
+
+dflow:DataFlow
+    a rdfs:Class ;
+    rdfs:label "Data Flow"@en ;
+    rdfs:comment "A directional movement of data between two bounded contexts. Captures what data is exchanged, how it is triggered, and in which direction it travels."@en .
+
+dflow:Payload
+    a rdfs:Class ;
+    rdfs:label "Payload"@en ;
+    rdfs:comment "The data object or aggregate transferred in a data flow. Described at aggregate level; field-level detail is deferred to SHACL shapes."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Message types
+# ---------------------------------------------------------------------------
+
+dflow:MessageType
+    a rdfs:Class ;
+    rdfs:label "Message Type"@en ;
+    rdfs:comment "The semantic category of the message crossing a context boundary. Determines governance expectations: integration events are versioned public facts; commands are directed write intents; queries expect a reply."@en .
+
+dflow:IntegrationEvent
+    a dflow:MessageType ;
+    rdfs:label "Integration Event"@en ;
+    rdfs:comment "A versioned, public-contract fact broadcast from one bounded context to signal that something has happened. Consumers decide independently whether to react. Contrast with domain events, which are intra-context and not subject to cross-context schema governance."@en .
+
+dflow:Command
+    a dflow:MessageType ;
+    rdfs:label "Command"@en ;
+    rdfs:comment "A directed write intent sent to exactly one receiver. The receiver may accept or reject it. Represents an explicit request for a state change, not a notification of one."@en .
+
+dflow:Query
+    a dflow:MessageType ;
+    rdfs:label "Query"@en ;
+    rdfs:comment "A read request sent to one receiver, expecting a reply payload. Carries no side effects in the receiver. Typically paired with a Reply flow in a RequestResponse pattern."@en .
+
+dflow:Reply
+    a dflow:MessageType ;
+    rdfs:label "Reply"@en ;
+    rdfs:comment "A response to a Query or Command, carrying the result or acknowledgement back to the originating context."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Flow direction
+# ---------------------------------------------------------------------------
+
+dflow:FlowDirection
+    a rdfs:Class ;
+    rdfs:label "Flow Direction"@en ;
+    rdfs:comment "The directional pattern of a data flow between sender and receiver."@en .
+
+dflow:Push
+    a dflow:FlowDirection ;
+    rdfs:label "Push"@en ;
+    rdfs:comment "The sender initiates the transfer and delivers data to the receiver without being asked. Typical of event-driven and publish-subscribe patterns."@en .
+
+dflow:Pull
+    a dflow:FlowDirection ;
+    rdfs:label "Pull"@en ;
+    rdfs:comment "The receiver initiates the transfer by requesting data from the sender. Typical of request-response and polling patterns."@en .
+
+dflow:RequestResponse
+    a dflow:FlowDirection ;
+    rdfs:label "Request-Response"@en ;
+    rdfs:comment "A synchronous exchange: the caller sends a request and waits for a response before continuing. The data flow is bidirectional within a single interaction."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Coordination style
+# ---------------------------------------------------------------------------
+
+dflow:CoordinationStyle
+    a rdfs:Class ;
+    rdfs:label "Coordination Style"@en ;
+    rdfs:comment "Whether the data flow is driven by an explicit orchestrator or emerges from decentralised event reactions."@en .
+
+dflow:Orchestrated
+    a dflow:CoordinationStyle ;
+    rdfs:label "Orchestrated"@en ;
+    rdfs:comment "An explicit orchestrator controls the sequence of interactions. The flow exists because the orchestrator commands it. Makes the overall process visible and auditable in one place."@en .
+
+dflow:Choreographed
+    a dflow:CoordinationStyle ;
+    rdfs:label "Choreographed"@en ;
+    rdfs:comment "No central coordinator exists. Each bounded context reacts to events from others and emits its own events in turn. The overall process emerges from the combination of local reactions."@en .
+
+# ---------------------------------------------------------------------------
+# Classes — Trigger types
+# ---------------------------------------------------------------------------
+
+dflow:Trigger
+    a rdfs:Class ;
+    rdfs:label "Trigger"@en ;
+    rdfs:comment "The condition or event that initiates a data flow."@en .
+
+dflow:EventTrigger
+    a rdfs:Class ;
+    rdfs:label "Event Trigger"@en ;
+    rdfs:comment "Abstract: the data flow is initiated by an event. Use the concrete subclasses DomainEventTrigger or IntegrationEventTrigger."@en ;
+    rdfs:subClassOf dflow:Trigger .
+
+dflow:DomainEventTrigger
+    a rdfs:Class ;
+    rdfs:label "Domain Event Trigger"@en ;
+    rdfs:comment "The flow is initiated by an intra-context domain event that is then translated and published outward. The domain event is an internal fact; what crosses the boundary is an integration event derived from it."@en ;
+    rdfs:subClassOf dflow:EventTrigger .
+
+dflow:IntegrationEventTrigger
+    a rdfs:Class ;
+    rdfs:label "Integration Event Trigger"@en ;
+    rdfs:comment "The flow is initiated by an integration event arriving from another bounded context. The receiving context subscribes to the public event contract published by the sender."@en ;
+    rdfs:subClassOf dflow:EventTrigger .
+
+dflow:ScheduledTrigger
+    a rdfs:Class ;
+    rdfs:label "Scheduled Trigger"@en ;
+    rdfs:comment "The data flow is initiated on a time-based schedule (e.g. nightly batch, monthly run)."@en ;
+    rdfs:subClassOf dflow:Trigger .
+
+dflow:CommandTrigger
+    a rdfs:Class ;
+    rdfs:label "Command Trigger"@en ;
+    rdfs:comment "The data flow is initiated by an explicit command or request from a user or another system."@en ;
+    rdfs:subClassOf dflow:Trigger .
+
+
+# ---------------------------------------------------------------------------
+# Properties — DataFlowMap
+# ---------------------------------------------------------------------------
+
+dflow:describesMap
+    a rdf:Property ;
+    rdfs:label "describes map"@en ;
+    rdfs:comment "Links the data flow map to the DDD context map it elaborates."@en ;
+    rdfs:domain dflow:DataFlowMap ;
+    rdfs:range dddcm:ContextMap .
+
+dflow:hasFlow
+    a rdf:Property ;
+    rdfs:label "has flow"@en ;
+    rdfs:comment "Relates a data flow map to one of its constituent data flows."@en ;
+    rdfs:domain dflow:DataFlowMap ;
+    rdfs:range dflow:DataFlow .
+
+# ---------------------------------------------------------------------------
+# Properties — DataFlow — participants
+# ---------------------------------------------------------------------------
+
+dflow:sender
+    a rdf:Property ;
+    rdfs:label "sender"@en ;
+    rdfs:comment "The bounded context that originates and sends the data in this flow."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dddcm:BoundedContext .
+
+dflow:receiver
+    a rdf:Property ;
+    rdfs:label "receiver"@en ;
+    rdfs:comment "The bounded context that receives the data in this flow."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dddcm:BoundedContext .
+
+dflow:refinesRelationship
+    a rdf:Property ;
+    rdfs:label "refines relationship"@en ;
+    rdfs:comment "Links this data flow to the context-map relationship it elaborates. Allows traceability from flow details back to the DDD relationship model."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dddcm:ContextRelationship .
+
+# ---------------------------------------------------------------------------
+# Properties — DataFlow — mechanics
+# ---------------------------------------------------------------------------
+
+dflow:messageType
+    a rdf:Property ;
+    rdfs:label "message type"@en ;
+    rdfs:comment "The semantic category of the message: IntegrationEvent, Command, Query, or Reply. Determines versioning and governance expectations for the payload contract."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dflow:MessageType .
+
+dflow:coordinationStyle
+    a rdf:Property ;
+    rdfs:label "coordination style"@en ;
+    rdfs:comment "Whether this flow is Orchestrated (driven by an explicit process engine) or Choreographed (emerges from decentralised event reactions). Critical for understanding observability and operational ownership of the overall process."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dflow:CoordinationStyle .
+
+dflow:direction
+    a rdf:Property ;
+    rdfs:label "direction"@en ;
+    rdfs:comment "The directional pattern of the flow: Push, Pull, or RequestResponse."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dflow:FlowDirection .
+
+dflow:hasTrigger
+    a rdf:Property ;
+    rdfs:label "has trigger"@en ;
+    rdfs:comment "The trigger that initiates this data flow."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dflow:Trigger .
+
+dflow:triggerDescription
+    a rdf:Property ;
+    rdfs:label "trigger description"@en ;
+    rdfs:comment "A human-readable description of what initiates this flow, e.g. 'Rentenantrag wird im Dokumenten-Eingang erfasst'."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range xsd:string .
+
+dflow:channel
+    a rdf:Property ;
+    rdfs:label "channel"@en ;
+    rdfs:comment "The technical transport mechanism used for this flow, e.g. 'AMQP queue', 'message broker topic', 'REST endpoint'. Complements dddcm:integrationTechnology on the relationship."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range xsd:string .
+
+dflow:flowName
+    a rdf:Property ;
+    rdfs:label "flow name"@en ;
+    rdfs:comment "An optional short human-readable name for this flow."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range xsd:string .
+
+dflow:notes
+    a rdf:Property ;
+    rdfs:label "notes"@en ;
+    rdfs:comment "Free-text notes about this flow, such as transformation logic, error handling, or open questions."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range xsd:string .
+
+# ---------------------------------------------------------------------------
+# Properties — DataFlow — payload
+# ---------------------------------------------------------------------------
+
+dflow:carries
+    a rdf:Property ;
+    rdfs:label "carries"@en ;
+    rdfs:comment "Relates a data flow to the payload it transports."@en ;
+    rdfs:domain dflow:DataFlow ;
+    rdfs:range dflow:Payload .
+
+# ---------------------------------------------------------------------------
+# Properties — Payload
+# ---------------------------------------------------------------------------
+
+dflow:aggregateName
+    a rdf:Property ;
+    rdfs:label "aggregate name"@en ;
+    rdfs:comment "The name of the aggregate or data object being transferred, matching the bounded context's ubiquitous language."@en ;
+    rdfs:domain dflow:Payload ;
+    rdfs:range xsd:string .
+
+dflow:payloadDescription
+    a rdf:Property ;
+    rdfs:label "payload description"@en ;
+    rdfs:comment "A human-readable description of the payload content and purpose."@en ;
+    rdfs:domain dflow:Payload ;
+    rdfs:range xsd:string .
+
+# ---------------------------------------------------------------------------
+# Properties — Trigger
+# ---------------------------------------------------------------------------
+
+dflow:eventName
+    a rdf:Property ;
+    rdfs:label "event name"@en ;
+    rdfs:comment "The name of the event that fires the trigger, in the ubiquitous language of the emitting bounded context. For DomainEventTrigger this is the internal domain event name; for IntegrationEventTrigger this is the public integration event name."@en ;
+    rdfs:domain dflow:EventTrigger ;
+    rdfs:range xsd:string .
+
+dflow:schedule
+    a rdf:Property ;
+    rdfs:label "schedule"@en ;
+    rdfs:comment "A human-readable description of the schedule, e.g. 'monthly on the 1st', 'nightly at 02:00 CET'."@en ;
+    rdfs:domain dflow:ScheduledTrigger ;
+    rdfs:range xsd:string .
+
+
