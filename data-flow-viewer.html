@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Flow Map</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f0f4f8;
+      color: #1a1a2e;
+    }
+
+    header {
+      background: #0f172a;
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    header h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: .5px; }
+    header span { font-size: .85rem; color: #94a3b8; }
+    #header-meta {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .meta-badge {
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 2px 9px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+    .meta-badge.coord-orch { background: #1e3a5f; color: #93c5fd; }
+    .meta-badge.coord-chor { background: #1a3a2e; color: #6ee7b7; }
+
+    #cy {
+      width: 100%;
+      height: calc(100vh - 56px);
+      background: #f0f4f8;
+    }
+
+    /* ── File picker overlay ───────────────────────────────────────── */
+    #file-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    #file-overlay.hidden { display: none; }
+    #file-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.25);
+      padding: 36px 40px;
+      text-align: center;
+      max-width: 420px;
+      width: 90%;
+    }
+    #file-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    #file-card > p { font-size: .85rem; color: #666; margin-bottom: 24px; }
+    #btn-open {
+      display: inline-block;
+      background: #0f172a;
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 600;
+      border: none;
+      transition: background .15s;
+    }
+    #btn-open:hover { background: #1e293b; }
+    #file-input { display: none; }
+
+    /* ── Recent files ──────────────────────────────────────────────── */
+    #recent-section {
+      margin-top: 28px;
+      text-align: left;
+    }
+    #recent-section h3 {
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    #recent-list { list-style: none; }
+    #recent-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    #recent-list li:hover { background: #f0f4ff; }
+    #recent-list .r-name {
+      font-size: .85rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 240px;
+    }
+    #recent-list .r-time {
+      font-size: .75rem;
+      color: #999;
+      flex-shrink: 0;
+    }
+    #recent-list .r-err {
+      font-size: .75rem;
+      color: #c0392b;
+      flex-shrink: 0;
+    }
+    #clear-history {
+      display: block;
+      margin-top: 10px;
+      font-size: .75rem;
+      color: #aaa;
+      cursor: pointer;
+      background: none;
+      border: none;
+      text-decoration: underline;
+      text-align: center;
+      width: 100%;
+    }
+    #clear-history:hover { color: #666; }
+
+    /* ── Tooltip panel ─────────────────────────────────────────────── */
+    #tooltip {
+      display: none;
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      width: 320px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.15);
+      padding: 16px;
+      z-index: 999;
+      border-top: 4px solid #3b82f6;
+    }
+    #tooltip.flow { border-top-color: #f59e0b; }
+    #tooltip h2  { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
+    #tooltip .type-badge {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    /* node badges */
+    .badge-sender   { background: #dbeafe; color: #1d4ed8; }
+    .badge-receiver { background: #fef3c7; color: #b45309; }
+    .badge-context  { background: #ede9fe; color: #6d28d9; }
+    /* flow/message type badges */
+    .badge-event    { background: #dcfce7; color: #166534; }
+    .badge-command  { background: #fee2e2; color: #991b1b; }
+    .badge-query    { background: #e0f2fe; color: #0c4a6e; }
+    .badge-reply    { background: #fdf4ff; color: #7e22ce; }
+
+    #tooltip p  { font-size: .82rem; line-height: 1.5; color: #444; margin-bottom: 8px; }
+    #tooltip .section-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: #888; margin: 8px 0 4px;
+    }
+    #tooltip .pills { display: flex; flex-wrap: wrap; gap: 4px; }
+    #tooltip .pill {
+      font-size: .75rem;
+      background: #f0f4ff;
+      color: #3b5bdb;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    #tooltip .pill.msg-event   { background: #dcfce7; color: #166534; }
+    #tooltip .pill.msg-command { background: #fee2e2; color: #991b1b; }
+    #tooltip .pill.msg-query   { background: #e0f2fe; color: #0c4a6e; }
+    #tooltip .pill.msg-reply   { background: #fdf4ff; color: #7e22ce; }
+    #tooltip .pill.dir-push    { background: #fef9c3; color: #713f12; }
+    #tooltip .pill.dir-pull    { background: #fff7ed; color: #9a3412; }
+    #tooltip .pill.dir-rr      { background: #f1f5f9; color: #475569; }
+    #tooltip .pill.coord-orch  { background: #dbeafe; color: #1e40af; }
+    #tooltip .pill.coord-chor  { background: #d1fae5; color: #065f46; }
+    #tooltip .pill.channel     { background: #f3e8ff; color: #7c3aed; }
+    #tooltip .pill.trigger     { background: #fef3c7; color: #92400e; }
+    #tooltip .close-btn {
+      position: absolute; top: 10px; right: 12px;
+      background: none; border: none; cursor: pointer;
+      font-size: 1rem; color: #888;
+    }
+    #tooltip .close-btn:hover { color: #333; }
+
+    /* ── Legend ────────────────────────────────────────────────────── */
+    #legend {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.1);
+      padding: 12px 16px;
+      font-size: .78rem;
+      z-index: 998;
+      min-width: 190px;
+    }
+    #legend h3 { font-size: .75rem; font-weight: 700; text-transform: uppercase;
+                 letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+    .legend-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .legend-dot {
+      width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
+    }
+    .legend-line {
+      width: 28px; height: 3px; flex-shrink: 0; border-radius: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Data Flow Map</h1>
+  <span>Click a node or flow for details</span>
+  <div id="header-meta"></div>
+</header>
+
+<!-- File picker overlay -->
+<div id="file-overlay">
+  <div id="file-card">
+    <h2>Data Flow Map</h2>
+    <p>Open a Turtle (.ttl) file to visualise your data flow map.</p>
+    <button id="btn-open">Open .ttl file</button>
+    <input type="file" id="file-input" accept=".ttl,text/turtle">
+    <div id="recent-section" style="display:none">
+      <h3>Recent files</h3>
+      <ul id="recent-list"></ul>
+      <button id="clear-history">Clear history</button>
+    </div>
+  </div>
+</div>
+
+<div id="cy"></div>
+
+<!-- Tooltip panel -->
+<div id="tooltip">
+  <button class="close-btn" onclick="document.getElementById('tooltip').style.display='none'">&#x2715;</button>
+  <h2 id="tt-title"></h2>
+  <div id="tt-badge" class="type-badge"></div>
+  <p id="tt-desc"></p>
+
+  <div id="tt-direction-section">
+    <div class="section-label">Direction &amp; Coordination</div>
+    <div id="tt-direction" class="pills"></div>
+  </div>
+
+  <div id="tt-trigger-section">
+    <div class="section-label">Trigger</div>
+    <div id="tt-trigger" class="pills"></div>
+    <p id="tt-trigger-desc" style="font-size:.8rem;color:#555;margin-top:4px;"></p>
+  </div>
+
+  <div id="tt-channel-section">
+    <div class="section-label">Channel</div>
+    <div id="tt-channel" class="pills"></div>
+  </div>
+
+  <div id="tt-payload-section">
+    <div class="section-label">Payload</div>
+    <div id="tt-payload-name" class="pills"></div>
+    <p id="tt-payload-desc" style="font-size:.8rem;color:#555;margin-top:4px;"></p>
+  </div>
+
+  <div id="tt-notes-section">
+    <div class="section-label">Notes</div>
+    <p id="tt-notes" style="font-size:.8rem;color:#555;"></p>
+  </div>
+</div>
+
+<!-- Legend -->
+<div id="legend">
+  <h3>Legend</h3>
+  <div style="font-size:.7rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">Contexts</div>
+  <div class="legend-row"><div class="legend-dot" style="background:#3b82f6;border-radius:4px;"></div> Bounded Context</div>
+  <div style="font-size:.7rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.4px;margin:8px 0 4px;">Message Types</div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#22c55e;"></div>
+    Integration Event
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#ef4444;"></div>
+    Command
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#3b82f6;"></div>
+    Query
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#a855f7;"></div>
+    Reply
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#94a3b8;"></div>
+    Other
+  </div>
+  <div style="font-size:.7rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.4px;margin:8px 0 4px;">Coordination</div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:#64748b;height:3px;"></div>
+    Orchestrated (solid)
+  </div>
+  <div class="legend-row">
+    <div class="legend-line" style="background:repeating-linear-gradient(to right,#64748b 0,#64748b 5px,transparent 5px,transparent 9px);height:2px;"></div>
+    Choreographed (dashed)
+  </div>
+</div>
+
+<!-- CDN: N3.js (Turtle parser) -->
+<script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
+<!-- CDN: Cytoscape.js -->
+<script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+<!-- CDN: Dagre layout engine + Cytoscape adapter -->
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+<script>
+// ────────────────────────────────────────────────────────────────────────────
+// 1.  IndexedDB helpers for storing FileSystemFileHandles
+// ────────────────────────────────────────────────────────────────────────────
+const DB_NAME    = 'data-flow-map';
+const DB_VERSION = 1;
+const STORE_NAME = 'recent-files';
+const MAX_RECENT = 5;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = e => {
+      e.target.result.createObjectStore(STORE_NAME, { keyPath: 'name' });
+    };
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function saveHandle(handle) {
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readwrite');
+  const store = tx.objectStore(STORE_NAME);
+  store.put({ name: handle.name, lastOpened: Date.now(), handle });
+  return new Promise(resolve => {
+    tx.oncomplete = async () => {
+      const db2    = await openDB();
+      const tx2    = db2.transaction(STORE_NAME, 'readwrite');
+      const store2 = tx2.objectStore(STORE_NAME);
+      const all    = await idbGetAll(store2);
+      if (all.length > MAX_RECENT) {
+        all.sort((a, b) => a.lastOpened - b.lastOpened);
+        const toDelete = all.slice(0, all.length - MAX_RECENT);
+        toDelete.forEach(r => store2.delete(r.name));
+      }
+      tx2.oncomplete = resolve;
+    };
+  });
+}
+
+function idbGetAll(store) {
+  return new Promise((resolve, reject) => {
+    const req = store.getAll();
+    req.onsuccess = e => resolve(e.target.result);
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+
+async function loadRecent() {
+  const db    = await openDB();
+  const tx    = db.transaction(STORE_NAME, 'readonly');
+  const store = tx.objectStore(STORE_NAME);
+  const all   = await idbGetAll(store);
+  return all.sort((a, b) => b.lastOpened - a.lastOpened);
+}
+
+async function clearRecent() {
+  const db  = await openDB();
+  const tx  = db.transaction(STORE_NAME, 'readwrite');
+  tx.objectStore(STORE_NAME).clear();
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 2.  File System Access API or <input> fallback
+// ────────────────────────────────────────────────────────────────────────────
+const hasFSA = typeof window.showOpenFilePicker === 'function';
+
+function relativeTime(ts) {
+  const diff = Date.now() - ts;
+  const mins  = Math.floor(diff / 60000);
+  if (mins < 1)   return 'just now';
+  if (mins < 60)  return mins + 'm ago';
+  const hrs = Math.floor(mins / 60);
+  if (hrs  < 24)  return hrs  + 'h ago';
+  return Math.floor(hrs / 24) + 'd ago';
+}
+
+async function readHandleAndDisplay(handle) {
+  let perm = await handle.queryPermission({ mode: 'read' });
+  if (perm !== 'granted') {
+    perm = await handle.requestPermission({ mode: 'read' });
+  }
+  if (perm !== 'granted') {
+    showOverlayError('Permission denied for "' + handle.name + '".');
+    return;
+  }
+  const file = await handle.getFile();
+  const text = await file.text();
+  await saveHandle(handle);
+  hideOverlay();
+  tryBuildGraph(text);
+}
+
+function showOverlayError(msg) {
+  let errEl = document.getElementById('overlay-error');
+  if (!errEl) {
+    errEl = document.createElement('p');
+    errEl.id = 'overlay-error';
+    errEl.style.cssText = 'color:#c0392b;font-size:.8rem;margin-top:12px;';
+    document.getElementById('file-card').appendChild(errEl);
+  }
+  errEl.textContent = msg;
+}
+
+function hideOverlay() {
+  document.getElementById('file-overlay').classList.add('hidden');
+  const errEl = document.getElementById('overlay-error');
+  if (errEl) errEl.textContent = '';
+}
+
+function tryBuildGraph(text) {
+  try {
+    buildGraph(text);
+  } catch (err) {
+    document.getElementById('cy').innerHTML =
+      '<p style="padding:2rem;color:#c0392b;font-family:monospace">' + err + '</p>';
+  }
+}
+
+// ── Open button ──────────────────────────────────────────────────────────────
+document.getElementById('btn-open').addEventListener('click', async () => {
+  if (hasFSA) {
+    let handles;
+    try {
+      handles = await window.showOpenFilePicker({
+        types: [{ description: 'Turtle RDF', accept: { 'text/turtle': ['.ttl'] } }],
+        multiple: false,
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') showOverlayError(e.message);
+      return;
+    }
+    await readHandleAndDisplay(handles[0]);
+  } else {
+    document.getElementById('file-input').click();
+  }
+});
+
+document.getElementById('file-input').addEventListener('change', function(evt) {
+  const file = evt.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    hideOverlay();
+    tryBuildGraph(e.target.result);
+  };
+  reader.readAsText(file);
+});
+
+// ── Recent files list ────────────────────────────────────────────────────────
+async function renderRecent() {
+  if (!hasFSA) return;
+  const items = await loadRecent();
+  const section = document.getElementById('recent-section');
+  const list    = document.getElementById('recent-list');
+  list.innerHTML = '';
+  if (!items.length) { section.style.display = 'none'; return; }
+  section.style.display = '';
+  items.forEach(rec => {
+    const li      = document.createElement('li');
+    li.title      = rec.name;
+    const name    = document.createElement('span');
+    name.className = 'r-name';
+    name.textContent = rec.name;
+    const time    = document.createElement('span');
+    time.className = 'r-time';
+    time.textContent = relativeTime(rec.lastOpened);
+    li.appendChild(name);
+    li.appendChild(time);
+    li.addEventListener('click', async () => {
+      time.className  = 'r-time';
+      time.textContent = '...';
+      try {
+        await readHandleAndDisplay(rec.handle);
+        await saveHandle(rec.handle);
+      } catch (e) {
+        time.className  = 'r-err';
+        time.textContent = 'Error';
+        showOverlayError(e.message);
+      }
+    });
+    list.appendChild(li);
+  });
+}
+
+document.getElementById('clear-history').addEventListener('click', async () => {
+  await clearRecent();
+  renderRecent();
+});
+
+renderRecent();
+
+function buildGraph(TURTLE) {
+
+// ────────────────────────────────────────────────────────────────────────────
+// 3.  Ontology IRI constants
+// ────────────────────────────────────────────────────────────────────────────
+const DFLOW = 'https://vocab.example/data-flow#';
+const RDFS  = 'http://www.w3.org/2000/01/rdf-schema#';
+const RDF   = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+
+const IRI = {
+  type:               RDF   + 'type',
+  label:              RDFS  + 'label',
+  // core classes
+  DataFlowMap:        DFLOW + 'DataFlowMap',
+  DataFlow:           DFLOW + 'DataFlow',
+  Payload:            DFLOW + 'Payload',
+  // message types
+  IntegrationEvent:   DFLOW + 'IntegrationEvent',
+  Command:            DFLOW + 'Command',
+  Query:              DFLOW + 'Query',
+  Reply:              DFLOW + 'Reply',
+  // flow directions
+  Push:               DFLOW + 'Push',
+  Pull:               DFLOW + 'Pull',
+  RequestResponse:    DFLOW + 'RequestResponse',
+  // coordination
+  Orchestrated:       DFLOW + 'Orchestrated',
+  Choreographed:      DFLOW + 'Choreographed',
+  // trigger types
+  DomainEventTrigger:      DFLOW + 'DomainEventTrigger',
+  IntegrationEventTrigger: DFLOW + 'IntegrationEventTrigger',
+  ScheduledTrigger:        DFLOW + 'ScheduledTrigger',
+  CommandTrigger:          DFLOW + 'CommandTrigger',
+  // properties — DataFlowMap
+  hasFlow:            DFLOW + 'hasFlow',
+  describesMap:       DFLOW + 'describesMap',
+  // properties — DataFlow
+  sender:             DFLOW + 'sender',
+  receiver:           DFLOW + 'receiver',
+  messageType:        DFLOW + 'messageType',
+  direction:          DFLOW + 'direction',
+  coordinationStyle:  DFLOW + 'coordinationStyle',
+  hasTrigger:         DFLOW + 'hasTrigger',
+  triggerDescription: DFLOW + 'triggerDescription',
+  channel:            DFLOW + 'channel',
+  flowName:           DFLOW + 'flowName',
+  notes:              DFLOW + 'notes',
+  carries:            DFLOW + 'carries',
+  refinesRelationship:DFLOW + 'refinesRelationship',
+  // properties — Payload
+  aggregateName:      DFLOW + 'aggregateName',
+  payloadDescription: DFLOW + 'payloadDescription',
+  // properties — Trigger
+  eventName:          DFLOW + 'eventName',
+  schedule:           DFLOW + 'schedule',
+};
+
+// ────────────────────────────────────────────────────────────────────────────
+// 4.  Parse Turtle → N3.Store
+// ────────────────────────────────────────────────────────────────────────────
+const store  = new N3.Store();
+const parser = new N3.Parser({ baseIRI: window.location.href });
+store.addQuads(parser.parse(TURTLE));
+
+// Helpers
+const nn     = (iri) => N3.DataFactory.namedNode(iri);
+const getAll = (s, p) =>
+  store.getQuads(s ? nn(s) : null, nn(p), null, null).map(q => q.object.value);
+const getOne = (s, p) => { const r = getAll(s, p); return r.length ? r[0] : null; };
+
+// strip language tag from literals like "label"@de → "label"
+function stripLang(v) {
+  return v ? v.replace(/@\w+$/, '') : v;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 5.  Resolve display label for any IRI (try rdfs:label first)
+// ────────────────────────────────────────────────────────────────────────────
+function resolveLabel(iri) {
+  if (!iri) return '';
+  const lbl = getOne(iri, IRI.label);
+  if (lbl) return stripLang(lbl);
+  // fallback: local name after # or /
+  const frag = iri.split('#').pop().split('/').pop();
+  return frag || iri;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 6.  Read DataFlowMap metadata
+// ────────────────────────────────────────────────────────────────────────────
+const headerMeta = document.getElementById('header-meta');
+headerMeta.innerHTML = '';
+
+let mapLabel = '';
+for (const q of store.match(null, nn(IRI.type), nn(IRI.DataFlowMap), null)) {
+  const mapId = q.subject.value;
+  const lbl   = getOne(mapId, IRI.label);
+  if (lbl) mapLabel = stripLang(lbl);
+}
+if (mapLabel) {
+  document.querySelector('header h1').textContent = mapLabel;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 7.  Collect all bounded contexts referenced as sender/receiver
+// ────────────────────────────────────────────────────────────────────────────
+const contextSet = new Set();
+for (const q of store.match(null, nn(IRI.sender),   null, null)) contextSet.add(q.object.value);
+for (const q of store.match(null, nn(IRI.receiver), null, null)) contextSet.add(q.object.value);
+
+const nodeData = {};
+const cyNodes  = [];
+
+for (const id of contextSet) {
+  const label = resolveLabel(id);
+  nodeData[id] = { label };
+  cyNodes.push({ data: { id, label } });
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 8.  Collect DataFlows → edges
+// ────────────────────────────────────────────────────────────────────────────
+const edgeData = {};
+const cyEdges  = [];
+
+// message type → edge key
+function msgTypeKey(iri) {
+  if (iri === IRI.IntegrationEvent) return 'event';
+  if (iri === IRI.Command)          return 'command';
+  if (iri === IRI.Query)            return 'query';
+  if (iri === IRI.Reply)            return 'reply';
+  return 'other';
+}
+
+// coordination → edge key
+function coordKey(iri) {
+  if (iri === IRI.Orchestrated)  return 'orch';
+  if (iri === IRI.Choreographed) return 'chor';
+  return 'orch';
+}
+
+for (const q of store.match(null, nn(IRI.type), nn(IRI.DataFlow), null)) {
+  const id = q.subject.value;
+
+  const sender   = getOne(id, IRI.sender);
+  const receiver = getOne(id, IRI.receiver);
+  if (!sender || !receiver) continue;
+
+  const rawFlowName   = getOne(id, IRI.flowName);
+  const flowName      = stripLang(rawFlowName) || resolveLabel(id);
+  const msgTypeIri    = getOne(id, IRI.messageType);
+  const directionIri  = getOne(id, IRI.direction);
+  const coordIri      = getOne(id, IRI.coordinationStyle);
+  const channel       = stripLang(getOne(id, IRI.channel)) || '';
+  const notes         = stripLang(getOne(id, IRI.notes))   || '';
+  const rawTriggerDesc = getOne(id, IRI.triggerDescription);
+  const triggerDesc   = stripLang(rawTriggerDesc) || '';
+
+  // Trigger
+  const triggerIri  = getOne(id, IRI.hasTrigger);
+  let triggerType   = '';
+  let eventName     = '';
+  let schedule      = '';
+  if (triggerIri) {
+    // Determine type by rdf:type
+    const tTypes = store.getQuads(nn(triggerIri), nn(IRI.type), null, null).map(tq => tq.object.value);
+    if (tTypes.includes(IRI.DomainEventTrigger))      triggerType = 'DomainEvent';
+    else if (tTypes.includes(IRI.IntegrationEventTrigger)) triggerType = 'IntegrationEvent';
+    else if (tTypes.includes(IRI.ScheduledTrigger))   triggerType = 'Scheduled';
+    else if (tTypes.includes(IRI.CommandTrigger))     triggerType = 'Command';
+    eventName = stripLang(getOne(triggerIri, IRI.eventName)) || '';
+    schedule  = stripLang(getOne(triggerIri, IRI.schedule))  || '';
+  }
+
+  // Payload
+  const payloadIri  = getOne(id, IRI.carries);
+  let payloadName   = '';
+  let payloadDesc   = '';
+  if (payloadIri) {
+    payloadName = stripLang(getOne(payloadIri, IRI.aggregateName))     || resolveLabel(payloadIri);
+    payloadDesc = stripLang(getOne(payloadIri, IRI.payloadDescription)) || '';
+  }
+
+  const mKey = msgTypeKey(msgTypeIri);
+  const cKey = coordKey(coordIri);
+
+  edgeData[id] = {
+    flowName, sender, receiver,
+    msgTypeIri, directionIri, coordIri,
+    mKey, cKey,
+    channel, notes, triggerDesc,
+    triggerType, eventName, schedule,
+    payloadName, payloadDesc,
+  };
+
+  cyEdges.push({
+    data: {
+      id,
+      source: sender,
+      target: receiver,
+      label:  flowName,
+      mKey,
+      cKey,
+    }
+  });
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// 9.  Register Dagre + initialise Cytoscape
+// ────────────────────────────────────────────────────────────────────────────
+cytoscape.use(cytoscapeDagre);
+
+const cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: { nodes: cyNodes, edges: cyEdges },
+  wheelSensitivity: 0.3,
+
+  style: [
+    // ── Base node ──────────────────────────────────────────────────────────
+    {
+      selector: 'node',
+      style: {
+        'shape':            'roundrectangle',
+        'background-color': '#3b82f6',
+        'border-width':     2,
+        'border-color':     '#1d4ed8',
+        'label':            'data(label)',
+        'color':            '#fff',
+        'font-size':        13,
+        'font-weight':      600,
+        'text-valign':      'center',
+        'text-halign':      'center',
+        'text-wrap':        'wrap',
+        'text-max-width':   150,
+        'width':            170,
+        'height':           64,
+      }
+    },
+    // ── Selected node ─────────────────────────────────────────────────────
+    {
+      selector: 'node:selected',
+      style: { 'border-width': 3, 'border-color': '#fff' }
+    },
+    // ── Base edge ─────────────────────────────────────────────────────────
+    {
+      selector: 'edge',
+      style: {
+        'width':                   2,
+        'curve-style':             'bezier',
+        'target-arrow-shape':      'triangle',
+        'label':                   'data(label)',
+        'font-size':               10,
+        'text-rotation':           'autorotate',
+        'text-background-color':   '#f0f4f8',
+        'text-background-opacity': 1,
+        'text-background-padding': '3px',
+        'line-color':              '#94a3b8',
+        'target-arrow-color':      '#94a3b8',
+      }
+    },
+    // ── Integration Event ─────────────────────────────────────────────────
+    {
+      selector: 'edge[mKey = "event"]',
+      style: {
+        'line-color':          '#22c55e',
+        'target-arrow-color':  '#22c55e',
+        'color':               '#15803d',
+      }
+    },
+    // ── Command ───────────────────────────────────────────────────────────
+    {
+      selector: 'edge[mKey = "command"]',
+      style: {
+        'line-color':          '#ef4444',
+        'target-arrow-color':  '#ef4444',
+        'color':               '#b91c1c',
+      }
+    },
+    // ── Query ─────────────────────────────────────────────────────────────
+    {
+      selector: 'edge[mKey = "query"]',
+      style: {
+        'line-color':          '#3b82f6',
+        'target-arrow-color':  '#3b82f6',
+        'color':               '#1d4ed8',
+      }
+    },
+    // ── Reply ─────────────────────────────────────────────────────────────
+    {
+      selector: 'edge[mKey = "reply"]',
+      style: {
+        'line-color':          '#a855f7',
+        'target-arrow-color':  '#a855f7',
+        'color':               '#7e22ce',
+      }
+    },
+    // ── Choreographed = dashed ────────────────────────────────────────────
+    {
+      selector: 'edge[cKey = "chor"]',
+      style: {
+        'line-style':        'dashed',
+        'line-dash-pattern': [6, 4],
+      }
+    },
+    // ── Selected edge ─────────────────────────────────────────────────────
+    {
+      selector: 'edge:selected',
+      style: { 'width': 3 }
+    },
+  ],
+
+  layout: {
+    name:    'dagre',
+    rankDir: 'LR',
+    nodeSep: 70,
+    rankSep: 200,
+    edgeSep: 20,
+    padding: 60,
+    animate: false,
+  },
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// 10.  Tooltip logic
+// ────────────────────────────────────────────────────────────────────────────
+const tooltip       = document.getElementById('tooltip');
+const ttTitle       = document.getElementById('tt-title');
+const ttBadge       = document.getElementById('tt-badge');
+const ttDesc        = document.getElementById('tt-desc');
+const ttDirection   = document.getElementById('tt-direction');
+const ttDirSec      = document.getElementById('tt-direction-section');
+const ttTrigger     = document.getElementById('tt-trigger');
+const ttTriggerDesc = document.getElementById('tt-trigger-desc');
+const ttTriggerSec  = document.getElementById('tt-trigger-section');
+const ttChannel     = document.getElementById('tt-channel');
+const ttChannelSec  = document.getElementById('tt-channel-section');
+const ttPayloadName = document.getElementById('tt-payload-name');
+const ttPayloadDesc = document.getElementById('tt-payload-desc');
+const ttPayloadSec  = document.getElementById('tt-payload-section');
+const ttNotes       = document.getElementById('tt-notes');
+const ttNotesSec    = document.getElementById('tt-notes-section');
+
+function pill(container, text, cssClass) {
+  const s = document.createElement('span');
+  s.className = 'pill ' + (cssClass || '');
+  s.textContent = text;
+  container.appendChild(s);
+}
+
+function clearPills(container) {
+  container.innerHTML = '';
+}
+
+const msgBadgeMap = {
+  event:   ['Integration Event', 'badge-event'],
+  command: ['Command',           'badge-command'],
+  query:   ['Query',             'badge-query'],
+  reply:   ['Reply',             'badge-reply'],
+  other:   ['Data Flow',         'badge-context'],
+};
+
+const dirLabel = {
+  [IRI.Push]:            ['Push',             'dir-push'],
+  [IRI.Pull]:            ['Pull',             'dir-pull'],
+  [IRI.RequestResponse]: ['Request-Response', 'dir-rr'],
+};
+
+const coordLabel = {
+  [IRI.Orchestrated]:  ['Orchestrated',  'coord-orch'],
+  [IRI.Choreographed]: ['Choreographed', 'coord-chor'],
+};
+
+const triggerTypeLabel = {
+  DomainEvent:      'Domain Event Trigger',
+  IntegrationEvent: 'Integration Event Trigger',
+  Scheduled:        'Scheduled Trigger',
+  Command:          'Command Trigger',
+};
+
+// Tap on node
+cy.on('tap', 'node', function(evt) {
+  const id = evt.target.id();
+  const d  = nodeData[id];
+  if (!d) return;
+
+  ttTitle.textContent    = d.label;
+  ttBadge.textContent    = 'Bounded Context';
+  ttBadge.className      = 'type-badge badge-context';
+  ttDesc.textContent     = '';
+
+  // Count flows in/out
+  const outFlows = Object.values(edgeData).filter(e => e.sender === id).length;
+  const inFlows  = Object.values(edgeData).filter(e => e.receiver === id).length;
+  ttDesc.textContent = outFlows + ' outgoing flow' + (outFlows !== 1 ? 's' : '') +
+    ', ' + inFlows + ' incoming flow' + (inFlows !== 1 ? 's' : '') + '.';
+
+  ttDirSec.style.display     = 'none';
+  ttTriggerSec.style.display = 'none';
+  ttChannelSec.style.display = 'none';
+  ttPayloadSec.style.display = 'none';
+  ttNotesSec.style.display   = 'none';
+
+  tooltip.className     = '';
+  tooltip.style.display = 'block';
+});
+
+// Tap on edge (flow)
+cy.on('tap', 'edge', function(evt) {
+  const id = evt.target.id();
+  const d  = edgeData[id];
+  if (!d) return;
+
+  ttTitle.textContent = d.flowName;
+
+  const [badgeText, badgeCls] = msgBadgeMap[d.mKey] || ['Data Flow', 'badge-context'];
+  ttBadge.textContent = badgeText;
+  ttBadge.className   = 'type-badge ' + badgeCls;
+
+  const senderLabel   = nodeData[d.sender]   ? nodeData[d.sender].label   : resolveLabel(d.sender);
+  const receiverLabel = nodeData[d.receiver] ? nodeData[d.receiver].label : resolveLabel(d.receiver);
+  ttDesc.textContent  = senderLabel + '  \u2192  ' + receiverLabel;
+
+  // Direction + Coordination
+  clearPills(ttDirection);
+  if (d.directionIri && dirLabel[d.directionIri]) {
+    const [dlbl, dcls] = dirLabel[d.directionIri];
+    pill(ttDirection, dlbl, dcls);
+  }
+  if (d.coordIri && coordLabel[d.coordIri]) {
+    const [clbl, ccls] = coordLabel[d.coordIri];
+    pill(ttDirection, clbl, ccls);
+  }
+  ttDirSec.style.display = (d.directionIri || d.coordIri) ? '' : 'none';
+
+  // Trigger
+  clearPills(ttTrigger);
+  if (d.triggerType) {
+    pill(ttTrigger, triggerTypeLabel[d.triggerType] || d.triggerType, 'trigger');
+    if (d.eventName) pill(ttTrigger, d.eventName, 'trigger');
+    if (d.schedule)  pill(ttTrigger, d.schedule,  'trigger');
+  }
+  ttTriggerDesc.textContent  = d.triggerDesc || '';
+  ttTriggerSec.style.display = (d.triggerType || d.triggerDesc) ? '' : 'none';
+
+  // Channel
+  clearPills(ttChannel);
+  if (d.channel) pill(ttChannel, d.channel, 'channel');
+  ttChannelSec.style.display = d.channel ? '' : 'none';
+
+  // Payload
+  clearPills(ttPayloadName);
+  if (d.payloadName) pill(ttPayloadName, d.payloadName, '');
+  ttPayloadDesc.textContent  = d.payloadDesc || '';
+  ttPayloadSec.style.display = (d.payloadName || d.payloadDesc) ? '' : 'none';
+
+  // Notes
+  ttNotes.textContent        = d.notes || '';
+  ttNotesSec.style.display   = d.notes ? '' : 'none';
+
+  tooltip.className     = 'flow';
+  tooltip.style.display = 'block';
+});
+
+cy.on('tap', function(evt) {
+  if (evt.target === cy) tooltip.style.display = 'none';
+});
+
+} // end buildGraph
+</script>
+</body>
+</html>
