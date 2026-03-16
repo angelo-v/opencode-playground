@@ -1,3 +1,4 @@
 node_modules
 .opencode/store
 *context-map.ttl
+*data-flow-map.ttl
